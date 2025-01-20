@@ -1,1 +1,37 @@
-<p>event-detail works!</p>
+<div class="event-detail-container" *ngIf="eventData">
+    <!-- Header Section -->
+    <div class="header">
+      <h1 class="event-title">{{ eventData.title }}</h1>
+      <div class="header-actions">
+        <button class="btn btn-danger">Register</button>
+        <button class="btn btn-secondary" routerLink="/events">Back to Events</button>
+      </div>
+    </div>
+  
+    <!-- Event Information Section -->
+    <div class="event-info">
+      <!-- Description -->
+      <div class="event-section">
+        <h2>Description</h2>
+        <p>{{ eventData.description }}</p>
+      </div>
+  
+      <!-- Date -->
+      <div class="event-section">
+        <h2>Date</h2>
+        <p>{{ eventData.date | date: 'fullDate' }}</p>
+      </div>
+  
+      <!-- Location -->
+      <div class="event-section">
+        <h2>Location</h2>
+        <p>{{ eventData.location }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loader -->
+  <div *ngIf="!eventData" class="loader">
+    <p>Loading event details...</p>
+  </div>
+  
