@@ -1,0 +1,103 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>EventPlanner</h1>
+    <button class="btn btn-danger" routerLink="/events">Return To Events</button>
+  </div>
+  <!-- Afficher une alerte si elle existe -->
+  <div *ngIf="alertMessage" class="alert alert-info mt-3">
+    {{ alertMessage }}
+  </div>
+  <div class="row mt-4">
+    <div class="form-container col-12 col-md-8 offset-md-2">
+      <h2>Add New Event</h2>
+      <form (ngSubmit)="onSubmit(eventForm)" #eventForm="ngForm">
+        <!-- Event Name -->
+        <div class="form-group">
+          <label for="title">Event Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            placeholder="Enter event title"
+            ngModel
+            required
+            minlength="3"
+          />
+          <div *ngIf="eventForm.controls['title']?.touched && eventForm.controls['title']?.invalid" class="text-danger">
+            <div *ngIf="eventForm.controls['title']?.errors?.['required']">
+              Title is required.
+            </div>
+            <div *ngIf="eventForm.controls['title']?.errors?.['minlength']">
+              Title must be at least 3 characters long.
+            </div>
+          </div>
+        </div>
+        
+    
+        <!-- Date -->
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="form-control"
+            ngModel
+            required
+            [min]="minDate"
+          />
+        </div>
+    
+        <!-- Location -->
+<!-- Location -->
+<div class="form-group">
+  <label for="location">Location</label>
+  <input
+    type="text"
+    id="location"
+    name="location"
+    class="form-control"
+    placeholder="Enter location"
+    ngModel
+    required
+    minlength="2"
+  />
+  <div *ngIf="eventForm.controls['location']?.touched && eventForm.controls['location']?.invalid" class="text-danger">
+    <div *ngIf="eventForm.controls['location']?.errors?.['required']">
+      Location is required.
+    </div>
+    <div *ngIf="eventForm.controls['location']?.errors?.['minlength']">
+      Location must be at least 2 characters long.
+    </div>
+  </div>
+</div>
+
+    
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            placeholder="Write a description..."
+            ngModel
+          ></textarea>
+        </div>
+    
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+          <button
+            type="submit"
+            class="btn2 btn-danger"
+            [disabled]="eventForm.invalid"
+          >
+            Submit Event
+          </button>
+        </div>
+      </form>
+    </div>  
+  </div>
+</div>
