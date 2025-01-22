@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Event } from '../../models/event.model'; // Import the Event interface
+import { Event } from '../../models/event.model'; 
 
 @Component({
   selector: 'app-event',
@@ -7,5 +7,5 @@ import { Event } from '../../models/event.model'; // Import the Event interface
   styleUrls: ['./event.component.css']
 })
 export class EventComponent {
-  @Input() event!: Event; 
+  @Input() event!: Event;
 }

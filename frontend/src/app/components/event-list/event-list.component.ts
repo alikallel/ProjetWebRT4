@@ -1,41 +1,90 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.css'],
 })
-export class EventListComponent {
+export class EventListComponent implements OnInit {
   events: Event[] = [];
-  searchTerm: string = '';      
   filteredEvents: Event[] = [];
-  constructor(private eventService: EventService) {}
+  paginatedEvents: Event[] = [];
+  searchTerm: string = '';
+
+  // Pagination variables
+  currentPage: number = 1;
+  eventsPerPage: number = 12;
+  totalPages: number = 1;
+
+  constructor(
+    private eventService: EventService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.fetchEvents();
+    this.route.params.subscribe((params) => {
+      const page = +params['page'] ;
+      // Récupère les événements en premier pour calculer totalPages
+      this.fetchEvents(page);
+    });
   }
 
-  fetchEvents(): void {
+  fetchEvents(page: number): void {
     this.eventService.getEvents().subscribe({
       next: (data: Event[]) => {
-        this.events = data; 
-        this.filteredEvents = data; 
+        this.events = data;
+        this.filteredEvents = data;  // Initialisation de filteredEvents avec tous les événements
+        this.totalPages = Math.ceil(this.events.length / this.eventsPerPage);
 
+        // Vérification de la page demandée après le calcul des totalPages
+        if (page < 1 || page > this.totalPages) {
+          this.router.navigate(['/events/page', 1]);  // Redirection vers la page 1 si la page demandée est invalide
+        } else {
+          this.currentPage = page;
+          this.applyFilterAndPaginate();  // Appliquer le filtre et la pagination
+        }
       },
       error: (err) => {
         console.error('Erreur lors du chargement des événements :', err);
       },
     });
   }
-  // Méthode de filtrage en fonction du terme de recherche
-  filterEvents() {
+
+  filterEvents(): void {
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-    this.filteredEvents = this.events.filter(event => 
+    // Filtrer tous les événements, pas seulement ceux de la page actuelle
+    this.filteredEvents = this.events.filter((event) =>
       event.title.toLowerCase().includes(lowerCaseSearchTerm) ||
       event.location.toLowerCase().includes(lowerCaseSearchTerm)
     );
+    this.applyFilterAndPaginate();  // Appliquer la pagination après le filtrage
+  }
+
+  applyFilterAndPaginate(): void {
+    this.totalPages = Math.ceil(this.filteredEvents.length / this.eventsPerPage);
+
+    // Si la page actuelle devient invalide après le filtrage, rediriger vers la première page
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = 1;
+      this.router.navigate(['/events/page', 1]);  // Redirection vers la première page
+    }
+
+    this.paginate();  // Mise à jour des événements paginés
+  }
+
+  paginate(): void {
+    const startIndex = (this.currentPage - 1) * this.eventsPerPage;
+    const endIndex = startIndex + this.eventsPerPage;
+    this.paginatedEvents = this.filteredEvents.slice(startIndex, endIndex);  // Mise à jour des événements paginés
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.router.navigate(['/events/page', page]);  // Mise à jour de l'URL avec la nouvelle page
+    }
   }
 }
-

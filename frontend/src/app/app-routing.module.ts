@@ -6,7 +6,9 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 
 const routes: Routes = [
   { path: 'events', component: EventListComponent }, 
+  { path: 'events/page/:page', component: EventListComponent }, 
   { path: 'add-event', component: EventFormComponent }, 
+  { path: 'events/page', redirectTo: '/events/page/1' },  // Redirection par défaut pour toutes les autres pages
   {path:'event-details/:id',component:EventDetailComponent},
 ];
 @NgModule({

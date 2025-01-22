@@ -13,7 +13,7 @@ import { PaymentModule } from './payment/payment.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: 'root123',
       database: 'eventplanner',
       entities: [Event],
       synchronize: true,
