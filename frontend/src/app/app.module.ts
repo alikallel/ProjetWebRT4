@@ -8,7 +8,8 @@ import { EventListComponent } from './components/event-list/event-list.component
 import { EventComponent } from './components/event/event.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { FormsModule } from '@angular/forms';
-import { EventDetailComponent } from './components/event-detail/event-detail.component';  
+import { EventDetailComponent } from './components/event-detail/event-detail.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
     EventListComponent,
     EventComponent,
     EventFormComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

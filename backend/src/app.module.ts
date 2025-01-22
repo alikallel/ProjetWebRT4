@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Event } from './event/event.entity';
 import { EventModule } from './event/event.module';
 import { PaymentModule } from './payment/payment.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PaymentModule } from './payment/payment.module';
     }),
     EventModule,
     PaymentModule,
+    AuthModule,
   ],
   controllers: [AppController, ],
   providers: [AppService],
