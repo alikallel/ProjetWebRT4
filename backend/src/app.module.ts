@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Event } from './event/event.entity';
 import { EventModule } from './event/event.module';
 import { PaymentModule } from './payment/payment.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,13 +15,14 @@ import { PaymentModule } from './payment/payment.module';
       username: 'root',
       password: 'root123',
       database: 'eventplanner',
-      entities: [Event],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     EventModule,
     PaymentModule,
+    AuthModule,
   ],
-  controllers: [AppController, ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
