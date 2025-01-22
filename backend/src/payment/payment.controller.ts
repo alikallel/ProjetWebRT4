@@ -1,5 +1,7 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
 import { PaymentService } from './payment.service';
+import { InitiatePaymentDto, PaymentVerificationDto } from './dto/payment.dto/payment.dto';
+
 
 @Controller('payment')
 export class PaymentController {
@@ -7,19 +9,16 @@ export class PaymentController {
         private paymentService: PaymentService
     )
     {}
-    @Post()
-    async payment(
-        @Body('amount') amount: number
-    )
-    {
-        return await this.paymentService.payment(amount)
-    }
+    @Post('initiate')
+    async initiatePayment(@Body() initiatePaymentDto: InitiatePaymentDto) {
+    return await this.paymentService.initiatePayment(
+      initiatePaymentDto.registration_id,
+      initiatePaymentDto.amount
+    );
+  }
 
-    @Post(':id')
-    async verify(
-        @Param('id') id: string
-    )
-    {
-        return await this.paymentService.verify(id)
-    }
+  @Post('verify/:paymentId')
+  async verifyPayment(@Param('paymentId') paymentId: string) {
+    return await this.paymentService.verifyPayment(paymentId);
+  }
 }
