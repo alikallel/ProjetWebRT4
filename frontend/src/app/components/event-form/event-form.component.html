@@ -78,6 +78,21 @@
           </div>
         </div>
 
+        <!-- price -->
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            formControlName="price"
+            class="form-control"
+            placeholder="Enter price"
+          />
+          <div *ngIf="eventForm.get('price')?.touched && eventForm.get('price')?.invalid" class="text-danger">
+            <div *ngIf="eventForm.get('price')?.errors?.['required']">price is required.</div>
+          </div>
+        </div>
+
         <!-- Submit Button -->
         <div class="form-group text-center">
           <button type="submit" class="btn btn-danger" [disabled]="eventForm.invalid">Submit Event</button>

@@ -19,4 +19,7 @@ export class Event {
 
   @Column()
   organizer: number;
+
+  @Column()
+  price : number;
 }

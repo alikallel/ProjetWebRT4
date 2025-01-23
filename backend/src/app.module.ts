@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm'; 
 import { EventModule } from './event/event.module';
 import { PaymentModule } from './payment/payment.module';
 import { AuthModule } from './auth/auth.module';
@@ -16,9 +16,9 @@ dotenv.config()
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      username: 'root',
+      password: '',
+      database: 'event_app',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

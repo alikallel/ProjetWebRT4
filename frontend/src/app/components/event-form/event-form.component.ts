@@ -26,6 +26,7 @@ export class EventFormComponent {
       date: ['', [Validators.required]],
       location: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
+      price: ['',[Validators.required]]
     });
 
     // Abonnement aux alertes

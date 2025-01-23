@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+declare  var bootstrap: any;
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
@@ -18,6 +18,25 @@ export class EventListComponent implements OnInit {
   currentPage: number = 1;
   eventsPerPage: number = 12;
   totalPages: number = 1;
+
+
+  quantity: number = 1; // Quantité initiale
+  amount: number = 0; // Montant total initialisé
+  
+  // L'événement sélectionné pour la modale
+
+  selectedEvent: any = null; // Événement sélectionné
+
+  openRegisterModal(event: any) {
+    this.selectedEvent = event; // Définit l'événement sélectionné
+    this.quantity = 1; // Réinitialise la quantité à 1
+    this.calculateTotal(); // Calcule le montant initial
+    const modalElement = document.getElementById('ticketModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show(); // Affiche le modal
+    }
+  }
 
   constructor(
     private eventService: EventService,
@@ -87,4 +106,25 @@ export class EventListComponent implements OnInit {
       this.router.navigate(['/events/page', page]);  // Mise à jour de l'URL avec la nouvelle page
     }
   }
+  
+
+  incrementQuantity() {
+    this.quantity++;
+    this.calculateTotal(); // Met à jour le montant total
+  }
+
+  decrementQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+      this.calculateTotal(); // Met à jour le montant total
+    }
+  }
+
+  calculateTotal() {
+    if (this.selectedEvent) {
+      this.amount = this.quantity * this.selectedEvent.price;
+    }
+  }
+
+  
 }
