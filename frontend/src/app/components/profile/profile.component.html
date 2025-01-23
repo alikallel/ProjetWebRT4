@@ -1,1 +1,32 @@
-<p>profile works!</p>
+
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="profile-image-container">
+        <img [src]="user?.photo" alt="Profile Picture" class="profile-image">
+      </div>
+      <h2>Profile Information</h2>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-group">
+        <label for="role">Role</label>
+        <input type="text" id="role" formControlName="role" readonly>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" >
+      </div>
+      <div class="form-group">
+        <label for="password">New Password</label>
+        <input type="password" id="password" formControlName="password" >
+      </div>
+      <div class="form-group">
+        <label for="photo">Profile Picture (URL)</label>
+        <textarea id="photo" formControlName="photo" rows="4"></textarea>
+      </div>
+      <button type="submit" [disabled]="userForm.invalid" class="submit-btn">
+        Update Profile
+      </button>
+    </form>
+  </div>
+</div>

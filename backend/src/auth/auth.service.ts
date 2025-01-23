@@ -30,4 +30,12 @@ export class AuthService {
     const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1h' });
     return { token };
   }
+  async getUserById(userId: number): Promise<User> {
+    return this.userRepository.findOne({ where: { id: userId } });
+  }
+
+  async updateUser(userId: number, updateData: Partial<User>): Promise<User> {
+    await this.userRepository.update(userId, updateData);
+    return this.getUserById(userId);
+  }
 }
