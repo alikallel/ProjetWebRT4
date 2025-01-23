@@ -88,10 +88,35 @@
             class="form-control"
             placeholder="Enter price"
           />
-          <div *ngIf="eventForm.get('price')?.touched && eventForm.get('price')?.invalid" class="text-danger">
-            <div *ngIf="eventForm.get('price')?.errors?.['required']">price is required.</div>
+          <div
+            *ngIf="eventForm.get('price')?.touched && eventForm.get('price')?.invalid"
+            class="text-danger"
+          >
+            <div *ngIf="eventForm.get('price')?.errors?.['required']">Price is required.</div>
+            <div *ngIf="eventForm.get('price')?.errors?.['min']">Price must be greater than 0.</div>
           </div>
         </div>
+        
+
+        <!-- capacity -->
+        <div class="form-group">
+          <label for="capacity">Capacity</label>
+          <input
+            type="number"
+            id="capacity"
+            formControlName="capacity"
+            class="form-control"
+            placeholder="Enter capacity"
+          />
+          <div
+            *ngIf="eventForm.get('capacity')?.touched && eventForm.get('capacity')?.invalid"
+            class="text-danger"
+          >
+            <div *ngIf="eventForm.get('capacity')?.errors?.['required']">Capacity is required.</div>
+            <div *ngIf="eventForm.get('capacity')?.errors?.['min']">Capacity must be greater than 0.</div>
+          </div>
+        </div>
+        
 
         <!-- Submit Button -->
         <div class="form-group text-center">

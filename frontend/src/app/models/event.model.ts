@@ -6,5 +6,6 @@ export interface Event {
     location: string; 
     organizer?: number;
     price : number;  
+    capacity : number; 
   }
   

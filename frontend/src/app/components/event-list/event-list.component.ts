@@ -103,7 +103,7 @@ export class EventListComponent implements OnInit {
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.router.navigate(['/events/page', page]);  // Mise à jour de l'URL avec la nouvelle page
+      this.router.navigate(['/events/page', page]);  
     }
   }
   

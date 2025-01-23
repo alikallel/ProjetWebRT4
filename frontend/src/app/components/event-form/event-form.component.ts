@@ -26,7 +26,14 @@ export class EventFormComponent {
       date: ['', [Validators.required]],
       location: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      price: ['',[Validators.required]]
+      price: [
+        '',
+        [Validators.required, Validators.min(1), Validators.minLength(1)],
+      ],
+      capacity: [
+        '',
+        [Validators.required, Validators.min(1),Validators.minLength(1)],
+      ],
     });
 
     // Abonnement aux alertes
@@ -39,7 +46,7 @@ export class EventFormComponent {
   // Méthode de soumission
   onSubmit() {
     if (this.eventForm.valid) {
-      const eventData = { ...this.eventForm.value, organizer: 1 };
+      const eventData = { ...this.eventForm.value, organizer: 1, };
       this.eventService.addEvent(eventData).subscribe(
         (response) => {
           console.log('Event added successfully:', response);
