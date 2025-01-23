@@ -22,4 +22,7 @@ export class Event {
 
   @Column()
   price : number;
+
+  @Column()
+  capacity: number;
 }
