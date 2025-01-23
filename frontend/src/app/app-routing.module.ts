@@ -5,6 +5,7 @@ import { EventFormComponent } from './components/event-form/event-form.component
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import {AuthComponent} from "./components/auth/auth.component";
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'add-event', component: EventFormComponent },
   { path: 'event-details/:id', component: EventDetailComponent },
   { path: 'auth', component: AuthComponent },
+  {path: 'profile', component:ProfileComponent},
   { path: '**', redirectTo: '/events/page/1' },
 
 ];
