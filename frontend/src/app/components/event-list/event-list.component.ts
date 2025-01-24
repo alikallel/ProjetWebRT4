@@ -135,7 +135,7 @@ export class EventListComponent implements OnInit {
   makePayment() {
     if (this.selectedEvent) {
       // First, create event registration
-      this.paymentService.createEventRegistration(this.selectedEvent.id, this.amount)
+      this.paymentService.createEventRegistration(this.selectedEvent.id, this.quantity)
         .subscribe({
           next: (registrationResponse) => {
             // Then, initiate payment

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { EventRegistration } from 'src/event-registrations/entities/event-registration.entity/event-registration.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Event {
@@ -25,4 +26,7 @@ export class Event {
 
   @Column()
   capacity: number;
+  
+  @OneToMany(() => EventRegistration, registration => registration.event)
+  registrations: EventRegistration[];
 }

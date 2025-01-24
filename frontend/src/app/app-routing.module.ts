@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
+import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'profile', component:ProfileComponent},
   { path: 'payment/success', component: PaymentSuccessComponent },
   { path: 'payment/fail', component: PaymentFailComponent },
+  { path: 'registration-details/:id', component: RegistrationDetailsComponent }, 
   { path: '**', redirectTo: '/events/page/1' },
 
 

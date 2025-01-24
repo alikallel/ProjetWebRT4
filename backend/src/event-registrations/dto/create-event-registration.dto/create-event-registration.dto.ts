@@ -1,4 +1,4 @@
-import { IsNumber, IsNotEmpty } from 'class-validator';
+import { IsNumber, IsNotEmpty, Min } from 'class-validator';
 
 export class CreateEventRegistrationDto {
   @IsNumber()
@@ -11,5 +11,7 @@ export class CreateEventRegistrationDto {
 
   @IsNumber()
   @IsNotEmpty()
-  amount: number;
+  @Min(1)
+  number_of_places: number;
+
 }

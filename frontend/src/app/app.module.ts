@@ -16,6 +16,7 @@ import { PaymentSuccessComponent } from './components/payment/payment-success/pa
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
 
 
 
@@ -31,6 +32,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     PaymentSuccessComponent,
     PaymentFailComponent,
     EventTicketComponent,
+    RegistrationDetailsComponent,
   ],
   imports: [
     BrowserModule,

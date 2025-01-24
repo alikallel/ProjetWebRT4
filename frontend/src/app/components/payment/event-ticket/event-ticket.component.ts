@@ -16,7 +16,8 @@ export class EventTicketComponent implements OnInit {
       registrationId: this.eventDetails.id,
       eventTitle: this.eventDetails.event.title,
       paymentId: this.eventDetails.payment_id,
-      email: this.eventDetails.user.email
+      email: this.eventDetails.user.email,
+      numberOfPlaces: this.eventDetails.number_of_places
     });
   }
 

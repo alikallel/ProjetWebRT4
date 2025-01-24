@@ -1,53 +1,57 @@
 <div class="ticket-container" id="ticket-print">
-    <div class="ticket">
-      <div class="ticket-header">
-        <h1>{{ eventDetails.event.title }}</h1>
+  <div class="ticket">
+    <div class="ticket-header">
+      <h1>{{ eventDetails.event.title }}</h1>
+    </div>
+
+    <div class="ticket-body">
+      <div class="ticket-section">
+        <div class="ticket-label">Event Date</div>
+        <div class="ticket-value">{{ formatDate(eventDetails.event.date) }}</div>
       </div>
-  
-      <div class="ticket-body">
-        <div class="ticket-section">
-          <div class="ticket-label">Event Date</div>
-          <div class="ticket-value">{{ formatDate(eventDetails.event.date) }}</div>
-        </div>
-  
-        <div class="ticket-section">
-          <div class="ticket-label">Location</div>
-          <div class="ticket-value">{{ eventDetails.event.location }}</div>
-        </div>
-  
-        <div class="ticket-section">
-          <div class="ticket-label">Ticket Holder</div>
-          <div class="ticket-value">{{ eventDetails.user.email }}</div>
-        </div>
-  
-        <div class="ticket-section">
-          <div class="ticket-label">Registration ID</div>
-          <div class="ticket-value">{{ eventDetails.id }}</div>
-        </div>
-  
-        <div class="ticket-section">
-          <div class="ticket-label">Amount Paid</div>
-          <div class="ticket-value">{{ eventDetails.amount }} TND</div>
-        </div>
-  
-        <div class="ticket-section">
-          <div class="ticket-label">Payment ID</div>
-          <div class="ticket-value">{{ eventDetails.payment_id }}</div>
-        </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Location</div>
+        <div class="ticket-value">{{ eventDetails.event.location }}</div>
       </div>
-  
-      <div class="ticket-footer">
-        <div class="barcode-placeholder">
-          <div class="ticket-footer">
-        <qrcode 
-          [qrdata]="qrCodeData"
-          [width]="150"
-          [errorCorrectionLevel]="'M'"
-          [elementType]="'canvas'"
-        ></qrcode>
-          <span>VERIFY: {{ eventDetails.payment_id }}</span>
-        </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Ticket Holder</div>
+        <div class="ticket-value">{{ eventDetails.user.email }}</div>
+      </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Registration ID</div>
+        <div class="ticket-value">{{ eventDetails.id }}</div>
+      </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Amount Paid</div>
+        <div class="ticket-value">{{ eventDetails.amount }} TND</div>
+      </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Number of Places</div>
+        <div class="ticket-value">{{ eventDetails.number_of_places }}</div>
+      </div>
+
+      <div class="ticket-section">
+        <div class="ticket-label">Payment ID</div>
+        <div class="ticket-value">{{ eventDetails.payment_id }}</div>
+      </div>
+    </div>
+
+    <div class="ticket-footer">
+      <div class="barcode-placeholder">
+        <div class="ticket-footer">
+      <qrcode 
+        [qrdata]="qrCodeData"
+        [width]="150"
+        [errorCorrectionLevel]="'M'"
+        [elementType]="'canvas'"
+      ></qrcode>
+        <span>VERIFY: {{ eventDetails.payment_id }}</span>
       </div>
     </div>
   </div>
-  
+</div>

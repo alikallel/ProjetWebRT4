@@ -100,6 +100,10 @@ export class PaymentService {
         throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
       }
 
+    const registration = payment.registration;
+    registration.payment_id = paymentId;
+    await this.eventRegistrationRepository.save(registration);
+
       return await this.processPaymentVerification(payment, verificationResult);
     } catch (error) {
       throw new HttpException(
@@ -137,7 +141,6 @@ export class PaymentService {
 
       const registration = payment.registration;
       registration.status = 'PAID';
-      registration.payment_id = verificationResult.result.payment_id;
       await this.eventRegistrationRepository.save(registration);
 
       return {
