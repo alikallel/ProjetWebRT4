@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
+import { CheckIn } from './components/checkin/checkin.component';
 
 
 
@@ -30,6 +31,7 @@ import { EventTicketComponent } from './components/payment/event-ticket/event-ti
     PaymentSuccessComponent,
     PaymentFailComponent,
     EventTicketComponent,
+    CheckIn,
   ],
   imports: [
     BrowserModule,
