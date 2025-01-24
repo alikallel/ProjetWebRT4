@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 
@@ -38,6 +39,7 @@ import { EventTicketComponent } from './components/payment/event-ticket/event-ti
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

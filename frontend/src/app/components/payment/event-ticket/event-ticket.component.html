@@ -38,7 +38,13 @@
   
       <div class="ticket-footer">
         <div class="barcode-placeholder">
-          <!-- idea : make Qr to look pro -->
+          <div class="ticket-footer">
+        <qrcode 
+          [qrdata]="qrCodeData"
+          [width]="150"
+          [errorCorrectionLevel]="'M'"
+          [elementType]="'canvas'"
+        ></qrcode>
           <span>VERIFY: {{ eventDetails.payment_id }}</span>
         </div>
       </div>

@@ -9,8 +9,16 @@ export class EventTicketComponent implements OnInit {
   @Input() eventDetails: any;
 
   constructor() {}
+  qrCodeData!: string;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.qrCodeData = JSON.stringify({
+      registrationId: this.eventDetails.id,
+      eventTitle: this.eventDetails.event.title,
+      paymentId: this.eventDetails.payment_id,
+      email: this.eventDetails.user.email
+    });
+  }
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);

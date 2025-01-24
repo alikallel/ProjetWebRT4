@@ -137,6 +137,7 @@ export class PaymentService {
 
       const registration = payment.registration;
       registration.status = 'PAID';
+      registration.payment_id = verificationResult.result.payment_id;
       await this.eventRegistrationRepository.save(registration);
 
       return {

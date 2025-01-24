@@ -12,7 +12,6 @@ export class EventRegistrationsService {
   constructor(
     @InjectRepository(EventRegistration)
     private eventRegistrationRepository: Repository<EventRegistration>,
-    private paymentsService: PaymentService
   ) {}
 
   async create(createEventRegistrationDto: CreateEventRegistrationDto) {
@@ -21,24 +20,17 @@ export class EventRegistrationsService {
     const registration = await this.createRegistration(createEventRegistrationDto);
     
     try {
-      const paymentResponse = await this.paymentsService.initiatePayment(
-        registration.id,
-        createEventRegistrationDto.amount
-      );
-
-      registration.payment_id = paymentResponse.payment_id;
+      
       await this.eventRegistrationRepository.save(registration);
 
       return {
         registration_id: registration.id,
-        payment_link: paymentResponse.payment_link,
         status: registration.status
       };
     } catch (error) {
-      // Rollback registration if payment initiation fails
       await this.eventRegistrationRepository.remove(registration);
       throw new HttpException(
-        'Failed to initiate payment',
+        'Failed to create registration',
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
