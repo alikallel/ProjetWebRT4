@@ -49,8 +49,13 @@ export class EventListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const page = +params['page'] ;
-      // Récupère les événements en premier pour calculer totalPages
-      this.fetchEvents(page);
+      if (isNaN(page) || page < 1) {
+        // Si la page est invalide (non numérique ou inférieure à 1), redirection vers la page 1
+        this.router.navigate(['/events/page', 1]);
+      } else {
+        // Récupère les événements pour calculer totalPages
+        this.fetchEvents(page);
+      }
     });
   }
 

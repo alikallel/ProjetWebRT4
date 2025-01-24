@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Event } from './event.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Event } from './entities/event.entity';
+import { CreateEventDto } from './dto/add-event.dto';
 
 @Injectable()
 export class EventService {
@@ -10,26 +11,19 @@ export class EventService {
     private readonly eventRepository: Repository<Event>,
   ) {}
 
-  getAllEvents(): Promise<Event[]> {
+  async getAllEvents(): Promise<Event[]> {
     return this.eventRepository.find();
   }
 
-  createEvent(event: Event): Promise<Event> {
+  async createEvent(createEventDto: CreateEventDto): Promise<Event> {
+    const event = this.eventRepository.create(createEventDto); 
     return this.eventRepository.save(event);
   }
 
-  async getEventById(id: string): Promise<Event> {
-    const eventId = Number(id);  
-    if (isNaN(eventId)) {
-      throw new NotFoundException(`Invalid ID: ${id}`);
-    }
-
-    const event = await this.eventRepository.findOne({
-      where: { id: eventId }, 
-    });
-    
+  async getEventById(id: number): Promise<Event> {
+    const event = await this.eventRepository.findOneBy({ id });
     if (!event) {
-      throw new NotFoundException(`Event with ID ${eventId} not found`);
+      throw new Error(`Event with ID ${id} not found`);
     }
     return event;
   }

@@ -43,6 +43,7 @@
           />
           <div *ngIf="eventForm.get('date')?.touched && eventForm.get('date')?.invalid" class="text-danger">
             <div *ngIf="eventForm.get('date')?.errors?.['required']">Date is required.</div>
+            <div *ngIf="eventForm.get('date')?.errors?.['invalidDate']">Date cannot be in the past.</div>
           </div>
         </div>
 

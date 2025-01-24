@@ -23,7 +23,7 @@ export class EventFormComponent {
     // Initialisation du formulaire avec des validations
     this.eventForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[A-Za-z0-9\\s]+$')]],
-      date: ['', [Validators.required]],
+      date: ['', [Validators.required, this.dateValidator.bind(this)]],
       location: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       price: [
@@ -41,6 +41,16 @@ export class EventFormComponent {
       this.alertMessage = message;
       setTimeout(() => (this.alertMessage = null), 3000);
     });
+  }
+  // Validateur personnalisé pour la date
+  private dateValidator(control: any): { [key: string]: any } | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date(this.minDate);
+
+    if (selectedDate < today) {
+      return { invalidDate: 'The date cannot be in the past.' };
+    }
+    return null;
   }
 
   // Méthode de soumission

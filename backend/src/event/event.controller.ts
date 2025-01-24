@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { EventService } from './event.service';
-import { Event } from './event.entity';
+import { Event } from './entities/event.entity';
+import { CreateEventDto } from './dto/add-event.dto';
 
 @Controller('events')
 export class EventController {
@@ -12,13 +13,14 @@ export class EventController {
   }
 
   @Post()
-  createEvent(@Body() event: Event): Promise<Event> {
-    return this.eventService.createEvent(event);
+  @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+  createEvent(@Body() createEventDto: CreateEventDto): Promise<Event> {
+    return this.eventService.createEvent(createEventDto);
   }
-  // Route pour récupérer un événement par ID
+
   @Get(':id')
-  async getEventById(@Param('id') id: string): Promise<Event> {
-    return this.eventService.getEventById(id);
-  }
+async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
+  return this.eventService.getEventById(id);
+}
 
 }
