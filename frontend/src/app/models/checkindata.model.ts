@@ -6,10 +6,12 @@ enum Status {
 }
 
 export interface CheckInData {
-  id: number;          
-  userN: string;      
+  reg_id: number;          
+  //userN: string;      
   status: Status; 
-  photoUrl: string;
+  userPhoto: string;
+  registrationDate: Date;
   checkedIn: boolean;
+
 }
   

@@ -9,15 +9,15 @@
            'checked-in': user.checkedIn,
            'not-checked-in': !user.checkedIn
          }">
-      <img [src]="user.photo" alt="{{user.name}}'s photo" class="user-photo">
+      <!--<img [src]="user.photo" alt="{{user.name}}'s photo" class="user-photo"> -->
       <div class="user-details">
-        <h3>{{ user.name }}</h3>
+        <!--<h3>{{ user.name }}</h3> -->
         <p>Status: {{ user.status }}</p>
-        <p>Amount: ${{ user.amount }}</p>
+        <p>date: ${{ user.registrationDate }}</p>
       </div>
       <label>
         Check-in:
-        <input type="checkbox" [(ngModel)]="user.checkedIn">
+        <input type="checkbox" [(ngModel)]="user.checkedIn" (click)="toggleCheckIn(user)">
       </label>
     </div>
   </div>

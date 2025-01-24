@@ -11,7 +11,7 @@ import { CheckInData } from 'src/app/models/checkindata.model';
 export class CheckIn {
 
     error=false;
-    //users: CheckInData[] = [];
+    users: CheckInData[] = [];
     eventId: number | null = null;
     constructor(
         private http: HttpClient,
@@ -26,13 +26,10 @@ export class CheckIn {
     }
 
     fetchUsers(Id: number| string) {
-        this.http.get<any[]>(`http://localhost:8080/listregisted/${Id}`)
+        this.http.get<any[]>(`http://localhost:3000/checkin/${Id}`)
           .subscribe({
             next: (data) => {
-              this.users = data.map(user => ({
-                ...user,
-                checkedIn: false // Initialize checkedIn state
-              }));
+              this.users = data;
             },
             error: (err) => {
               console.error('Error fetching users:', err);
@@ -41,16 +38,25 @@ export class CheckIn {
           });
       }
 
-  users = [
-    { id: 1, name: 'John Doe', status: 'Active', amount: 120, photo: 'https://randomuser.me/api/portraits/men/1.jpg', checkedIn: false },
-    { id: 2, name: 'Jane Smith', status: 'Inactive', amount: 95, photo: 'https://randomuser.me/api/portraits/women/2.jpg', checkedIn: false },
-    { id: 3, name: 'Chris Johnson', status: 'Active', amount: 200, photo: 'https://randomuser.me/api/portraits/men/3.jpg', checkedIn: false },
-    { id: 4, name: 'Emily Brown', status: 'Inactive', amount: 150, photo: 'https://randomuser.me/api/portraits/women/4.jpg', checkedIn: false }
-  ];
 
-  toggleCheckIn(user: any) {
-    user.checkedIn = !user.checkedIn;
-    console.log(user.checkedIn); 
-  }
+    toggleCheckIn(user: CheckInData) {
+      const newCheckedInStatus = !user.checkedIn;
+  
+      this.http
+        .patch(`http://localhost:3000/checkin/${user.reg_id}`, {
+          checkedIn: newCheckedInStatus,
+        }, { responseType: 'text' })
+        .subscribe({
+          next: () => {
+            user.checkedIn = newCheckedInStatus; // Update the UI on success
+            console.log('Check-in status updated successfully.');
+          },
+          error: (err) => {
+            console.error('Error updating check-in status:', err);
+            // Revert the change on error
+            user.checkedIn = !newCheckedInStatus;
+          },
+        });
+    }
   
 }
