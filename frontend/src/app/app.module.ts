@@ -12,6 +12,9 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 import { EventListComponent } from './components/event-list/event-list.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
+import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
+import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
 
 
 
@@ -24,6 +27,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     EventDetailComponent,
     AuthComponent,
     ProfileComponent,
+    PaymentSuccessComponent,
+    PaymentFailComponent,
+    EventTicketComponent,
   ],
   imports: [
     BrowserModule,

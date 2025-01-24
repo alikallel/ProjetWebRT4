@@ -6,6 +6,8 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 import {AuthComponent} from "./components/auth/auth.component";
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
+import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -14,7 +16,10 @@ const routes: Routes = [
   { path: 'event-details/:id', component: EventDetailComponent },
   { path: 'auth', component: AuthComponent },
   {path: 'profile', component:ProfileComponent},
+  { path: 'payment/success', component: PaymentSuccessComponent },
+  { path: 'payment/fail', component: PaymentFailComponent },
   { path: '**', redirectTo: '/events/page/1' },
+
 
 ];
 

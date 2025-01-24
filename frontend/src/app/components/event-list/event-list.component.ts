@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PaymentService } from '../../services/payment.service';
 declare  var bootstrap: any;
 @Component({
   selector: 'app-event-list',
@@ -41,6 +42,7 @@ export class EventListComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
+    private paymentService: PaymentService,
     private router: Router
   ) {}
 
@@ -125,6 +127,28 @@ export class EventListComponent implements OnInit {
       this.amount = this.quantity * this.selectedEvent.price;
     }
   }
-
+  makePayment() {
+    if (this.selectedEvent) {
+      // First, create event registration
+      this.paymentService.createEventRegistration(this.selectedEvent.id, this.amount)
+        .subscribe({
+          next: (registrationResponse) => {
+            // Then, initiate payment
+            this.paymentService.initiatePayment(registrationResponse.registration_id, this.amount)
+              .subscribe({
+                next: (paymentResponse) => {
+                  window.location.href = paymentResponse.payment_link;
+                },
+                error: (err) => {
+                  console.error('Payment initiation failed', err);
+                }
+              });
+          },
+          error: (err) => {
+            console.error('Event registration failed', err);
+          }
+        });
+    }
+  }
   
 }

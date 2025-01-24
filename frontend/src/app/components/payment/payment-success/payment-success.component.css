@@ -1,0 +1,22 @@
+.container {
+    margin-top: 5rem;
+  }
+  
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+  
+  button {
+    margin-right: 0.5rem;
+  }
+  
+  .alert {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
