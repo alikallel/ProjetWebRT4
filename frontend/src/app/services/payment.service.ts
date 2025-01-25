@@ -19,6 +19,22 @@ interface PaymentResponse {
   payment_id?: string;
   status: string;
 }
+export interface UserPayment {
+  id: number;
+  amount: string;
+  payment_date: string;
+  payment_id: string;
+  status: string;
+  registration: {
+    id: any;
+    event: {
+      title: string;
+      date: string;
+      location: string;
+    };
+    number_of_places: number;
+  };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +59,8 @@ export class PaymentService {
       amount: amount
     };
     return this.http.post<PaymentResponse>(`${this.apiUrl}/payment/initiate`, request);
+  }
+  getUserPayments(userId: number): Observable<UserPayment[]> {
+    return this.http.get<UserPayment[]>(`${this.apiUrl}/payment/user/${userId}`);
   }
 }

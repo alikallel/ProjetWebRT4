@@ -17,6 +17,7 @@ import { PaymentFailComponent } from './components/payment/payment-fail/payment-
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
+import { UserHistoryComponent } from './components/user-history/user-history.component';
 
 
 
@@ -33,6 +34,7 @@ import { RegistrationDetailsComponent } from './components/registration-details/
     PaymentFailComponent,
     EventTicketComponent,
     RegistrationDetailsComponent,
+    UserHistoryComponent,
   ],
   imports: [
     BrowserModule,

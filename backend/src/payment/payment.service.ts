@@ -159,4 +159,10 @@ export class PaymentService {
     await this.paymentRepository.save(payment);
     throw new HttpException('Payment failed', HttpStatus.BAD_REQUEST);
   }
+  async findPaymentsByUser(userId: number) {
+    return await this.paymentRepository.find({
+      where: { registration: { user_id: userId } },
+      relations: ['registration', 'registration.event']
+    });
+  }
 }
