@@ -1,33 +1,23 @@
-import { Controller, Post, Body, Get, Param, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
+// src/auth/auth.controller.ts
+
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import * as  path from 'path';
-import * as multer from 'multer';
-import { Express } from 'express';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post('register')
-    register(@Body() body: { email: string; password: string }) {
-        return this.authService.register(body.email, body.password);
-    }
-
     @Post('login')
-    login(@Body() body: { email: string; password: string }) {
-        return this.authService.login(body.email, body.password);
+    @UseGuards(LocalAuthGuard)
+    async login(@Body() loginDto: LoginDto) {
+        return this.authService.login(loginDto);
     }
-    @Get(':id')
-    async getUser(@Param('id') id: number) {
-    return this.authService.getUserById(id);
-  }
-  @Put(':id')
-  async updateUser(
-    @Param('id') id: number,
-    @Body() updateData: { password?: string; photo?: string }
-  ): Promise<any> {
-    return this.authService.updateUser(id, updateData);
-  }
-}
 
+    @Post('register')
+    async register(@Body() registerDto: RegisterDto) {
+        return this.authService.register(registerDto.email, registerDto.username, registerDto.password);
+    }
+}

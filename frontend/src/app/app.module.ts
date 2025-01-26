@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './components/auth/auth.component';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { EventComponent } from './components/event/event.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventListComponent } from './components/event-list/event-list.component';
@@ -18,8 +18,9 @@ import { EventTicketComponent } from './components/payment/event-ticket/event-ti
 import { QRCodeModule } from 'angularx-qrcode';
 import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
-
-
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
     EventTicketComponent,
     RegistrationDetailsComponent,
     UserHistoryComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    QRCodeModule
+    QRCodeModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
