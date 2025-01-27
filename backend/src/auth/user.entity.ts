@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Event } from 'src/event/entities/event.entity';
 
 export enum UserRole {
   UTILISATEUR = 'Utilisateur',
@@ -28,5 +29,7 @@ export class User {
   default: UserRole.UTILISATEUR,
 })
   role: UserRole;
- 
+
+@OneToMany(() => Event, event => event.organizer)  
+events: Event[];  
 }
