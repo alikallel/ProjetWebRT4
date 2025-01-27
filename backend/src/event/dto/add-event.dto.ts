@@ -30,5 +30,5 @@ export class CreateEventDto {
   capacity: number;
 
   @IsNumber({}, { message: 'The id must be a valid number.' })
-  organizer: number;
+  organizer_id: number;
 }
