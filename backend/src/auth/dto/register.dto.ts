@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsEnum } from 'class-validator';
 
 export class RegisterDto {
     @IsEmail()
@@ -10,4 +10,7 @@ export class RegisterDto {
     @IsString()
     @MinLength(6)
     password: string;
+
+    @IsEnum(['User', 'EventMaster'], { message: 'Role must be either "User" or "EventMaster".' })
+    role: 'User' | 'EventMaster';
 }

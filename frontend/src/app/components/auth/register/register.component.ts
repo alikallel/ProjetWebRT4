@@ -11,11 +11,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegisterComponent {
   email = '';
   password = '';
+  username = '';
+  role = 'User';
+
+  roles = ['User', 'EventMaster'];
 
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
 
   register() {
-    this.authService.register(this.email, this.password).subscribe({
+    this.authService.register(this.email, this.password, this.username, this.role).subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => this.snackBar.open('Registration failed. Please try again later.', 'Close', { duration: 3000 }),
     });

@@ -14,8 +14,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(email: string, password: string) {
-    return this.http.post(`${this.apiUrl}/register`, { email, password }).pipe(
+  register(email: string, password: string, username: string, role: string) {
+    const payload = { email, password, username, role };
+    return this.http.post(`${this.apiUrl}/register`, payload).pipe(
       catchError(this.handleError)
     );
   }
