@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 
 import { Event } from 'src/event/entities/event.entity';
 
 export enum UserRole {
-  UTILISATEUR = 'Utilisateur',
-  FOURNISSEUR = 'Fournisseur',
+  USER = 'User',
+  EVENTMASTER = 'EventMaster',
 }
 
 @Entity()
@@ -26,7 +26,7 @@ export class User {
 @Column({
   type: 'enum',
   enum: UserRole,
-  default: UserRole.UTILISATEUR,
+  default: UserRole.USER,
 })
   role: UserRole;
 
