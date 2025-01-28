@@ -1,0 +1,56 @@
+/* General Styles */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 40px; /* 40px top/bottom, 20px left/right */
+    font-family: Arial, sans-serif;
+}
+
+.section {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+table {
+    width: 40%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+
+
+.chart canvas {
+    max-width: 350px; /* Maximum width */
+    max-height: 350px; /* Maximum height */
+    width: 100% !important; /* Allow scaling down */
+    height: auto !important; /* Maintain aspect ratio */
+  }

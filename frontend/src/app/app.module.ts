@@ -15,6 +15,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
+import { CheckIn } from './components/checkin/checkin.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartsComponent } from './components/charts/charts.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
@@ -34,6 +37,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     PaymentSuccessComponent,
     PaymentFailComponent,
     EventTicketComponent,
+    CheckIn,
+    ChartsComponent,
     RegistrationDetailsComponent,
     UserHistoryComponent,
     LoginComponent,
@@ -46,6 +51,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgChartsModule,
     QRCodeModule,
     MatSnackBarModule
   ],

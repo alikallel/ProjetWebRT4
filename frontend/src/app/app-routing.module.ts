@@ -8,6 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
+import { CheckIn } from './components/checkin/checkin.component'
+import { ChartsComponent } from './components/charts/charts.component';
 import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import {LoginComponent} from "./components/auth/login/login.component";
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path: 'profile', component:ProfileComponent},
   { path: 'payment/success', component: PaymentSuccessComponent },
   { path: 'payment/fail', component: PaymentFailComponent },
+  { path: 'CheckList/:id', component: CheckIn },
+  { path: 'Charts/:id', component: ChartsComponent},
   { path: 'registration-details/:id', component: RegistrationDetailsComponent },
   { path: 'user-history', component: UserHistoryComponent },
   //{ path: '**', redirectTo: '/events/page/1' },

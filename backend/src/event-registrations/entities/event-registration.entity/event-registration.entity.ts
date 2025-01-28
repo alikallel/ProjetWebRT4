@@ -39,6 +39,8 @@ export class EventRegistration {
 
   @Column({ nullable: true })
   payment_id: string;
-
  
+  @Column({ type: 'boolean', default: false }) 
+  checkedIn: boolean;
+
 }
