@@ -7,7 +7,7 @@ export class EventRegistration {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Event)
+  @ManyToOne(() => Event, event => event.registrations)
   @JoinColumn({ name: 'event_id' })
   event: Event;
 
@@ -34,9 +34,13 @@ export class EventRegistration {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   amount: number;
 
+  @Column({ default: 1 })
+  number_of_places: number;
+
   @Column({ nullable: true })
   payment_id: string;
-
+ 
   @Column({ type: 'boolean', default: false }) 
   checkedIn: boolean;
+
 }

@@ -100,6 +100,10 @@ export class PaymentService {
         throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
       }
 
+    const registration = payment.registration;
+    registration.payment_id = paymentId;
+    await this.eventRegistrationRepository.save(registration);
+
       return await this.processPaymentVerification(payment, verificationResult);
     } catch (error) {
       throw new HttpException(
@@ -154,5 +158,11 @@ export class PaymentService {
     payment.status = 'FAILED';
     await this.paymentRepository.save(payment);
     throw new HttpException('Payment failed', HttpStatus.BAD_REQUEST);
+  }
+  async findPaymentsByUser(userId: number) {
+    return await this.paymentRepository.find({
+      where: { registration: { user_id: userId } },
+      relations: ['registration', 'registration.event']
+    });
   }
 }

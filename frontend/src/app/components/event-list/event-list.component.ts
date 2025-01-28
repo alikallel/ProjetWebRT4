@@ -17,7 +17,7 @@ export class EventListComponent implements OnInit {
 
   // Pagination variables
   currentPage: number = 1;
-  eventsPerPage: number = 12;
+  eventsPerPage: number = 9;
   totalPages: number = 1;
 
 
@@ -82,25 +82,29 @@ export class EventListComponent implements OnInit {
 
   filterEvents(): void {
     const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-    // Filtrer tous les événements, pas seulement ceux de la page actuelle
+    // Filtrer tous les événements
     this.filteredEvents = this.events.filter((event) =>
       event.title.toLowerCase().includes(lowerCaseSearchTerm) ||
       event.location.toLowerCase().includes(lowerCaseSearchTerm)
     );
-    this.applyFilterAndPaginate();  // Appliquer la pagination après le filtrage
+  
+    // Réinitialiser à la première page après un filtre
+    this.currentPage = 1;
+    this.applyFilterAndPaginate();
   }
+  
 
   applyFilterAndPaginate(): void {
     this.totalPages = Math.ceil(this.filteredEvents.length / this.eventsPerPage);
-
-    // Si la page actuelle devient invalide après le filtrage, rediriger vers la première page
+  
+    // Vérifier si la page courante est valide
     if (this.currentPage > this.totalPages) {
-      this.currentPage = 1;
-      this.router.navigate(['/events/page', 1]);  // Redirection vers la première page
+      this.currentPage = 1; // Revenir à la première page si la page actuelle n'est plus valide
     }
-
-    this.paginate();  // Mise à jour des événements paginés
+  
+    this.paginate(); // Mettre à jour les événements paginés
   }
+  
 
   paginate(): void {
     const startIndex = (this.currentPage - 1) * this.eventsPerPage;
@@ -110,9 +114,11 @@ export class EventListComponent implements OnInit {
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.router.navigate(['/events/page', page]);  
+      this.currentPage = page;
+      this.paginate(); // Rafraîchir la pagination avec la liste filtrée
     }
   }
+  
   
 
   incrementQuantity() {
@@ -135,7 +141,7 @@ export class EventListComponent implements OnInit {
   makePayment() {
     if (this.selectedEvent) {
       // First, create event registration
-      this.paymentService.createEventRegistration(this.selectedEvent.id, this.amount)
+      this.paymentService.createEventRegistration(this.selectedEvent.id, this.quantity)
         .subscribe({
           next: (registrationResponse) => {
             // Then, initiate payment

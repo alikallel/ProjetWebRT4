@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { InitiatePaymentDto, PaymentVerificationDto } from './dto/payment.dto/payment.dto';
 
@@ -20,5 +20,9 @@ export class PaymentController {
   @Post('verify/:paymentId')
   async verifyPayment(@Param('paymentId') paymentId: string) {
     return await this.paymentService.verifyPayment(paymentId);
+  }
+  @Get('user/:userId')
+  async findPaymentsByUser(@Param('userId') userId: string) {
+    return await this.paymentService.findPaymentsByUser(+userId);
   }
 }

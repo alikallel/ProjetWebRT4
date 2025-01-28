@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './components/auth/auth.component';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { EventComponent } from './components/event/event.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventListComponent } from './components/event-list/event-list.component';
@@ -18,8 +18,12 @@ import { EventTicketComponent } from './components/payment/event-ticket/event-ti
 import { CheckIn } from './components/checkin/checkin.component';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartsComponent } from './components/charts/charts.component';
-
-
+import { QRCodeModule } from 'angularx-qrcode';
+import { RegistrationDetailsComponent } from './components/registration-details/registration-details.component';
+import { UserHistoryComponent } from './components/user-history/user-history.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -35,6 +39,10 @@ import { ChartsComponent } from './components/charts/charts.component';
     EventTicketComponent,
     CheckIn,
     ChartsComponent,
+    RegistrationDetailsComponent,
+    UserHistoryComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +52,8 @@ import { ChartsComponent } from './components/charts/charts.component';
     FormsModule,
     ReactiveFormsModule,
     NgChartsModule,
+    QRCodeModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

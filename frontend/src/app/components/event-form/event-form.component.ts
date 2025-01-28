@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/event.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-form',
@@ -18,7 +18,7 @@ export class EventFormComponent {
     private fb: FormBuilder,
     private eventService: EventService,
     private router: Router,
-    private alertService: AlertService
+     private snackBar: MatSnackBar
   ) {
     // Initialisation du formulaire avec des validations
     this.eventForm = this.fb.group({
@@ -36,11 +36,7 @@ export class EventFormComponent {
       ],
     });
 
-    // Abonnement aux alertes
-    this.alertService.alert$.subscribe((message) => {
-      this.alertMessage = message;
-      setTimeout(() => (this.alertMessage = null), 3000);
-    });
+    
   }
   // Validateur personnalisé pour la date
   private dateValidator(control: any): { [key: string]: any } | null {
@@ -56,21 +52,23 @@ export class EventFormComponent {
   // Méthode de soumission
   onSubmit() {
     if (this.eventForm.valid) {
-      const eventData = { ...this.eventForm.value, organizer: 1, };
+      const eventData = { ...this.eventForm.value, organizer_id: 4, };
       this.eventService.addEvent(eventData).subscribe(
         (response) => {
           console.log('Event added successfully:', response);
-          this.alertService.showAlert('Event added successfully!');
+          this.snackBar.open('Event added successfully.', 'Close', { duration: 3000 })
           this.eventForm.reset(); 
         },
         (error) => {
           console.error('Error adding event:', error);
-          this.alertService.showAlert('Error adding event! Please try again.');
+          this.snackBar.open('Error adding event.', 'Close', { duration: 3000 })
+
         }
       );
     } else {
       console.log('Form is invalid');
-      this.alertService.showAlert('Please fill out the form correctly.');
+      this.snackBar.open('Form is invalid.', 'Close', { duration: 3000 })
+
     }
   }
 }

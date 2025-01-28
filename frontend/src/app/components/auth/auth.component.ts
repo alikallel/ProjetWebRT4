@@ -12,11 +12,4 @@ export class AuthComponent {
 
   constructor(private authService: AuthService) {}
 
-  submit() {
-    if (this.isRegister) {
-      this.authService.register(this.email, this.password).subscribe();
-    } else {
-      this.authService.login(this.email, this.password).subscribe();
-    }
-  }
 }

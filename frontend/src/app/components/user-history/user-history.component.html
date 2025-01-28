@@ -1,0 +1,43 @@
+<div class="container mt-4">
+    <h2>Payment History</h2>
+  
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <table *ngIf="!isLoading && !error" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Places</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Payment ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of payments">
+          <td>{{ payment.registration.event.title }}</td>
+          <td>{{ payment.registration.event.date | date }}</td>
+          <td>{{ payment.registration.event.location }}</td>
+          <td>{{ payment.registration.number_of_places }}</td>
+          <td>{{ payment.amount }} TND</td>
+          <td>
+            <span [ngClass]="getStatusClass(payment.status)">
+              {{ payment.status }}
+            </span>
+          </td>
+          <td>{{ payment.payment_id }}</td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
