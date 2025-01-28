@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { EventRegistrationsController } from './event-registrations/event-registrations.controller';
 import { EventRegistrationsModule } from './event-registrations/event-registrations.module';
 import { CheckinModule } from './checkin/checkin.module';
+import { ChartsdataModule } from './chartsdata/chartsdata.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config()
@@ -28,6 +29,7 @@ dotenv.config()
     AuthModule,
     EventRegistrationsModule,
     CheckinModule,
+    ChartsdataModule,
   ],
   controllers: [AppController, EventRegistrationsController],
   providers: [AppService],

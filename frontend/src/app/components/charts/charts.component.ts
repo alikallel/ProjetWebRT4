@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-charts',
@@ -7,14 +9,41 @@ import { Component } from '@angular/core';
 })
 export class ChartsComponent {
 
-  // Section 1: Registered vs Attended
+  eventId: number | null = null;
+  isDataLoaded = false; // Flag to control chart visibility
   registeredVsAttendedData = [
     {
-      data: [30, 70],
+      data: [] as number[], // Initialize with empty data
       backgroundColor: ['#FF6384', '#36A2EB'], 
       label: 'Registered vs Attended'
     }
   ];
+  constructor(
+      private http: HttpClient,
+      private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    const idParam = this.route.snapshot.paramMap.get('id') || '';
+
+    //this.eventId = idParam; //remenber to parse the id from string to int
+    console.log(this.eventId);
+    this.getdata(idParam); 
+  }
+
+  getdata(Id: number| string) {
+    this.http.get<{ Reg: number, Att: number }>(`http://localhost:3000/chartsdata/reg-vs-att/${Id}`)
+          .subscribe({
+            next: (data) => {
+              this.registeredVsAttendedData[0].data = [data.Reg, data.Att];
+              this.isDataLoaded = true;
+              console.log(this.registeredVsAttendedData)
+            },
+            error: (err) => {
+              console.error('Error fetching users:', err);
+            }
+          });
+  }
+
 
   registeredVsAttendedLabels = ['Registered', 'Attended'];
 

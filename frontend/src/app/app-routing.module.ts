@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'payment/success', component: PaymentSuccessComponent },
   { path: 'payment/fail', component: PaymentFailComponent },
   { path: 'CheckList/:id', component: CheckIn },
-  { path: 'Charts', component: ChartsComponent},
+  { path: 'Charts/:id', component: ChartsComponent},
   { path: '**', redirectTo: '/events/page/1' },
 
 
