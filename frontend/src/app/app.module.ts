@@ -16,6 +16,8 @@ import { PaymentSuccessComponent } from './components/payment/payment-success/pa
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
 import { CheckIn } from './components/checkin/checkin.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartsComponent } from './components/charts/charts.component';
 
 
 
@@ -32,6 +34,7 @@ import { CheckIn } from './components/checkin/checkin.component';
     PaymentFailComponent,
     EventTicketComponent,
     CheckIn,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { CheckIn } from './components/checkin/checkin.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

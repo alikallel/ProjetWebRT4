@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { CheckIn } from './components/checkin/checkin.component'
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'payment/success', component: PaymentSuccessComponent },
   { path: 'payment/fail', component: PaymentFailComponent },
   { path: 'CheckList/:id', component: CheckIn },
+  { path: 'Charts', component: ChartsComponent},
   { path: '**', redirectTo: '/events/page/1' },
 
 
