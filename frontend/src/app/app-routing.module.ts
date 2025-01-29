@@ -14,6 +14,7 @@ import { RegistrationDetailsComponent } from './components/registration-details/
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   //{ path: '**', redirectTo: 'login' },
+  { path: '', component : HomeComponent}
 
 
 ];
