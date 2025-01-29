@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import { User } from '../models/user.model';
 import { catchError } from 'rxjs/operators';
@@ -30,13 +30,23 @@ export class AuthService {
       })
     );
   }
-
+  getCurrentUser(): Observable<User> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error('User is not authenticated'));
+    }
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  private apiUrl2 = 'http://localhost:3000/user';
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`).pipe(catchError(this.handleError));
+    return this.http.get<User>(`${this.apiUrl2}/${id}`).pipe(catchError(this.handleError));
   }
 
   updateUser(id: number, userData: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${id}`, userData).pipe(catchError(this.handleError));
+    return this.http.put<User>(`${this.apiUrl2}/${id}`, userData).pipe(catchError(this.handleError));
   }
 
   isAuthenticated(): boolean {
@@ -56,4 +66,5 @@ export class AuthService {
     console.error(error);
     return throwError(() => new Error(error.message || 'Something went wrong'));
   }
+  
 }

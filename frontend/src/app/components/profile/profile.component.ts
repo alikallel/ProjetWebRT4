@@ -12,38 +12,58 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ProfileComponent {
   userForm: FormGroup;
   user: User | undefined;
-  userId = 1;
+  //userId = 1;
 
   constructor(private fb: FormBuilder, private userService: AuthService) {
     this.userForm = this.fb.group({
       email: [''],
       role: [''],
+      username: [''],
       password: [''],
-      photo: [''] // URL optionnelle
+      photo: [''] 
     });    
   }
 
-  ngOnInit(): void {
+ /* ngOnInit(): void {
     this.userService.getUser(this.userId).subscribe((user: User) => {
       this.user = user;
       this.userForm.patchValue({
         email: user.email,
         role: user.role,
-        photo: user.photo
+        photo: user.photo,
+        username: user.username
       });
     });
-  }
+  }*/
 
- 
+    ngOnInit(): void {
+      // ✅ Charger l'utilisateur connecté au démarrage
+      this.userService.getCurrentUser().subscribe({
+        next: (user: User) => {
+          this.user = user;
+          this.userForm.patchValue({
+            email: user.email,
+            role: user.role,
+            photo: user.photo,
+            username: user.username
+          });
+        },
+        error: (err) => {
+          console.error('Failed to load user', err);
+        }
+      });
+    }
 
   onSubmit() {
+    if (!this.user) return;
     const updatedData = {
       email: this.userForm.value.email,
       password: this.userForm.value.password,
-      photo: this.userForm.value.photo
+      photo: this.userForm.value.photo,
+      username: this.userForm.value.username
     };
 
-    this.userService.updateUser(this.userId, updatedData).subscribe(() => {
+    this.userService.updateUser(this.user.id, updatedData).subscribe(() => {
       alert('Profile updated successfully!');
     });
   }
