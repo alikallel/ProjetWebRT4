@@ -25,9 +25,14 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
+import { HomeComponent } from './components/home/home.component';
+import { PopularEventsComponent } from './components/popular-events/popular-events.component';
+
 
 @NgModule({
   declarations: [
+    HomeComponent,
+    PopularEventsComponent
     AppComponent,
     EventListComponent,
     EventComponent,
