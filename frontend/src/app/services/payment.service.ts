@@ -60,7 +60,7 @@ export class PaymentService {
     };
     return this.http.post<PaymentResponse>(`${this.apiUrl}/payment/initiate`, request);
   }
-  getUserPayments(userId: number): Observable<UserPayment[]> {
-    return this.http.get<UserPayment[]>(`${this.apiUrl}/payment/user/${userId}`);
+  getUserPayments(): Observable<UserPayment[]> {
+    return this.http.get<UserPayment[]>(`${this.apiUrl}/payment/user`);
   }
 }

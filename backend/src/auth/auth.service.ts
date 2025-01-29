@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { User, UserRole } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
@@ -41,6 +41,7 @@ export class AuthService {
     const newUser = this.userRepository.create({
       email,
       username,
+      role: role as UserRole,
       password: hashedPassword,
     });
     await this.userRepository.save(newUser);
