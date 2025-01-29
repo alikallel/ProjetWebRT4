@@ -21,6 +21,8 @@ dotenv.config()
       username: 'root',
       password: '',
       database: 'event_app',
+
+
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

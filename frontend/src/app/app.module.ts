@@ -24,6 +24,7 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { LoginInterceptorProvider } from './interceptors/login.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     QRCodeModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

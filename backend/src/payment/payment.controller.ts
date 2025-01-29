@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { InitiatePaymentDto, PaymentVerificationDto } from './dto/payment.dto/payment.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { User } from 'src/decorators/user.decorator';
 
 
 @Controller('payment')
@@ -21,8 +23,9 @@ export class PaymentController {
   async verifyPayment(@Param('paymentId') paymentId: string) {
     return await this.paymentService.verifyPayment(paymentId);
   }
-  @Get('user/:userId')
-  async findPaymentsByUser(@Param('userId') userId: string) {
-    return await this.paymentService.findPaymentsByUser(+userId);
+  @UseGuards(JwtAuthGuard)
+  @Get('user')
+  async findPaymentsByUser(@User() user) {
+    return await this.paymentService.findPaymentsByUser(user.id);
   }
 }

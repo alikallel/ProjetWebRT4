@@ -14,12 +14,11 @@ export class UserHistoryComponent implements OnInit {
   constructor(private paymentService: PaymentService) {}
 
   ngOnInit(): void {
-    const userId = 1; //waiting for mohamed karrab 
-    this.fetchPayments(userId);
+    this.fetchPayments();
   }
 
-  fetchPayments(userId: number): void {
-    this.paymentService.getUserPayments(userId).subscribe({
+  fetchPayments(): void {
+    this.paymentService.getUserPayments().subscribe({
       next: (payments) => {
         this.payments = payments;
         this.isLoading = false;

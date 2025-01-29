@@ -1,8 +1,8 @@
-// src/auth/auth.middleware.ts
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { AuthService } from './auth.service';
 import { RequestWithUser } from './interfaces/request.interface';
+import { User } from './user.entity';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -15,7 +15,7 @@ export class AuthMiddleware implements NestMiddleware {
         }
 
         const user = await this.authService.verifyToken(token);
-        req.user = user;
+        req.user = user as User;
         next();
     }
 }
