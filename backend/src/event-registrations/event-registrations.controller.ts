@@ -31,7 +31,7 @@ export class EventRegistrationsController {
   async findByEvent(@Param('eventId') eventId: string, @User() user) {
     validateUserRole(user, 'EVENTMASTER'); 
     await this.eventService.validateEventOwnership(+eventId, user); 
-    return this.eventRegistrationsService.findByEvent(+eventId, user.id);
+    return this.eventRegistrationsService.findByEvent(+eventId );
   }
   
   @Get(':id')

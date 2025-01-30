@@ -119,9 +119,9 @@ export class EventRegistrationsService {
     });
   }
 
-  async findByEvent(eventId: number, userId: number) {
+  async findByEvent(eventId: number) {
     return await this.eventRegistrationRepository.find({
-      where: { event_id: eventId, user_id: userId },
+      where: { event_id: eventId},
       relations: ['user']
     });
   }
