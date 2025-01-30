@@ -14,7 +14,7 @@ export class EventRegistrationsService {
     @InjectRepository(Event)
     private eventRepository: Repository<Event>,  ) {}
 
-  async create(createEventRegistrationDto: CreateEventRegistrationDto) {
+  async create(createEventRegistrationDto: CreateEventRegistrationDto , user) {
     const event = await this.eventRepository.findOne({
       where: { id: createEventRegistrationDto.eventId }
     });
@@ -26,6 +26,7 @@ export class EventRegistrationsService {
     const totalBookedPlaces = await this.eventRegistrationRepository
     .createQueryBuilder('registration')
     .where('registration.event_id = :eventId', { eventId: event.id })
+    .andWhere('registration.status = :status', { status: 'PAID' }) // Add this line
     .select('SUM(registration.number_of_places)', 'total')
     .getRawOne();
     
@@ -39,9 +40,9 @@ export class EventRegistrationsService {
     );
   }
   
-    await this.validateRegistration(createEventRegistrationDto);
+    await this.validateRegistration(createEventRegistrationDto ,user );
 
-    const registration = await this.createRegistration(createEventRegistrationDto);
+    const registration = await this.createRegistration(createEventRegistrationDto,user);
     
     try {
       
@@ -60,11 +61,11 @@ export class EventRegistrationsService {
     }
   }
 
-  private async validateRegistration(dto: CreateEventRegistrationDto) {
+  private async validateRegistration(dto: CreateEventRegistrationDto,user) {
     const existingRegistration = await this.eventRegistrationRepository.findOne({
       where: {
         event_id: dto.eventId,
-        user_id: dto.userId
+        user_id: user.id
       }
     });
 
@@ -76,7 +77,7 @@ export class EventRegistrationsService {
     }
   }
 
-  private async createRegistration(dto: CreateEventRegistrationDto) {
+  private async createRegistration(dto: CreateEventRegistrationDto , user) {
     const event = await this.eventRepository.findOne({
       where: { id: dto.eventId }
     });
@@ -88,7 +89,7 @@ export class EventRegistrationsService {
   
     const registration = this.eventRegistrationRepository.create({
       event_id: dto.eventId,
-      user_id: dto.userId,
+      user_id: user.id,
       amount: totalAmount,
       number_of_places: dto.number_of_places,
       status: 'PENDING'
@@ -97,19 +98,7 @@ export class EventRegistrationsService {
     return registration;
   }
 
-  async updateStatus(registrationId: number, status: string) {
-    const registration = await this.eventRegistrationRepository.findOne({
-      where: { id: registrationId }
-    });
-
-    if (!registration) {
-      throw new HttpException('Registration not found', HttpStatus.NOT_FOUND);
-    }
-
-    registration.status = status;
-    return await this.eventRegistrationRepository.save(registration);
-  }
-
+  
   async findOne(id: number) {
     const registration = await this.eventRegistrationRepository.findOne({
       where: { id },
