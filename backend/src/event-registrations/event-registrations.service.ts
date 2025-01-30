@@ -26,7 +26,7 @@ export class EventRegistrationsService {
     const totalBookedPlaces = await this.eventRegistrationRepository
     .createQueryBuilder('registration')
     .where('registration.event_id = :eventId', { eventId: event.id })
-    .andWhere('registration.status = :status', { status: 'PAID' }) // Add this line
+    .andWhere('registration.status = :status', { status: 'PAID' })
     .select('SUM(registration.number_of_places)', 'total')
     .getRawOne();
     
@@ -119,9 +119,9 @@ export class EventRegistrationsService {
     });
   }
 
-  async findByEvent(eventId: number) {
+  async findByEvent(eventId: number, userId: number) {
     return await this.eventRegistrationRepository.find({
-      where: { event_id: eventId },
+      where: { event_id: eventId, user_id: userId },
       relations: ['user']
     });
   }

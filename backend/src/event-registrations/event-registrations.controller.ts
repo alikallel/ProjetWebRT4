@@ -3,14 +3,15 @@ import { EventRegistrationsService } from './event-registrations.service';
 import { CreateEventRegistrationDto } from './dto/create-event-registration.dto/create-event-registration.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
-import { UserRole } from 'src/auth/user.entity';
-import { validateUserRole } from 'src/utils/auth.utils';
+import {  validateUserRole } from 'src/utils/auth.utils';
+import { EventService } from 'src/event/event.service';
 
 @Controller('event-registrations')
 @UseGuards()
 export class EventRegistrationsController {
   constructor(
-    private readonly eventRegistrationsService: EventRegistrationsService
+    private readonly eventRegistrationsService: EventRegistrationsService,
+    private readonly eventService: EventService
   ) {}
 
   @Post()
@@ -25,17 +26,17 @@ export class EventRegistrationsController {
     return this.eventRegistrationsService.findByUser(user.id);
   }
 
-  @Get('event/:eventId')
+    @Get('event/:eventId')
   @UseGuards(JwtAuthGuard)
-  findByEvent(@Param('eventId') eventId: string, @User() user) {
-    validateUserRole(user,"EVENTMASTER");
-    return this.eventRegistrationsService.findByEvent(+eventId);
+  async findByEvent(@Param('eventId') eventId: string, @User() user) {
+    validateUserRole(user, 'EVENTMASTER'); 
+    await this.eventService.validateEventOwnership(+eventId, user); 
+    return this.eventRegistrationsService.findByEvent(+eventId, user.id);
   }
   
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string, @User() user) {
-    validateUserRole(user,"EVENTMASTER");  
     return this.eventRegistrationsService.findOne(+id);
   }
 

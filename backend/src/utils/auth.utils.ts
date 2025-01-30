@@ -1,5 +1,5 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { UserRole } from 'src/auth/user.entity';
+import { User, UserRole } from 'src/auth/user.entity';
 
 export function validateUserRole(user: any, requiredR: string) {
   let requiredRole: UserRole;
@@ -14,3 +14,4 @@ export function validateUserRole(user: any, requiredR: string) {
     throw new UnauthorizedException('You cant acess this endpoint');
   }
 }
+

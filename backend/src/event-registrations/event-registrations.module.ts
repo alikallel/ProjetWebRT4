@@ -8,12 +8,14 @@ import { Event } from '../event/entities/event.entity';
 import { RegistrationCleanerService } from './registration-cleaner.service';
 import { Payment } from 'src/payment/entities/payment.entity/payment.entity';
 import { ScheduleModule } from '@nestjs/schedule';
+import { EventModule } from 'src/event/event.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([EventRegistration, Payment, Event]),
     ScheduleModule.forRoot(),
-    PaymentModule
+    PaymentModule,
+    EventModule
   ],
   controllers: [EventRegistrationsController],
   providers: [EventRegistrationsService,RegistrationCleanerService],
