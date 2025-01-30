@@ -43,4 +43,17 @@ export class EventService {
     }
     return event;
   }
+
+  async getEventsByOrganizerId(organizerId: number): Promise<Event[]> {
+    const events = await this.eventRepository.find({
+      where: { organizer: { id: organizerId } },
+      relations: ['organizer'],
+    });
+  
+    if (events.length === 0) {
+      throw new Error(`No events found for organizer with ID ${organizerId}`);
+    }
+  
+    return events;
+  }
 }

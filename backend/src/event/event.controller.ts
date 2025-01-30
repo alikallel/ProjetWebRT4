@@ -7,7 +7,6 @@ import { User } from 'src/decorators/user.decorator';
 import { UserRole } from 'src/auth/user.entity';
 
 @Controller('events')
-@UseGuards()
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
@@ -32,4 +31,10 @@ export class EventController {
   async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
     return this.eventService.getEventById(id);
   }
+
+  @Get('organizer/:organizerId')
+  @UseGuards(JwtAuthGuard)
+async getEventsByOrganizerId(@Param('organizerId', ParseIntPipe) organizerId: number): Promise<Event[]> {
+  return this.eventService.getEventsByOrganizerId(organizerId);
+}
 }
