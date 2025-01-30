@@ -19,8 +19,9 @@ dotenv.config()
       host: 'localhost',
       port: 3306,
       username: process.env.DB_USERNAME,
-      password: '',
+      password: process.env.PASSWORD,
       database: process.env.DB_NAME,
+
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

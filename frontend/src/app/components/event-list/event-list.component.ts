@@ -3,6 +3,8 @@ import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 declare  var bootstrap: any;
 @Component({
   selector: 'app-event-list',
@@ -43,7 +45,8 @@ export class EventListComponent implements OnInit {
     private eventService: EventService,
     private route: ActivatedRoute,
     private paymentService: PaymentService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +61,10 @@ export class EventListComponent implements OnInit {
       }
     });
   }
-
+  isEventMaster(): boolean {
+    console.log(this.authService.getUserRole());
+    return this.authService.getUserRole() === 'EventMaster';
+  }
   fetchEvents(page: number): void {
     this.eventService.getEvents().subscribe({
       next: (data: Event[]) => {

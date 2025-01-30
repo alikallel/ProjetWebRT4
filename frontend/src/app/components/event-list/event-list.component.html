@@ -11,7 +11,7 @@
         (ngModelChange)="filterEvents()"
         style="width: 300px; margin-right: 10px;" />
       
-      <button class="btn btn-danger" routerLink="/add-event">Add New Event</button>
+      <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/add-event">Add New Event</button>
     </div>
   </div>
 

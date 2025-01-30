@@ -5,6 +5,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 //import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('auth')
@@ -26,7 +27,7 @@ export class AuthController {
     async getMe(@Req() req): Promise<any> {
     return req.user; 
     }
-    
+
     @UseGuards(JwtAuthGuard)
     @Post('profile')
     getProfile(@Request() req) {

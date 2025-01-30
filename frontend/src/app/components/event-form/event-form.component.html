@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center">
     <h1>EventPlanner</h1>
-    <button class="btn btn-danger" routerLink="/events">Return To Events</button>
+    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/events">Return To Events</button>
   </div>
 
   <!-- Afficher une alerte si elle existe -->
@@ -121,7 +121,7 @@
 
         <!-- Submit Button -->
         <div class="form-group text-center">
-          <button type="submit" class="btn btn-danger" [disabled]="eventForm.invalid">Submit Event</button>
+          <button type="submit" class="btn btn-success" [disabled]="eventForm.invalid">Submit Event</button>
         </div>
       </form>
     </div>
