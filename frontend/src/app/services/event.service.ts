@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 
@@ -12,13 +12,23 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.apiUrl);
+    return this.http.get<Event[]>(this.apiUrl, this.getAuthHeaders());
   }
 
   addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.apiUrl, event);
+    return this.http.post<Event>(this.apiUrl, event, this.getAuthHeaders());
   }
+
   getEventById(id: string): Observable<Event> {
-    return this.http.get<Event>(`${this.apiUrl}/${id}`);
+    return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
+  }
+
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token'); 
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    };
   }
 }

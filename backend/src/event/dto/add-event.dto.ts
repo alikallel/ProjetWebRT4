@@ -28,7 +28,4 @@ export class CreateEventDto {
   @IsNotEmpty({ message: 'The event capacity is required.' })
   @Min(1, { message: 'The capacity must be at least 1.' })
   capacity: number;
-
-  @IsNumber({}, { message: 'The id must be a valid number.' })
-  organizer_id: number;
 }

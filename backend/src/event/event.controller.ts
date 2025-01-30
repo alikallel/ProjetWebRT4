@@ -1,26 +1,35 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/add-event.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { User } from 'src/decorators/user.decorator';
+import { UserRole } from 'src/auth/user.entity';
 
 @Controller('events')
+@UseGuards()
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   getAllEvents(): Promise<Event[]> {
     return this.eventService.getAllEvents();
   }
-
+  
   @Post()
+  @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
-  createEvent(@Body() createEventDto: CreateEventDto): Promise<Event> {
-    return this.eventService.createEvent(createEventDto);
+  createEvent(@Body() createEventDto: CreateEventDto, @User() user): Promise<Event> {
+    if (user.role !== UserRole.EVENTMASTER) {
+      throw new UnauthorizedException('Only event masters can create events');
+    }
+    return this.eventService.createEvent(createEventDto, user);
   }
-
+  
   @Get(':id')
-async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
-  return this.eventService.getEventById(id);
-}
-
+  @UseGuards(JwtAuthGuard)
+  async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
+    return this.eventService.getEventById(id);
+  }
 }

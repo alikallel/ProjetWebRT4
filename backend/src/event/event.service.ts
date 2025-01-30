@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/add-event.dto';
 import { UserService } from '../user/user.service';  
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class EventService {
@@ -22,19 +23,16 @@ export class EventService {
       },
     });  }
 
-    async createEvent(createEventDto: CreateEventDto): Promise<Event> {
-      const { organizer_id, ...eventData } = createEventDto;
-      // Recherche l'organisateur avec le UserService
-      const organizer = await this.userService.findOneById(organizer_id);
-  
-      if (!organizer) {
-        throw new Error('Organizer not found');
+    async createEvent(createEventDto: CreateEventDto, user: User): Promise<Event> {
+      if (!user) {
+        throw new UnauthorizedException('User not authenticated');
       }
-        const event = this.eventRepository.create({
-        ...eventData,
-        organizer,
+    
+      const event = this.eventRepository.create({
+        ...createEventDto,
+        organizer: user, 
       });
-  
+    
       return this.eventRepository.save(event);
     }
     
