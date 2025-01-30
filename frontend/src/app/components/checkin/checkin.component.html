@@ -1,23 +1,27 @@
 <div *ngIf="error" class="error-state">
-    Failed to load users. Please try again later.
+  Failed to load users. Please try again later.
 </div>
 
 <div class="user-list">
-    <div *ngFor="let user of users" 
-         class="user-card" 
-         [ngClass]="{
-           'checked-in': user.checkedIn,
-           'not-checked-in': !user.checkedIn
-         }">
-      <!--<img [src]="user.photo" alt="{{user.name}}'s photo" class="user-photo"> -->
-      <div class="user-details">
-        <!--<h3>{{ user.name }}</h3> -->
-        <p>Status: {{ user.status }}</p>
-        <p>date: ${{ user.registrationDate }}</p>
-      </div>
-      <label>
-        Check-in:
-        <input type="checkbox" [(ngModel)]="user.checkedIn" (click)="toggleCheckIn(user)">
-      </label>
-    </div>
+  <div *ngIf="users.length === 0">
+    There are no registered users till now.
   </div>
+
+  <div *ngFor="let user of users" 
+       class="user-card" 
+       [ngClass]="{
+         'checked-in': user.checkedIn,
+         'not-checked-in': !user.checkedIn
+       }">
+    <!--<img [src]="user.photo" alt="{{user.username}}'s photo" class="user-photo"> --> <!-- Uncomment if user photo exists -->
+    <div class="user-details">
+      <h3>{{ user.username }}</h3>
+      <p>Status: {{ user.status }}</p>
+      <p>Registration Date: {{ user.registrationDate | date:'shortDate' }}</p> <!-- Use Angular Date Pipe -->
+    </div>
+    <label>
+      Check-in:
+      <input type="checkbox" [(ngModel)]="user.checkedIn" (change)="toggleCheckIn(user)">
+    </label>
+  </div>
+</div>

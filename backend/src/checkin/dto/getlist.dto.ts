@@ -3,7 +3,7 @@ export class UserDataDto {
 
     reg_id:number;
     
-    //username: string;
+    username: string;
   
     userPhoto: string;
   

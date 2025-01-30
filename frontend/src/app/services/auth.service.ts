@@ -14,17 +14,17 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(email: string, password: string, username: string, role: string) {
-    const payload = { email, password, username, role };
+  register(email: string, password: string, username: string, role: string, gender: string, birthdate: Date) {
+    const payload = { email, password, username, role, gender, birthdate };
     return this.http.post(`${this.apiUrl}/register`, payload).pipe(
       catchError(this.handleError)
     );
   }
+  
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
       catchError(this.handleError),
-      // On successful login, store the token in local storage
       tap((response: any) => {
         localStorage.setItem(this.tokenKey, response.accessToken);
         localStorage.setItem('userRole', response.role); 

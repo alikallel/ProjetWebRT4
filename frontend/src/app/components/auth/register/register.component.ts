@@ -13,13 +13,16 @@ export class RegisterComponent {
   password = '';
   username = '';
   role = 'User';
+  gender = ''; 
+  birthdate: Date = new Date(); 
 
   roles = ['User', 'EventMaster'];
+  genders = ['male', 'female'];
 
   constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
 
   register() {
-    this.authService.register(this.email, this.password, this.username, this.role).subscribe({
+    this.authService.register(this.email, this.password, this.username, this.role, this.gender, this.birthdate).subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => this.snackBar.open('Registration failed. Please try again later.', 'Close', { duration: 3000 }),
     });
