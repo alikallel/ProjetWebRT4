@@ -27,6 +27,8 @@ export class AuthService {
       // On successful login, store the token in local storage
       tap((response: any) => {
         localStorage.setItem(this.tokenKey, response.accessToken);
+        localStorage.setItem('userRole', response.role); 
+        console.log('User role:', response.role);
       })
     );
   }
@@ -40,6 +42,10 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
+  
   private apiUrl2 = 'http://localhost:3000/user';
   getUser(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl2}/${id}`).pipe(catchError(this.handleError));

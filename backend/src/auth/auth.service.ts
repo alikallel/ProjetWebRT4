@@ -68,6 +68,7 @@ export class AuthService {
     return {
       message: 'Login successful',
       accessToken,
+      role: user.role,
     };
   }
 
