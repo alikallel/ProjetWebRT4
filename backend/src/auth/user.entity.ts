@@ -6,6 +6,11 @@ export enum UserRole {
   EVENTMASTER = 'EventMaster',
 }
 
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -13,6 +18,15 @@ export class User {
 
   @Column()
   username: string
+
+  @Column({
+    type: 'enum',
+    enum: Gender,
+  })
+  gender: Gender;
+
+  @Column()
+  birthdate: Date;
 
   @Column({ unique: true })
   email: string;

@@ -1,15 +1,28 @@
 <div class="auth-container">
   <h2>Register</h2>
   <form (ngSubmit)="register()" class="auth-form">
+    <!-- Username, Email, Password Inputs -->
     <input [(ngModel)]="username" name="username" placeholder="Username" required />
     <input [(ngModel)]="email" name="email" placeholder="Email" type="email" required />
     <input [(ngModel)]="password" name="password" placeholder="Password" type="password" required />
 
+    <!-- Role Select Dropdown -->
     <label for="role">Role</label>
     <select [(ngModel)]="role" name="role" required>
       <option *ngFor="let roleOption of roles" [value]="roleOption">{{ roleOption }}</option>
     </select>
 
+    <!-- Gender Select Dropdown -->
+    <label for="gender">Gender</label>
+    <select [(ngModel)]="gender" name="gender" required>
+      <option *ngFor="let genderOption of genders" [value]="genderOption">{{ genderOption }}</option>
+    </select>
+
+    <!-- Birthdate Input -->
+    <label for="birthdate">Birthdate</label>
+    <input [(ngModel)]="birthdate" name="birthdate" type="date" required />
+
+    <!-- Register Button -->
     <button type="submit" class="btn-primary">Register</button>
   </form>
   <p>Already have an account? <a routerLink="/login">Login</a></p>

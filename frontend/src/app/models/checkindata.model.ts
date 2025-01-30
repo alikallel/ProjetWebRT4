@@ -7,7 +7,7 @@ enum Status {
 
 export interface CheckInData {
   reg_id: number;          
-  //userN: string;      
+  username: string;      
   status: Status; 
   userPhoto: string;
   registrationDate: Date;

@@ -52,7 +52,7 @@ export class EventFormComponent {
   // Méthode de soumission
   onSubmit() {
     if (this.eventForm.valid) {
-      const eventData = { ...this.eventForm.value, organizer_id: 4, };
+      const eventData = { ...this.eventForm.value, organizer_id: 1, };
       this.eventService.addEvent(eventData).subscribe(
         (response) => {
           console.log('Event added successfully:', response);

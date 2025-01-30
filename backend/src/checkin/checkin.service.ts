@@ -17,7 +17,7 @@ export class CheckinService {
             .leftJoinAndSelect('registration.user', 'user')
             .select([
                 'registration.id',
-                //'user.username',  // Uncomment this line
+                'user.username',
                 'user.photo as userPhoto',
                 'registration.status',
                 'registration.registration_date',
@@ -29,7 +29,7 @@ export class CheckinService {
     
         return registrations.map((registration) => ({
             reg_id: registration.registration_id,
-            // username: registration.username,
+            username: registration.username,
             userPhoto: registration.userPhoto,
             status: registration.registration_status,
             registrationDate: registration.registration_registration_date,
