@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from '../../../auth/user.entity';
 import { Event } from '../../../event/entities/event.entity';
+import { Payment } from 'src/payment/entities/payment.entity/payment.entity';
 
 @Entity('event_registrations')
 export class EventRegistration {
@@ -42,5 +43,8 @@ export class EventRegistration {
  
   @Column({ type: 'boolean', default: false }) 
   checkedIn: boolean;
+  
+  @OneToMany(() => Payment, payment => payment.registration)
+  payments: Payment[];
 
 }

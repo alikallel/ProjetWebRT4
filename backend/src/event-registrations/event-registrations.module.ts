@@ -5,14 +5,20 @@ import { EventRegistrationsController } from './event-registrations.controller';
 import { EventRegistration } from './entities/event-registration.entity/event-registration.entity';
 import { PaymentModule } from '../payment/payment.module';
 import { Event } from '../event/entities/event.entity';
+import { RegistrationCleanerService } from './registration-cleaner.service';
+import { Payment } from 'src/payment/entities/payment.entity/payment.entity';
+import { ScheduleModule } from '@nestjs/schedule';
+import { EventModule } from 'src/event/event.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([EventRegistration, Event]),
-    PaymentModule
+    TypeOrmModule.forFeature([EventRegistration, Payment, Event]),
+    ScheduleModule.forRoot(),
+    PaymentModule,
+    EventModule
   ],
   controllers: [EventRegistrationsController],
-  providers: [EventRegistrationsService],
+  providers: [EventRegistrationsService,RegistrationCleanerService],
   exports: [EventRegistrationsService]
 })
 export class EventRegistrationsModule {}

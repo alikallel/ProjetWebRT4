@@ -11,7 +11,7 @@ const dataSource = new DataSource({
     port: 3306,
     username: 'root',
     password: '',
-    database: 'projweb',
+    database: 'eventplanner',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
 });

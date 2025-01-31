@@ -56,4 +56,13 @@ export class EventService {
   
     return events;
   }
+  async validateEventOwnership(eventId: number, user: User) {
+    const event = await this.getEventById(eventId);
+
+    if (event.organizer.id !== user.id) {
+      throw new UnauthorizedException('You are not authorized to manage this event.');
+    }
+    
+    return event;
+  }
 }
