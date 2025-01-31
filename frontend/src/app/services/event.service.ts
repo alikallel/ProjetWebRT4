@@ -33,6 +33,10 @@ export class EventService {
   }
 
   getEventsByOrganizerId(organizerId: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${this.apiUrl}/organizer/${organizerId}`,this.getAuthHeaders());
+    return this.http.get<Event[]>(`${this.apiUrl}/organizer/${organizerId}`, this.getAuthHeaders());
+  }
+
+  getMyEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.apiUrl}/myevents`);
   }
 }

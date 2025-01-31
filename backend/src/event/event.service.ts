@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
@@ -51,11 +51,12 @@ export class EventService {
     });
   
     if (events.length === 0) {
-      throw new Error(`No events found for organizer with ID ${organizerId}`);
+      throw new NotFoundException(`No events found for organizer with ID ${organizerId}`);
     }
   
     return events;
   }
+  
   async validateEventOwnership(eventId: number, user: User) {
     const event = await this.getEventById(eventId);
 

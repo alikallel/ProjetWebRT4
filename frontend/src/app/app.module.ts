@@ -27,6 +27,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { PopularEventsComponent } from './components/popular-events/popular-events.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
     UserHistoryComponent,
     LoginComponent,
     RegisterComponent,
+    MyEventComponent,
   ],
   imports: [
     BrowserModule,
