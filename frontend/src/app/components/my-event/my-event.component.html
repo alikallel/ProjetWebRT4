@@ -1,6 +1,6 @@
 <div class="container">
     <h2>My Events</h2>
-    <button class="add-event-btn" (click)="navigateToAddEvent()">Add Event</button>
+    <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/add-event">Add Event</button>
     <div *ngIf="isLoading">Loading...</div>
     <div *ngIf="error">{{ error }}</div>
     <div class="events-grid" *ngIf="myEvents.length">

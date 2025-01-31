@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration-details.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
 
 interface Event {
@@ -32,7 +32,9 @@ export class RegistrationDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private registrationService: RegistrationService,
-    private eventService: EventService
+    private eventService: EventService,
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
@@ -74,5 +76,8 @@ export class RegistrationDetailsComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+  navigateToChecklist(eventId: number): void {
+    this.router.navigate(['/checklist', eventId]);
   }
 }

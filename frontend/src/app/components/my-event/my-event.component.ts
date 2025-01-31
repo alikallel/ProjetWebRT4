@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/event.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-my-event',
@@ -13,7 +14,7 @@ export class MyEventComponent {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private eventService: EventService, private router: Router) {}
+  constructor(private eventService: EventService, private router: Router,    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.fetchMyEvents();
@@ -43,5 +44,9 @@ export class MyEventComponent {
 
   navigateToAddEvent(): void {
     this.router.navigate(['/add-event']);
+  }
+  isEventMaster(): boolean {
+    console.log(this.authService.getUserRole());
+    return this.authService.getUserRole() === 'EventMaster';
   }
 }
