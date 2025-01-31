@@ -31,6 +31,7 @@ import { FormContainerComponent } from './components/shared/form-container/form-
 import { InputComponent } from './components/shared/input/input.component';
 import { ValidationMessagePipe } from './components/shared/validation-message.pipe';
 import { SelectComponent } from './components/shared/select/select.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
 
 
@@ -58,6 +59,7 @@ import { SliderComponent } from './components/slider/slider.component';
     UserHistoryComponent,
     LoginComponent,
     RegisterComponent,
+    MyEventComponent,
     SliderComponent,
   ],
   imports: [
@@ -69,7 +71,9 @@ import { SliderComponent } from './components/slider/slider.component';
     ReactiveFormsModule,
     NgChartsModule,
     QRCodeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MyEventComponent,
+    SliderComponent
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]

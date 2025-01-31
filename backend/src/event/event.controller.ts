@@ -5,6 +5,7 @@ import { CreateEventDto } from './dto/add-event.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { UserRole } from 'src/auth/user.entity';
+import { validateUserRole } from 'src/utils/auth.utils';
 
 @Controller('events')
 export class EventController {
@@ -25,16 +26,22 @@ export class EventController {
     }
     return this.eventService.createEvent(createEventDto, user);
   }
-  
+  @Get('organizer/:organizerId')
+  @UseGuards(JwtAuthGuard)
+async getEventsByOrganizerId(@Param('organizerId', ParseIntPipe) organizerId: number): Promise<Event[]> {
+  return this.eventService.getEventsByOrganizerId(organizerId);
+}
+@Get('myevents')
+@UseGuards(JwtAuthGuard)
+async getMyEvents(@User() user): Promise<Event[]> {
+    validateUserRole(user, 'EVENTMASTER'); 
+    return this.eventService.getEventsByOrganizerId(user.id);
+}
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
     return this.eventService.getEventById(id);
   }
 
-  @Get('organizer/:organizerId')
-  @UseGuards(JwtAuthGuard)
-async getEventsByOrganizerId(@Param('organizerId', ParseIntPipe) organizerId: number): Promise<Event[]> {
-  return this.eventService.getEventsByOrganizerId(organizerId);
-}
+
 }

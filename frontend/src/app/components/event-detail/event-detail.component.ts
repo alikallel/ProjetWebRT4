@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
 import { Router } from '@angular/router';
+import { RegistrationService } from 'src/app/services/registration-details.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -15,11 +16,14 @@ export class EventDetailComponent implements OnInit {
   organizerEvents: Event[] = [];
   loading: boolean = true;
   errorMessage: string = '';
+  availablePlaces?: number;
+
 
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private regestrationService: RegistrationService
   ) {}
 
 ngOnInit(): void {
@@ -28,6 +32,7 @@ ngOnInit(): void {
       this.eventId = params.get('id') || '';
       if (this.eventId) {
         this.loadEventData(this.eventId);
+        this.loadAvailablePlaces(this.eventId);
       }
     });
   }
@@ -62,5 +67,15 @@ ngOnInit(): void {
         this.errorMessage = 'Error fetching organizer events. Please try again later.';
       }
     );
+  }
+  loadAvailablePlaces(eventId: string): void {
+    this.regestrationService.getAvailablePlaces(+eventId).subscribe({
+      next: (places) => {
+        this.availablePlaces = places;
+      },
+      error: (error) => {
+        console.error('Error fetching available places:', error);
+      }
+    });
   }
 }
