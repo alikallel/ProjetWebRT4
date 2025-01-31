@@ -1,29 +1,95 @@
 <div class="auth-container">
   <h2>Register</h2>
-  <form (ngSubmit)="register()" class="auth-form">
-    <!-- Username, Email, Password Inputs -->
-    <input [(ngModel)]="username" name="username" placeholder="Username" required />
-    <input [(ngModel)]="email" name="email" placeholder="Email" type="email" required />
-    <input [(ngModel)]="password" name="password" placeholder="Password" type="password" required />
+  <form (ngSubmit)="register()" class="auth-form" #registerForm="ngForm">
 
-    <!-- Role Select Dropdown -->
+    <!-- Username Input -->
+    <input
+      [(ngModel)]="username"
+      name="username"
+      placeholder="Username"
+      required
+      #usernameModel="ngModel"
+      class="form-input"
+    />
+    <div *ngIf="usernameModel.invalid && usernameModel.touched" class="error-message">
+      Username is required.
+    </div>
+
+    <!-- Email Input -->
+    <input
+      [(ngModel)]="email"
+      name="email"
+      placeholder="Email"
+      type="email"
+      required
+      #emailModel="ngModel"
+      class="form-input"
+    />
+    <div *ngIf="emailModel.invalid && emailModel.touched" class="error-message">
+      <div *ngIf="emailModel.errors?.['required']">Email is required.</div>
+      <div *ngIf="emailModel.errors?.['email']">Please enter a valid email address.</div>
+    </div>
+
+    <!-- Password Input -->
+    <input
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+      required
+      #passwordModel="ngModel"
+      class="form-input"
+    />
+    <div *ngIf="passwordModel.invalid && passwordModel.touched" class="error-message">
+      Password is required.
+    </div>
+
+    <!-- Role Dropdown -->
     <label for="role">Role</label>
-    <select [(ngModel)]="role" name="role" required>
+    <select
+      [(ngModel)]="role"
+      name="role"
+      required
+      #roleModel="ngModel"
+      class="form-input"
+    >
       <option *ngFor="let roleOption of roles" [value]="roleOption">{{ roleOption }}</option>
     </select>
+    <div *ngIf="roleModel.invalid && roleModel.touched" class="error-message">
+      Role is required.
+    </div>
 
-    <!-- Gender Select Dropdown -->
+    <!-- Gender Dropdown -->
     <label for="gender">Gender</label>
-    <select [(ngModel)]="gender" name="gender" required>
+    <select
+      [(ngModel)]="gender"
+      name="gender"
+      #genderModel="ngModel"
+      class="form-input"
+    >
       <option *ngFor="let genderOption of genders" [value]="genderOption">{{ genderOption }}</option>
     </select>
 
+
     <!-- Birthdate Input -->
     <label for="birthdate">Birthdate</label>
-    <input [(ngModel)]="birthdate" name="birthdate" type="date" required />
+    <input
+      [(ngModel)]="birthdate"
+      name="birthdate"
+      type="date"
+      #birthdateModel="ngModel"
+      class="form-input"
+    />
 
     <!-- Register Button -->
-    <button type="submit" class="btn-primary">Register</button>
+    <button
+      type="submit"
+      class="btn-primary"
+      [disabled]="registerForm.invalid"
+    >
+      Register
+    </button>
   </form>
+
   <p>Already have an account? <a routerLink="/login">Login</a></p>
 </div>

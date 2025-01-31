@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import { User } from '../models/user.model';
 import { catchError } from 'rxjs/operators';
@@ -17,17 +17,21 @@ export class AuthService {
   register(email: string, password: string, username: string, role: string, gender: string, birthdate: Date) {
     const payload = { email, password, username, role, gender, birthdate };
     return this.http.post(`${this.apiUrl}/register`, payload).pipe(
-      catchError(this.handleError)
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      })
     );
   }
-  
+
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
-      catchError(this.handleError),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error);
+      }),
       tap((response: any) => {
         localStorage.setItem(this.tokenKey, response.accessToken);
-        localStorage.setItem('userRole', response.role); 
+        localStorage.setItem('userRole', response.role);
         console.log('User role:', response.role);
       })
     );
@@ -45,7 +49,7 @@ export class AuthService {
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
   }
-  
+
   private apiUrl2 = 'http://localhost:3000/user';
   getUser(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl2}/${id}`).pipe(catchError(this.handleError));
@@ -72,5 +76,5 @@ export class AuthService {
     console.error(error);
     return throwError(() => new Error(error.message || 'Something went wrong'));
   }
-  
+
 }
