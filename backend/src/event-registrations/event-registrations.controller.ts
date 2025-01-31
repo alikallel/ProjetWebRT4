@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards, UnauthorizedException, ParseIntPipe } from '@nestjs/common';
 import { EventRegistrationsService } from './event-registrations.service';
 import { CreateEventRegistrationDto } from './dto/create-event-registration.dto/create-event-registration.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -38,6 +38,11 @@ export class EventRegistrationsController {
   @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string, @User() user) {
     return this.eventRegistrationsService.findOne(+id);
+  }
+  @Get('available-places/:id')
+  @UseGuards(JwtAuthGuard)
+  async getAvailablePlaces(@Param('id', ParseIntPipe) id: number): Promise<number> {
+    return this.eventRegistrationsService.findAvailablePlaces(id);
   }
 
   

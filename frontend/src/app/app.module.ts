@@ -31,6 +31,7 @@ import { FormContainerComponent } from './components/shared/form-container/form-
 import { InputComponent } from './components/shared/input/input.component';
 import { ValidationMessagePipe } from './components/shared/validation-message.pipe';
 import { SelectComponent } from './components/shared/select/select.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { SelectComponent } from './components/shared/select/select.component';
     UserHistoryComponent,
     LoginComponent,
     RegisterComponent,
+    MyEventComponent,
   ],
   imports: [
     BrowserModule,

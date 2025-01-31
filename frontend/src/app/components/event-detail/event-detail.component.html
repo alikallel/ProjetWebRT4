@@ -2,9 +2,7 @@
   <!-- Header Section -->
   <div class="header flex justify-between items-center mb-6">
     <h2 class="event-title text-4xl font-bold">{{ eventData.title }}</h2>
-    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/events">
-      Back to Events
-    </button>
+    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/events">Back to Events</button>
   </div>
 
   <!-- Event Information -->
@@ -29,27 +27,23 @@
       <h2 class="text-xl font-semibold">Capacity</h2>
       <p>{{ eventData.capacity }} attendees</p>
     </div>
+    <div class="event-section">
+      <h2 class="text-xl font-semibold">Available Places</h2>
+      <p>{{ availablePlaces !== undefined ? (availablePlaces > 0 ? availablePlaces + ' places' : 'Fully Booked') : 'Loading...' }}</p>
+    </div>
   </div>
 
   <!-- Organizer Events Section -->
   <div class="mt-8">
     <h3 class="event-title text-4xl font-bold">Other Events by {{ eventData?.organizer.username }}</h3>
-    <p></p>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div *ngFor="let event of organizerEvents" class="bg-white p-4 shadow-lg rounded-xl border border-gray-200 hover:shadow-xl transform hover:scale-105 transition duration-300">
         <h4 class="text-xl font-bold text-gray-800 mb-2">{{ event.title }}</h4>
         <p class="text-sm text-gray-500">{{ event.date | date }}</p>
         <div class="mt-4">
-          <a 
-  class="text-blue-600 hover:underline font-medium cursor-pointer"
-  [routerLink]="['/event-details', event.id]" 
-  routerLinkActive="active" >
-  View Details
-</a>
-       </div>
+          <a class="text-blue-600 hover:underline font-medium cursor-pointer" [routerLink]="['/event-details', event.id]" routerLinkActive="active">View Details</a>
+        </div>
       </div>
     </div>
   </div>
-  
-  
-  
+</div>

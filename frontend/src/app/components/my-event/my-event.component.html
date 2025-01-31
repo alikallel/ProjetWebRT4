@@ -1,0 +1,16 @@
+<div class="container">
+    <h2>My Events</h2>
+    <button class="add-event-btn" (click)="navigateToAddEvent()">Add Event</button>
+    <div *ngIf="isLoading">Loading...</div>
+    <div *ngIf="error">{{ error }}</div>
+    <div class="events-grid" *ngIf="myEvents.length">
+      <div class="event-card" *ngFor="let event of myEvents">
+        <h3>{{ event.title }}</h3>
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <button (click)="navigateToEventDetails(event.id)">View Details</button>
+        <button (click)="navigateToRegistrationDetails(event.id)">View Registrations</button>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && myEvents.length === 0">No events found.</div>
+  </div>
