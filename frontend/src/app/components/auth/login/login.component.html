@@ -1,10 +1,31 @@
-<!-- login.component.html -->
-<div class="auth-container">
-  <h2>Login</h2>
-  <form (ngSubmit)="login()" class="auth-form">
-    <input [(ngModel)]="email" name="email" placeholder="Email" required />
-    <input [(ngModel)]="password" name="password" placeholder="Password" type="password" required />
-    <button type="submit" class="btn-primary">Login</button>
-  </form>
-  <p>Don't have an account? <a routerLink="/register">Register</a></p>
-</div>
+<app-form-container
+  title="Login"
+  submitText="Sign In"
+  (formSubmit)="onSubmit()"
+>
+  <app-input
+    label="Email"
+    type="email"
+    placeholder="Enter your email"
+    [formControl]="loginForm.controls.email"
+    [errorMessage]="loginForm.controls.email.errors?.['required'] || loginForm.controls.email.errors?.['email']"
+  ></app-input>
+
+  <app-input
+    label="Password"
+    type="password"
+    placeholder="Enter your password"
+    [formControl]="loginForm.controls.password"
+    [errorMessage]="loginForm.controls.password.errors?.['required'] || loginForm.controls.password.errors?.['minlength']"
+  ></app-input>
+  <div class="auth-footer">
+    <p>Don't have an account? <a routerLink="/register">Register</a></p>
+  </div>
+
+  <div class="debug-info" *ngIf="false"> <!-- Set to true temporarily -->
+    <pre>Form valid: {{ loginForm.valid }}</pre>
+    <pre>Form value: {{ loginForm.value | json }}</pre>
+    <pre>Email errors: {{ loginForm.controls.email.errors | json }}</pre>
+    <pre>Password errors: {{ loginForm.controls.password.errors | json }}</pre>
+  </div>
+</app-form-container>

@@ -1,0 +1,9 @@
+<div class="form-container">
+    <h2 *ngIf="title">{{ title }}</h2>
+    <form (ngSubmit)="handleSubmit()"> 
+      <ng-content></ng-content>
+      <button type="submit" class="btn btn-primary">
+        {{ submitText }}
+      </button>
+    </form>
+  </div>

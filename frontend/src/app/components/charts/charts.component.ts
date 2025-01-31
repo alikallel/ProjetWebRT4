@@ -33,8 +33,7 @@ export class ChartsComponent {
     {
       data: [] as number[], 
       label: 'Gender Distribution'
-    }
-  ];
+    }];
   gendersLabels= ['Male', 'Female'];
 
   constructor(
@@ -55,7 +54,6 @@ export class ChartsComponent {
           .subscribe({
             next: (data) => {
               this.registeredVsAttendedData[0].data = [data.Reg, data.Att];
-              this.isDataLoaded = true;
             },
             error: (err) => {
               console.error('Error fetching users:', err);
@@ -66,9 +64,9 @@ export class ChartsComponent {
           .subscribe({
             next: (data) => {
               console.log(data);
-              this.gendersData[0].data = [data.male,data.female];
+              this.gendersData[0].data = [data.male, data.female];
               this.isDataLoaded = true;
-              console.log(this.gendersData);
+              console.log("hllo",this.gendersData);
               this.cdr.detectChanges();
             },
             error: (err) => {
@@ -81,7 +79,6 @@ export class ChartsComponent {
             next: (data) => {
               this.ageLabels = Object.keys(data);
               this.ageData[0].data = Object.values(data);
-              this.isDataLoaded = true;
             },
             error: (err) => {
               console.error('Error fetching Age Data:', err);

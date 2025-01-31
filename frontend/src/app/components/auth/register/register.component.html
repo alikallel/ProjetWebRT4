@@ -1,29 +1,62 @@
-<div class="auth-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="register()" class="auth-form">
-    <!-- Username, Email, Password Inputs -->
-    <input [(ngModel)]="username" name="username" placeholder="Username" required />
-    <input [(ngModel)]="email" name="email" placeholder="Email" type="email" required />
-    <input [(ngModel)]="password" name="password" placeholder="Password" type="password" required />
+<!-- register.component.html -->
+<app-form-container
+  title="Register"
+  submitText="Create Account"
+  (formSubmit)="onSubmit()"
+>
+  <!-- Username -->
+  <app-input
+    label="Username"
+    type="text"
+    placeholder="Enter your username"
+    [formControl]="registerForm.controls.username"
+    [errorMessage]="registerForm.controls.username.errors | validationMessage"
+  ></app-input>
 
-    <!-- Role Select Dropdown -->
-    <label for="role">Role</label>
-    <select [(ngModel)]="role" name="role" required>
-      <option *ngFor="let roleOption of roles" [value]="roleOption">{{ roleOption }}</option>
-    </select>
+  <!-- Email -->
+  <app-input
+    label="Email"
+    type="email"
+    placeholder="Enter your email"
+    [formControl]="registerForm.controls.email"
+    [errorMessage]="registerForm.controls.email.errors | validationMessage"
+  ></app-input>
 
-    <!-- Gender Select Dropdown -->
-    <label for="gender">Gender</label>
-    <select [(ngModel)]="gender" name="gender" required>
-      <option *ngFor="let genderOption of genders" [value]="genderOption">{{ genderOption }}</option>
-    </select>
+  <!-- Password -->
+  <app-input
+    label="Password"
+    type="password"
+    placeholder="Enter your password"
+    [formControl]="registerForm.controls.password"
+    [errorMessage]="registerForm.controls.password.errors | validationMessage"
+  ></app-input>
 
-    <!-- Birthdate Input -->
-    <label for="birthdate">Birthdate</label>
-    <input [(ngModel)]="birthdate" name="birthdate" type="date" required />
+    <!-- Role Select -->
+    <app-select
+    label="Role"
+    [options]="roles"
+    placeholder="Select your role"
+    [formControl]="registerForm.controls.role"
+    [errorMessage]="registerForm.controls.role.errors | validationMessage"
+  ></app-select>
 
-    <!-- Register Button -->
-    <button type="submit" class="btn-primary">Register</button>
-  </form>
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
-</div>
+  <!-- Gender Select -->
+  <app-select
+    label="Gender"
+    [options]="genders"
+    placeholder="Select your gender"
+    [formControl]="registerForm.controls.gender"
+    [errorMessage]="registerForm.controls.gender.errors | validationMessage"
+  ></app-select>
+
+  <app-input
+    label="Birthdate"
+    type="date"
+    [formControl]="registerForm.controls.birthdate"
+    [errorMessage]="registerForm.controls.birthdate.errors | validationMessage"
+  ></app-input>
+
+  <div class="auth-footer">
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</app-form-container>

@@ -1,0 +1,19 @@
+<!-- select.component.html -->
+<div class="form-group">
+    <label *ngIf="label">{{ label }}</label>
+    <select
+      class="form-control"
+      [class.is-invalid]="errorMessage"
+      [disabled]="disabled"
+      (change)="onChange($any($event.target).value)"
+      (blur)="onTouched()"
+    >
+      <option [value]="null" disabled hidden>{{ placeholder }}</option>
+      <option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>

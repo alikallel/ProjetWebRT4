@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label *ngIf="label">{{ label }}</label>
+    <input
+      [type]="type"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="disabled"
+      (input)="onInputChange($any($event.target).value)"
+      (blur)="onTouched()"
+      class="form-control"
+    >
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+</div>
