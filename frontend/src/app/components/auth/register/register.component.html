@@ -1,95 +1,62 @@
-<div class="auth-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="register()" class="auth-form" #registerForm="ngForm">
+<!-- register.component.html -->
+<app-form-container
+  title="Register"
+  submitText="Create Account"
+  (formSubmit)="onSubmit()"
+>
+  <!-- Username -->
+  <app-input
+    label="Username"
+    type="text"
+    placeholder="Enter your username"
+    [formControl]="registerForm.controls.username"
+    [errorMessage]="registerForm.controls.username.errors | validationMessage"
+  ></app-input>
 
-    <!-- Username Input -->
-    <input
-      [(ngModel)]="username"
-      name="username"
-      placeholder="Username"
-      required
-      #usernameModel="ngModel"
-      class="form-input"
-    />
-    <div *ngIf="usernameModel.invalid && usernameModel.touched" class="error-message">
-      Username is required.
-    </div>
+  <!-- Email -->
+  <app-input
+    label="Email"
+    type="email"
+    placeholder="Enter your email"
+    [formControl]="registerForm.controls.email"
+    [errorMessage]="registerForm.controls.email.errors | validationMessage"
+  ></app-input>
 
-    <!-- Email Input -->
-    <input
-      [(ngModel)]="email"
-      name="email"
-      placeholder="Email"
-      type="email"
-      required
-      #emailModel="ngModel"
-      class="form-input"
-    />
-    <div *ngIf="emailModel.invalid && emailModel.touched" class="error-message">
-      <div *ngIf="emailModel.errors?.['required']">Email is required.</div>
-      <div *ngIf="emailModel.errors?.['email']">Please enter a valid email address.</div>
-    </div>
+  <!-- Password -->
+  <app-input
+    label="Password"
+    type="password"
+    placeholder="Enter your password"
+    [formControl]="registerForm.controls.password"
+    [errorMessage]="registerForm.controls.password.errors | validationMessage"
+  ></app-input>
 
-    <!-- Password Input -->
-    <input
-      [(ngModel)]="password"
-      name="password"
-      placeholder="Password"
-      type="password"
-      required
-      #passwordModel="ngModel"
-      class="form-input"
-    />
-    <div *ngIf="passwordModel.invalid && passwordModel.touched" class="error-message">
-      Password is required.
-    </div>
+    <!-- Role Select -->
+    <app-select
+    label="Role"
+    [options]="roles"
+    placeholder="Select your role"
+    [formControl]="registerForm.controls.role"
+    [errorMessage]="registerForm.controls.role.errors | validationMessage"
+  ></app-select>
 
-    <!-- Role Dropdown -->
-    <label for="role">Role</label>
-    <select
-      [(ngModel)]="role"
-      name="role"
-      required
-      #roleModel="ngModel"
-      class="form-input"
-    >
-      <option *ngFor="let roleOption of roles" [value]="roleOption">{{ roleOption }}</option>
-    </select>
-    <div *ngIf="roleModel.invalid && roleModel.touched" class="error-message">
-      Role is required.
-    </div>
+  <!-- Gender Select -->
+  <app-select
+    label="Gender"
+    [options]="genders"
+    placeholder="Select your gender"
+    [formControl]="registerForm.controls.gender"
+    [errorMessage]="registerForm.controls.gender.errors | validationMessage"
+  ></app-select>
 
-    <!-- Gender Dropdown -->
-    <label for="gender">Gender</label>
-    <select
-      [(ngModel)]="gender"
-      name="gender"
-      #genderModel="ngModel"
-      class="form-input"
-    >
-      <option *ngFor="let genderOption of genders" [value]="genderOption">{{ genderOption }}</option>
-    </select>
+  <app-input
+    label="Birthdate"
+    type="date"
+    [formControl]="registerForm.controls.birthdate"
+    [errorMessage]="registerForm.controls.birthdate.errors | validationMessage"
+  ></app-input>
 
-
-    <!-- Birthdate Input -->
-    <label for="birthdate">Birthdate</label>
-    <input
-      [(ngModel)]="birthdate"
-      name="birthdate"
-      type="date"
-      #birthdateModel="ngModel"
-      class="form-input"
-    />
-
-    <!-- Register Button -->
-    <button
-      type="submit"
-      class="btn-primary"
-      [disabled]="registerForm.invalid"
-    >
-      Register
-    </button>
-  </form>
-
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
-</div>
+  <div class="auth-footer">
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</app-form-container>

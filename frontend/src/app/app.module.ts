@@ -27,6 +27,10 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { PopularEventsComponent } from './components/popular-events/popular-events.component';
+import { FormContainerComponent } from './components/shared/form-container/form-container.component';
+import { InputComponent } from './components/shared/input/input.component';
+import { ValidationMessagePipe } from './components/shared/validation-message.pipe';
+import { SelectComponent } from './components/shared/select/select.component';
 
 
 @NgModule({
@@ -34,6 +38,10 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
     HomeComponent,
     PopularEventsComponent,
     AppComponent,
+    FormContainerComponent,
+    InputComponent,
+    SelectComponent,
+    ValidationMessagePipe,
     EventListComponent,
     EventComponent,
     EventFormComponent,
