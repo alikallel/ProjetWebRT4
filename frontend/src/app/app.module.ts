@@ -72,8 +72,6 @@ import { SliderComponent } from './components/slider/slider.component';
     NgChartsModule,
     QRCodeModule,
     MatSnackBarModule,
-    MyEventComponent,
-    SliderComponent
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]
