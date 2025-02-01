@@ -1,38 +1,87 @@
 <div class="event-detail-container p-5" *ngIf="eventData">
-  <!-- Header Section -->
-  <div class="header flex justify-between items-center mb-6">
-    <h2 class="event-title text-4xl font-bold">{{ eventData.title }}</h2>
-    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/events">Back to Events</button>
+<!-- Header Section -->
+<div class="header flex justify-between items-center mb-6">
+  <h2 class="event-title text-4xl font-bold">{{ eventData.title }}</h2>
+  
+  <div class="flex gap-3">
+    <button
+      *ngIf="isEventMaster()"
+      class="btn btn-warning px-3 py-2 rounded shadow-md flex items-center gap-2"
+      (click)="toggleEditMode()"
+    >
+      <fa-icon [icon]="faEdit" class="text-blue-600"></fa-icon>
+      Edit Event
+    </button>
+    <button
+      class="btn btn-default px-4 py-2 rounded shadow-md"
+      routerLink="/events"
+    >
+      Back to Events
+    </button>
+    
+    
   </div>
-
+</div>
+  
   <!-- Event Information -->
   <div class="event-info grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded-xl shadow-md">
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Description</h2>
-      <p>{{ eventData.description }}</p>
+    <!-- Description Section -->
+    <div class="event-section flex items-start">
+      <div class="flex-grow">
+        <h2 class="text-xl font-semibold">Description</h2>
+        <p *ngIf="!editMode">{{ eventData.description }}</p>
+        <textarea *ngIf="editMode" [(ngModel)]="eventData.description" class="w-full p-2 border rounded"></textarea>
+      </div>
     </div>
+
+    <!-- Date Section -->
     <div class="event-section">
       <h2 class="text-xl font-semibold">Date</h2>
       <p>{{ eventData.date | date: 'fullDate' }}</p>
     </div>
+
+    <!-- Location Section -->
     <div class="event-section">
       <h2 class="text-xl font-semibold">Location</h2>
       <p>{{ eventData.location }}</p>
     </div>
+
+    <!-- Price Section -->
     <div class="event-section">
       <h2 class="text-xl font-semibold">Price</h2>
       <p>{{ eventData.price }}DT</p>
     </div>
+
+    <!-- Capacity Section -->
     <div class="event-section">
       <h2 class="text-xl font-semibold">Capacity</h2>
       <p>{{ eventData.capacity }} attendees</p>
     </div>
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Available Places</h2>
-      <p>{{ availablePlaces !== undefined ? (availablePlaces > 0 ? availablePlaces + ' places' : 'Fully Booked') : 'Loading...' }}</p>
+
+    <!-- Available Places Section -->
+    <div class="event-section flex items-start">
+      <div class="flex-grow">
+        <h2 class="text-xl font-semibold">Available Places</h2>
+        <p *ngIf="!editMode">{{ availablePlaces !== undefined ? (availablePlaces > 0 ? availablePlaces + ' places' : 'Fully Booked') : 'Loading...' }}</p>
+        <input *ngIf="editMode" type="number" [(ngModel)]="availablePlaces" class="w-full p-2 border rounded">
+        </div>
     </div>
   </div>
-
+  <!-- Save and Cancel Buttons -->
+  <div *ngIf="editMode" class="flex gap-3 mb-6">
+    <button
+      class="btn btn-success px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+      (click)="updateEvent()"
+    >
+      Save Changes
+    </button>
+    <button
+      class="btn btn-secondary px-4 py-2 rounded-lg shadow-md hover:bg-gray-200 transition duration-300"
+      (click)="toggleEditMode()"
+    >
+      Cancel
+    </button>
+  </div>
   <!-- Organizer Events Section -->
   <div class="mt-8">
     <h3 class="event-title text-4xl font-bold">Other Events by {{ eventData?.organizer.username }}</h3>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 
 @Injectable({
@@ -20,7 +20,12 @@ export class EventService {
   }
 
   getEventById(id: string): Observable<Event> {
-    return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders());
+    return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders()).pipe(
+      catchError(error => {
+        console.error('Error fetching event:', error);
+        throw error;
+      })
+    );
   }
 
   private getAuthHeaders() {
@@ -37,6 +42,12 @@ export class EventService {
   }
 
   getMyEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${this.apiUrl}/myevents`);
+    return this.http.get<Event[]>(`${this.apiUrl}/myevents`, this.getAuthHeaders());
   }
+
+  patchEvent(id: string, payload: Partial<Event>): Observable<Event> {
+    return this.http.patch<Event>(`${this.apiUrl}/${id}`, payload, this.getAuthHeaders());
+  }
+  
+  
 }

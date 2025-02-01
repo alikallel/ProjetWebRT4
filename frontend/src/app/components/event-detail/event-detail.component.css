@@ -71,4 +71,13 @@
     color: #888;
     margin-top: 50px;
   }
+  .edit-icon {
+    cursor: pointer;
+    color: blue;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .edit-icon:hover {
+    color: darkblue;
+  }
   

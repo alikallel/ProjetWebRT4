@@ -33,6 +33,7 @@ import { ValidationMessagePipe } from './components/shared/validation-message.pi
 import { SelectComponent } from './components/shared/select/select.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { SliderComponent } from './components/slider/slider.component';
     NgChartsModule,
     QRCodeModule,
     MatSnackBarModule,
+    FontAwesomeModule ,
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]
