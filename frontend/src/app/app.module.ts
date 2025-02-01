@@ -33,6 +33,7 @@ import { ValidationMessagePipe } from './components/shared/validation-message.pi
 import { SelectComponent } from './components/shared/select/select.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
+import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { SliderComponent } from './components/slider/slider.component';
     RegisterComponent,
     MyEventComponent,
     SliderComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,

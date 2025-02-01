@@ -1,63 +1,24 @@
 .form-container {
-    background: linear-gradient(135deg, 
-      #5FBDFF 0%, 
-      #96EFFF 50%, 
-      #C5FFF8 100%);
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(95, 189, 255, 0.2);
-    max-width: 500px;
-    margin: 2rem auto;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .form-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to right, 
-      rgba(255, 255, 255, 0.15) 0%,
-      rgba(255, 255, 255, 0.05) 100%);
-    pointer-events: none;
-  }
-  
-  .form-container h2 {
-    color: white;
-    text-align: center;
-    font-size: 2rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  
-  .form-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .btn-primary {
-    background: white;
-    color: #5FBDFF;
-    border: 2px solid rgba(95, 189, 255, 0.3);
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    backdrop-filter: blur(5px);
-  }
-  
-  .btn-primary:hover {
-    background: #5FBDFF;
-    color: white;
-    border-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(95, 189, 255, 0.3);
-  }
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(95, 189, 255, 0.2),
+              0 15px 40px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto;
+  min-width: 320px;
+}
+
+.form-container h2 {
+  color: #1a365d;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

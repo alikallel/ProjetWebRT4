@@ -1,4 +1,3 @@
-// register.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
@@ -32,7 +31,7 @@ export class RegisterComponent {
     role: ['User', [
       ValidationService.required('Role is required')
     ]],
-    gender: ['', [
+    gender: ['male', [
       ValidationService.required('Gender is required')
     ]],
     birthdate: ['', [
