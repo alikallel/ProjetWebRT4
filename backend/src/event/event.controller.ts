@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, UnauthorizedException, Patch } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/add-event.dto';
@@ -6,6 +6,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/decorators/user.decorator';
 import { UserRole } from 'src/auth/user.entity';
 import { validateUserRole } from 'src/utils/auth.utils';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Controller('events')
 export class EventController {
@@ -37,11 +38,24 @@ async getMyEvents(@User() user): Promise<Event[]> {
     validateUserRole(user, 'EVENTMASTER'); 
     return this.eventService.getEventsByOrganizerId(user.id);
 }
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
+@Get(':id')
+@UseGuards(JwtAuthGuard)
   async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
     return this.eventService.getEventById(id);
   }
 
-
+@Patch(':id')
+@UseGuards(JwtAuthGuard)
+@UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+async updateEvent(
+  @Param('id', ParseIntPipe) id: number,
+  @Body() updateEventDto: UpdateEventDto,
+  @User() user
+): Promise<Event> {
+  if (user.role !== UserRole.EVENTMASTER) {
+    throw new UnauthorizedException('Only event masters can update events');
+  }
+  return this.eventService.updateEvent(id, updateEventDto, user);
 }
+}
+
