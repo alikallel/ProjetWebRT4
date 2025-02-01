@@ -62,7 +62,7 @@
             <strong>Price:</strong> {{ selectedEvent?.price }} TND
           </p>
           <p>
-            <i class="fas fa-ticket-alt"></i>
+            <i class="fas fa-chair"> </i>
             <strong>Available Places:</strong> 
             {{ availablePlacesMap[selectedEvent?.id] !== undefined 
                ? (availablePlacesMap[selectedEvent?.id] > 0 
@@ -104,12 +104,20 @@
         >
           Fermer
         </button>
-        <button
+          <button
           type="button"
-          class="btn btn-danger"
+          [class]="selectedEvent?.price === 0 ? 'btn btn-success' : 'btn btn-danger'"
           (click)="makePayment()"
         >
-          <i class="fas fa-credit-card"></i> Payer
+          <ng-container *ngIf="selectedEvent?.price !== 0">
+            <img 
+              src="https://developersdev.flouci.com/static/flouci_icon.png" 
+              [style.height.px]="20"
+              [style.marginRight.px]="5"
+              alt="Flouci"
+            >
+          </ng-container>
+          {{ selectedEvent?.price === 0 ? 'Register' : 'Pay' }}
         </button>
       </div>
     </div>

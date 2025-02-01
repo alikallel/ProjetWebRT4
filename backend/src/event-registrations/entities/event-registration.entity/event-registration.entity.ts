@@ -24,7 +24,7 @@ export class EventRegistration {
 
   @Column({
     type: 'enum',
-    enum: ['PENDING', 'PAID', 'CANCELLED', 'REFUNDED'],
+    enum: ['PENDING', 'PAID', 'CANCELLED', 'FREE'],
     default: 'PENDING'
   })
   status: string;
@@ -38,9 +38,6 @@ export class EventRegistration {
   @Column({ default: 1 })
   number_of_places: number;
 
-  @Column({ nullable: true })
-  payment_id: string;
- 
   @Column({ type: 'boolean', default: false }) 
   checkedIn: boolean;
   
