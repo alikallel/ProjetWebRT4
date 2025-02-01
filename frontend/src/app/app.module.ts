@@ -33,11 +33,9 @@ import { ValidationMessagePipe } from './components/shared/validation-message.pi
 import { SelectComponent } from './components/shared/select/select.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
-<<<<<<< HEAD
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-=======
 import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
->>>>>>> a4f509e6cef6a33bc77eba4fd8034c079287c05b
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 
 @NgModule({
@@ -66,7 +64,8 @@ import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.c
     RegisterComponent,
     MyEventComponent,
     SliderComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
