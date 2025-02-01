@@ -20,7 +20,7 @@ dotenv.config()
       port: 3306,
       username: 'root',
       password: '',
-      database: 'eventplanner', // not event_app
+      database: 'event_app',
 
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
