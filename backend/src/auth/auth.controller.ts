@@ -25,11 +25,13 @@ export class AuthController {
         return this.authService.register(registerDto);
     }
 
+
     @Get('me')
     @UseGuards(JwtAuthGuard)
     async getMe(@Req() req): Promise<any> {
     return req.user; 
     }
+
 
     @UseGuards(JwtAuthGuard)
     @Post('profile')

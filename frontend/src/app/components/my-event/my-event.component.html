@@ -1,16 +1,84 @@
-<div class="container">
-    <h2>My Events</h2>
-    <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/add-event">Add Event</button>
-    <div *ngIf="isLoading">Loading...</div>
-    <div *ngIf="error">{{ error }}</div>
-    <div class="events-grid" *ngIf="myEvents.length">
-      <div class="event-card" *ngFor="let event of myEvents">
-        <h3>{{ event.title }}</h3>
-        <p><strong>Date:</strong> {{ event.date }}</p>
-        <p><strong>Location:</strong> {{ event.location }}</p>
-        <button (click)="navigateToEventDetails(event.id)">View Details</button>
-        <button (click)="navigateToRegistrationDetails(event.id)">View Registrations</button>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h2 mb-0">My Events</h2>
+    <div class="d-flex align-items-center">
+      <input
+        type="text"
+        class="form-control me-3"
+        placeholder="Search events by title or location"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filterEvents()"
+        style="width: 300px;" />
+      <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/add-event">
+        Add Event
+      </button>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2">Total Events</h6>
+          <h3 class="card-title mb-0">{{ filteredEvents.length }}</h3>
+        </div>
       </div>
     </div>
-    <div *ngIf="!isLoading && myEvents.length === 0">No events found.</div>
+    <div class="col-md-3">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2">Upcoming Events</h6>
+          <h3 class="card-title mb-0">{{ getUpcomingEventsCount() }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2">Past Events</h6>
+          <h3 class="card-title mb-0">{{ getPastEventsCount() }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2">Get paid</h6>
+          <h3 class="card-title mb-0">Click to Learn More</h3>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="filteredEvents.length">
+    <div class="col" *ngFor="let event of filteredEvents">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title h5">{{ event.title }}</h3>
+          <p class="card-text"><strong>Date:</strong> {{ event.date | date }}</p>
+          <p class="card-text"><strong>Location:</strong> {{ event.location }}</p>
+        </div>
+        <div class="card-footer bg-transparent border-0 p-3">
+          <button class="btn btn-primary w-100 mb-2" (click)="navigateToEventDetails(event.id)">
+            View Details
+          </button>
+          <button class="btn btn-light w-100" (click)="navigateToRegistrationDetails(event.id)">
+            View Registrations
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && filteredEvents.length === 0" class="text-center py-5">
+    <p class="h5 text-muted">No events found.</p>
+  </div>
+</div>
