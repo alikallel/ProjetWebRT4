@@ -32,7 +32,7 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
 @NgModule({
   declarations: [
     HomeComponent,
-    PopularEventsComponent
+    PopularEventsComponent,
     AppComponent,
     EventListComponent,
     EventComponent,

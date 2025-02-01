@@ -21,17 +21,9 @@ export class AuthController {
         return this.authService.register(registerDto);
     }
 
-<<<<<<< HEAD
-  @Get('me')
-  @UseGuards(AuthGuard('jwt')) // Protège la route, nécessite un token JWT valide
-  async getMe(@Req() req): Promise<any> {
-    return req.user; // Retourne l'utilisateur actuellement connecté
-  }
-=======
     @UseGuards(JwtAuthGuard)
     @Post('profile')
     getProfile(@Request() req) {
         return req.user;
     }
->>>>>>> adf89e2abdfacace06e18c66d20e9336aa00f7e3
 }
