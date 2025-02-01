@@ -12,10 +12,10 @@
   
   .form-control {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.7rem 1rem;
     border: 2px solid #96EFFF;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.9);
   }
