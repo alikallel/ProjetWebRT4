@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 interface RegistrationRequest {
   eventId: number;
-  userId: number;
   number_of_places: number;
 }
 
@@ -47,7 +46,6 @@ export class PaymentService {
   createEventRegistration(eventId: number, numberOfPlaces: number): Observable<PaymentResponse> {
     const request: RegistrationRequest = {
       eventId: eventId,
-      userId: 1, // Static user ID, ask Mohamed how to get the user ID
       number_of_places: numberOfPlaces
     };
     return this.http.post<PaymentResponse>(`${this.apiUrl}/event-registrations`, request);

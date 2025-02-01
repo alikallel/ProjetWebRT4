@@ -12,10 +12,11 @@ export class PaymentController {
     )
     {}
     @Post('initiate')
+    @UseGuards(JwtAuthGuard)
     async initiatePayment(@Body() initiatePaymentDto: InitiatePaymentDto) {
     return await this.paymentService.initiatePayment(
       initiatePaymentDto.registration_id,
-      initiatePaymentDto.amount
+      initiatePaymentDto.amount*1000
     );
   }
 

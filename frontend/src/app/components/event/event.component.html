@@ -15,11 +15,11 @@
         <strong>Capacity:</strong> {{ event.capacity }}
       </div>
     </div>
-    <button class="btn btn-secondary" [routerLink]="['/event-details', event.id]">View Details</button>
     <p></p>
-    <!-- Disable button if capacity is 0 -->
+    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md custom-button" [routerLink]="['/event-details', event.id]">View Details</button>
+    <p></p>
     <button 
-      class="btn btn-danger" 
+      class="btn btn-primary" 
       (click)="onRegisterClick()" 
       [disabled]="event.capacity === 0">
       Register

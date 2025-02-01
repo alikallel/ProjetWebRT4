@@ -1,0 +1,137 @@
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .image-section {
+    flex: 0.6;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: white;
+  }
+  
+  .form-section {
+    flex: 0.4;
+    position: relative;
+    justify-content: center;
+    padding: 3rem;
+    background: #f8fafc;
+    border: black;
+    width: 100%;
+     display: flex;
+  align-items: center;
+  justify-content: center;
+
+  }
+  .form-wrapper {
+    width: 100%;
+    position: static;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  }
+  
+  .content-wrapper {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  
+  .main-title {
+    margin: auto;
+  }
+  
+  .main-title h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+  }
+  
+  .tagline {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  
+  .bottom-text {
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  .home-link {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+  }
+  
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .icon-circle i {
+    font-size: 20px;
+    color: white;
+  }
+  .icon-circle:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  @media (max-width: 992px) {
+    .auth-container {
+      flex-direction: column;
+    }
+  
+    .image-section {
+      flex: none;
+      min-height: 40vh;
+    }
+  
+    .form-section {
+        padding: 2rem;
+    }
+     .form-wrapper {
+    position: static;
+    transform: none;
+    padding: 1rem;
+  }
+  
+    .main-title h1 {
+      font-size: 3rem;
+    }
+  }
+  

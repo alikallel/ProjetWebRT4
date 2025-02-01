@@ -9,7 +9,7 @@ declare var bootstrap: any;
 export class EventComponent {
   @Input() event: any;
   @Output() register = new EventEmitter<any>(); // Émet un événement vers le parent
-
+  
   onRegisterClick() {
     this.register.emit(this.event); // Émet l'événement en passant les données de l'événement
   }

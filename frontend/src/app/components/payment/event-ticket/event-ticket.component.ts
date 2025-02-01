@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class EventTicketComponent implements OnInit {
   @Input() eventDetails: any;
+  ticketReference: string = '';
 
   constructor() {}
   qrCodeData!: string;
@@ -19,6 +20,8 @@ export class EventTicketComponent implements OnInit {
       email: this.eventDetails.user.email,
       numberOfPlaces: this.eventDetails.number_of_places
     });
+    this.generateTicketReference();
+
   }
 
   formatDate(dateString: string): string {
@@ -29,5 +32,12 @@ export class EventTicketComponent implements OnInit {
       day: 'numeric',
       weekday: 'long',
     });
+  }
+  calculateExpirationDate(): Date {
+    const eventDate = new Date(this.eventDetails.event.date);
+    return new Date(eventDate.setHours(eventDate.getHours() + 1));
+  }
+  generateTicketReference(): void {
+    this.ticketReference = `EP-${this.eventDetails.id.toString().padStart(6, '0')}`;
   }
 }
