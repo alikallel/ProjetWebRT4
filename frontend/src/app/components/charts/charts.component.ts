@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,17 +10,36 @@ import { ActivatedRoute } from '@angular/router';
 export class ChartsComponent {
 
   eventId: number | null = null;
-  isDataLoaded = false; // Flag to control chart visibility
+  isDataLoaded = false; 
+
   registeredVsAttendedData = [
     {
-      data: [] as number[], // Initialize with empty data
+      data: [] as number[],
       backgroundColor: ['#FF6384', '#36A2EB'], 
       label: 'Registered vs Attended'
     }
   ];
+  registeredVsAttendedLabels = ['Registered', 'Attended'];
+
+  ageData = [
+    {
+      data: [] as number[], 
+      label: 'Age Distribution'
+    }
+  ];
+  ageLabels: string[] = [];
+
+  gendersData = [
+    {
+      data: [] as number[], 
+      label: 'Gender Distribution'
+    }];
+  gendersLabels= ['Male', 'Female'];
+
   constructor(
       private http: HttpClient,
-      private route: ActivatedRoute) {}
+      private route: ActivatedRoute,
+      private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id') || '';
@@ -35,40 +54,39 @@ export class ChartsComponent {
           .subscribe({
             next: (data) => {
               this.registeredVsAttendedData[0].data = [data.Reg, data.Att];
-              this.isDataLoaded = true;
-              console.log(this.registeredVsAttendedData)
             },
             error: (err) => {
               console.error('Error fetching users:', err);
             }
           });
+
+          this.http.get<{ male: number, female: number }>(`http://localhost:3000/chartsdata/genders/${Id}`)
+          .subscribe({
+            next: (data) => {
+              console.log(data);
+              this.gendersData[0].data = [data.male, data.female];
+              this.isDataLoaded = true;
+              console.log("hllo",this.gendersData);
+              this.cdr.detectChanges();
+            },
+            error: (err) => {
+              console.error('Error fetching Gender Data:', err);
+            }
+          });
+
+          this.http.get<{ [key: string]: number }>(`http://localhost:3000/chartsdata/age/${Id}`)
+          .subscribe({
+            next: (data) => {
+              this.ageLabels = Object.keys(data);
+              this.ageData[0].data = Object.values(data);
+            },
+            error: (err) => {
+              console.error('Error fetching Age Data:', err);
+            }
+          });
+
   }
 
-
-  registeredVsAttendedLabels = ['Registered', 'Attended'];
-
-  // Section 2: Genders (Male/Female)
-  gendersData = [
-    {
-      data: [40, 60], // Example data: 40% Male, 60% Female
-      label: 'Genders'
-    }
-  ];
-
-  gendersLabels = ['Male', 'Female'];
-
-  // Section 3: Age Distribution
-  ageData = [
-    {
-      data: [20, 35, 25, 20], // Example data: counts for different age groups
-      label: 'Age Distribution'
-    }
-  ];
-
-  ageLabels = ['18-24', '25-34', '35-44', '45+'];
-
-
-  // Chart Options
   chartOptions = {
     responsive: true,
     maintainAspectRatio: false,

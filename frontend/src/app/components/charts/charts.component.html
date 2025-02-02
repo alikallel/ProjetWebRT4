@@ -46,7 +46,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="chart">
+            <div class="chart" *ngIf="isDataLoaded">
                 <canvas 
                     baseChart
                     type="pie"
@@ -54,6 +54,7 @@
                     [labels]="gendersLabels"
                     [datasets]="gendersData"  
                 ></canvas>
+            <p>thanks to siwar</p>
             </div>
         </div>
     </div>

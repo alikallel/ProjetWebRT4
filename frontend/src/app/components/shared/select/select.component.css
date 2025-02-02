@@ -1,0 +1,47 @@
+/* Add to your shared styles or component-specific CSS */
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+.form-group select.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #96EFFF;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235FBDFF'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group select.form-control:hover {
+    border-color: #5FBDFF;
+    cursor: pointer;
+  }
+  
+  .form-group select.form-control:focus {
+    outline: none;
+    border-color: #5FBDFF;
+    box-shadow: 0 0 0 3px #5fbfff3d;
+  }
+
+  
+  .error-message {
+    color: #ff4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ff4444;
+    display: inline-block;
+  }

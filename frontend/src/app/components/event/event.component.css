@@ -8,12 +8,16 @@
     font-weight: bold;
   }
   
-  .btn-danger {
-    background-color: #ff4b5c;
-    border: none;
-  }
-  
-  .btn-danger:hover {
-    background-color: #ff1c33;
-  }
-  
+/* Keep the default button styles */
+.custom-button {
+  border-color: #007bff; /* Default border color */
+  color: #007bff; /* Default text color */
+  background-color: transparent; /* Background color stays transparent */
+}
+
+/* Change only the border color on hover, without changing the text or background */
+.custom-button:hover {
+  border-color: #0056b3; /* Darker blue border on hover */
+  background-color: transparent; /* Keep background transparent */
+  color: #007bff; /* Keep text color the same */
+}

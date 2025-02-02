@@ -51,7 +51,14 @@
         [elementType]="'canvas'"
       ></qrcode>
         <span>VERIFY: {{ eventDetails.payment_id }}</span>
+        <p class="text-sm text-gray-500">Ticket Reference: {{ ticketReference }}</p>
       </div>
     </div>
   </div>
+  <div class="ticket-footer bg-gray-100 p-4 text-center">
+    <p class="text-sm text-gray-600">
+      Ticket valid until: {{ formatDate(calculateExpirationDate().toISOString()) }}
+    </p>
+  </div>
+</div>
 </div>

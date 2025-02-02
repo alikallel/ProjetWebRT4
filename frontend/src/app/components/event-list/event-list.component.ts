@@ -3,6 +3,9 @@ import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
+import { AuthService } from 'src/app/services/auth.service';
+import {RegistrationService } from 'src/app/services/registration-details.service'
+
 declare  var bootstrap: any;
 @Component({
   selector: 'app-event-list',
@@ -19,6 +22,7 @@ export class EventListComponent implements OnInit {
   currentPage: number = 1;
   eventsPerPage: number = 9;
   totalPages: number = 1;
+  availablePlacesMap: { [eventId: number]: number } = {};
 
 
   quantity: number = 1; // Quantité initiale
@@ -32,6 +36,16 @@ export class EventListComponent implements OnInit {
     this.selectedEvent = event; // Définit l'événement sélectionné
     this.quantity = 1; // Réinitialise la quantité à 1
     this.calculateTotal(); // Calcule le montant initial
+    this.registrationService.getAvailablePlaces(event.id).subscribe({
+      next: (availablePlaces) => {
+        this.availablePlacesMap[event.id] = availablePlaces;
+      },
+      error: (err) => {
+        console.error('Error fetching available places', err);
+        this.availablePlacesMap[event.id] = 0;
+      }
+    });
+  
     const modalElement = document.getElementById('ticketModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -43,7 +57,9 @@ export class EventListComponent implements OnInit {
     private eventService: EventService,
     private route: ActivatedRoute,
     private paymentService: PaymentService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private registrationService: RegistrationService
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +73,37 @@ export class EventListComponent implements OnInit {
         this.fetchEvents(page);
       }
     });
+    this.fetchAvailablePlaces();
+  }
+  fetchAvailablePlaces(): void {
+    this.events.forEach(event => {
+      this.registrationService.getAvailablePlaces(event.id).subscribe({
+        next: (availablePlaces) => {
+          this.availablePlacesMap[event.id] = availablePlaces;
+        },
+        error: (err) => {
+          console.error(`Error fetching available places for event ${event.id}`, err);
+        }
+      });
+    });
+  }
+  
+  getAvailablePlacesDisplay(eventId: number): string {
+    const availablePlaces = this.availablePlacesMap[eventId];
+    
+    if (availablePlaces === undefined) {
+      return 'Loading...';
+    }
+    
+    return availablePlaces > 0 
+      ? `${availablePlaces} places available` 
+      : 'Full';
   }
 
+  isEventMaster(): boolean {
+    console.log(this.authService.getUserRole());
+    return this.authService.getUserRole() === 'EventMaster';
+  }
   fetchEvents(page: number): void {
     this.eventService.getEvents().subscribe({
       next: (data: Event[]) => {

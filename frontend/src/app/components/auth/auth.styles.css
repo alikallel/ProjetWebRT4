@@ -36,3 +36,36 @@ input:focus {
 .btn-primary:hover {
   background-color: #0056b3;
 }
+
+/* Styles for the form inputs */
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Styles for error messages */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Optional: Styles for form inputs with errors */
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+select.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+/* Highlight error messages with a background */
+.error-message {
+  background-color: #fdd;
+  padding: 5px;
+  border: 1px solid #f00;
+  border-radius: 4px;
+}

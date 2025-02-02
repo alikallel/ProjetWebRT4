@@ -157,6 +157,10 @@ export class PaymentService {
 
     payment.status = 'FAILED';
     await this.paymentRepository.save(payment);
+    const registration = payment.registration;
+    registration.status = 'FAILED';
+    await this.eventRegistrationRepository.save(registration);
+
     throw new HttpException('Payment failed', HttpStatus.BAD_REQUEST);
   }
   async findPaymentsByUser(userId: number) {

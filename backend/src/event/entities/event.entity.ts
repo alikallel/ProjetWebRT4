@@ -19,7 +19,7 @@ export class Event {
   @Column()
   description: string;
 
-  @ManyToOne(() => User, user => user.events)
+  @ManyToOne(() => User, user => user.events,{ eager: true, nullable: false })
   @JoinColumn({ name: 'organizer_id' })
   organizer: User; 
   

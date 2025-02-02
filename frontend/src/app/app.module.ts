@@ -27,6 +27,13 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { PopularEventsComponent } from './components/popular-events/popular-events.component';
+import { FormContainerComponent } from './components/shared/form-container/form-container.component';
+import { InputComponent } from './components/shared/input/input.component';
+import { ValidationMessagePipe } from './components/shared/validation-message.pipe';
+import { SelectComponent } from './components/shared/select/select.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
+import { SliderComponent } from './components/slider/slider.component';
+import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 
 
 @NgModule({
@@ -34,6 +41,10 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
     HomeComponent,
     PopularEventsComponent,
     AppComponent,
+    FormContainerComponent,
+    InputComponent,
+    SelectComponent,
+    ValidationMessagePipe,
     EventListComponent,
     EventComponent,
     EventFormComponent,
@@ -49,6 +60,9 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
     UserHistoryComponent,
     LoginComponent,
     RegisterComponent,
+    MyEventComponent,
+    SliderComponent,
+    AuthLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +73,7 @@ import { PopularEventsComponent } from './components/popular-events/popular-even
     ReactiveFormsModule,
     NgChartsModule,
     QRCodeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]

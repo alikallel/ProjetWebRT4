@@ -10,6 +10,7 @@
     </div>
   
     <div *ngIf="event && !isLoading && !error" class="card">
+      
       <div class="card-header bg-primary text-white">
         <h2 class="mb-0">{{ event.title }}</h2>
       </div>
@@ -18,6 +19,13 @@
           <div class="col-md-6">
             <p class="mb-1"><strong>Booked Places:</strong> {{ bookedPlaces }} / {{ event.capacity }}</p>
             
+          </div>
+          <div class="col-md-6 text-end">
+            <button 
+              class="btn btn-outline-primary px-4 py-2 rounded shadow-md" 
+              (click)="navigateToChecklist(event.id)">
+              Check In
+            </button>
           </div>
         </div>
   
