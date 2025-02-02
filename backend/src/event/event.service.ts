@@ -91,4 +91,12 @@ export class EventService {
     Object.assign(event, updateEventDto);
     return this.eventRepository.save(event);
   }
+  async updateEventImage(id: number, imagePath: string, user: User): Promise<Event> {
+    const event = await this.validateEventOwnership(id, user);
+    
+    // Update the image path
+    event.image = imagePath;
+    
+    return this.eventRepository.save(event);
+  }
 }

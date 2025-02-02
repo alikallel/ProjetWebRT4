@@ -21,3 +21,17 @@
   background-color: transparent; /* Keep background transparent */
   color: #007bff; /* Keep text color the same */
 }
+
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

@@ -49,6 +49,12 @@ export class EventService {
   patchEvent(id: string, payload: Partial<Event>): Observable<Event> {
     return this.http.patch<Event>(`${this.apiUrl}/${id}`, payload, this.getAuthHeaders());
   }
-  
+  updateEventImage(id: string, formData: FormData): Observable<Event> {
+    return this.http.patch<Event>(
+      `${this.apiUrl}/${id}/image`,
+      formData,
+      this.getAuthHeaders()
+    );
+  }
   
 }

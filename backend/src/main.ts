@@ -19,8 +19,8 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
   }));
   */
+  app.use('/uploads', express.static('uploads'));
 
   await app.listen(process.env.PORT ?? 3000);
-  app.use('/uploads', express.static('uploads'));
 }
 bootstrap();

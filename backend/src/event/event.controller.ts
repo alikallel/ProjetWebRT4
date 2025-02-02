@@ -72,7 +72,31 @@ async getMyEvents(@User() user): Promise<Event[]> {
   async getEventById(@Param('id', ParseIntPipe) id: number): Promise<Event> {
     return this.eventService.getEventById(id);
   }
-
+  @Patch(':id/image')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('image', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: (req, file, callback) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = extname(file.originalname);
+        const filename = `${uniqueSuffix}${ext}`;
+        callback(null, filename);
+      },
+    }),
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+  }))
+  async updateEventImage(
+    @Param('id', ParseIntPipe) id: number,
+    @User() user,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<Event> {
+    if (user.role !== UserRole.EVENTMASTER) {
+      throw new UnauthorizedException('Only event masters can update event images');
+    }
+    
+    return this.eventService.updateEventImage(id, file.path, user);
+  }
 @Patch(':id')
 @UseGuards(JwtAuthGuard)
 @UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
@@ -86,5 +110,8 @@ async updateEvent(
   }
   return this.eventService.updateEvent(id, updateEventDto, user);
 }
+ 
 }
+
+
 

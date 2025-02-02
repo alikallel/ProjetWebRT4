@@ -13,6 +13,7 @@ export class EventComponent {
   onRegisterClick() {
     this.register.emit(this.event); // Émet l'événement en passant les données de l'événement
   }
+
    // Cette méthode s'occupe d'ouvrir le modal Bootstrap
   /*openRegisterModal() {
     const modalElement = document.getElementById('registerModal'); // Sélectionnez l'élément modal par son ID

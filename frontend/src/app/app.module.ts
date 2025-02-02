@@ -36,6 +36,7 @@ import { SliderComponent } from './components/slider/slider.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { DefaultImagePipe } from './pipes/default-image.pipe';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     MyEventComponent,
     SliderComponent,
     AuthLayoutComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    DefaultImagePipe
   ],
   imports: [
     BrowserModule,
