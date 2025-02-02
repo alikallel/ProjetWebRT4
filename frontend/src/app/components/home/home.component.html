@@ -6,20 +6,34 @@
       src="assets/hadath.png"
       class="logo-image"
     />
-    <span>Welcome</span>
-    <div class="spacer"></div>
-    <a aria-label="sign in" target="_blank" rel="noopener" [routerLink]="['login']" title="login">
-      Login
-    </a>
-    <a aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['rgister']" title="register">
-      Register
-    </a>
-</div>
 
-<div class="content" role="main">
-    <app-slider></app-slider>
-    <app-about-us></app-about-us>
-    <app-popular-events></app-popular-events>   
+
+  <div class="spacer"></div>
+  <a aria-label="sign in" target="_blank" rel="noopener" [routerLink]="['login']" title="login">
+    Login
+  </a>
+  <a aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['register']" title="register">
+    Register
+     </a>
+   
+  </div>
+ <body>
+  <div class="content" role="main">
+ 
+<!-- Highlight Card -->
+<div class="card highlight-card card-small">
+
+  <span>{{ title }} app is running!</span>
+ 
+   </div>
+
+<!-- Resources -->
+<h2>Popular events</h2>
+<p>Here are some links to help you get started:</p>
+
+<app-popular-events></app-popular-events>
+
+
 </div>
 
 <!-- Footer -->
