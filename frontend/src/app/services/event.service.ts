@@ -15,9 +15,10 @@ export class EventService {
     return this.http.get<Event[]>(this.apiUrl, this.getAuthHeaders());
   }
 
-  addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.apiUrl, event, this.getAuthHeaders());
+  addEvent(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData, this.getAuthHeaders());
   }
+  
 
   getEventById(id: string): Observable<Event> {
     return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders()).pipe(

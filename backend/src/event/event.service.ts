@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
@@ -24,18 +24,25 @@ export class EventService {
       },
     });  }
 
-    async createEvent(createEventDto: CreateEventDto, user: User): Promise<Event> {
+    async createEvent(createEventDto: CreateEventDto, user: User, file?: Express.Multer.File): Promise<Event> {
       if (!user) {
         throw new UnauthorizedException('User not authenticated');
       }
-    
+  
+      const imagePath = file ? file.path : null;  
       const event = this.eventRepository.create({
         ...createEventDto,
-        organizer: user, 
+        image: imagePath, 
+        organizer: user,
       });
-    
-      return this.eventRepository.save(event);
-    }
+  
+      try {
+        return await this.eventRepository.save(event);
+      } catch (error) {
+        console.error('Error saving event:', error);
+        throw new InternalServerErrorException('Failed to save event');
+      }
+          }
     
   async getEventById(id: number): Promise<Event> {
     const event = await this.eventRepository.findOneBy({ id });
