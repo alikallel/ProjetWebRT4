@@ -5,6 +5,7 @@ import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/add-event.dto';
 import { UserService } from '../user/user.service';  
 import { User } from 'src/auth/user.entity';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -65,5 +66,22 @@ export class EventService {
     }
     
     return event;
+  }
+  async updateEvent(id: number, updateEventDto: UpdateEventDto, user: User): Promise<Event> {
+    const event = await this.eventRepository.findOne({
+      where: { id },
+      relations: ['organizer'], 
+    });
+
+    if (!event) {
+      throw new NotFoundException(`Event with ID ${id} not found`);
+    }
+
+    if (event.organizer.id !== user.id) {  
+      throw new UnauthorizedException('You can only update your own events');
+    }
+
+    Object.assign(event, updateEventDto);
+    return this.eventRepository.save(event);
   }
 }

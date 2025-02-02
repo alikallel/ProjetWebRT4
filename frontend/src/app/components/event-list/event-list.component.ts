@@ -184,27 +184,35 @@ export class EventListComponent implements OnInit {
     }
   }
   makePayment() {
-    if (this.selectedEvent) {
-      // First, create event registration
-      this.paymentService.createEventRegistration(this.selectedEvent.id, this.quantity)
-        .subscribe({
-          next: (registrationResponse) => {
-            // Then, initiate payment
-            this.paymentService.initiatePayment(registrationResponse.registration_id, this.amount)
-              .subscribe({
-                next: (paymentResponse) => {
-                  window.location.href = paymentResponse.payment_link;
-                },
-                error: (err) => {
-                  console.error('Payment initiation failed', err);
-                }
-              });
-          },
-          error: (err) => {
-            console.error('Event registration failed', err);
+    if (!this.selectedEvent) return;
+
+    this.paymentService.createEventRegistration(this.selectedEvent.id, this.quantity)
+      .subscribe({
+        next: (registrationResponse) => {
+          if (this.selectedEvent.price === 0) {
+            const modalElement = document.getElementById('ticketModal');
+            if (modalElement) {
+              const modal = bootstrap.Modal.getInstance(modalElement);
+              if (modal) modal.hide();
+            }
+            this.fetchAvailablePlaces();
+            return;
           }
-        });
-    }
+
+          this.paymentService.initiatePayment(registrationResponse.registration_id, this.amount)
+            .subscribe({
+              next: (paymentResponse) => {
+                window.location.href = paymentResponse.payment_link;
+              },
+              error: (err) => {
+                console.error('Payment initiation failed', err);
+              }
+            });
+        },
+        error: (err) => {
+          console.error('Event registration failed', err);
+        }
+      });
   }
-  
+
 }

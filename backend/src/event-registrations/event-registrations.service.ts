@@ -31,25 +31,31 @@ export class EventRegistrationsService {
         }
       });
     
-      // Calculate total booked places
+      // Calculate total booked places - include both PAID and FREE statuses
       const totalBookedPlaces = await this.eventRegistrationRepository
         .createQueryBuilder('registration')
         .where('registration.event_id = :eventId', { eventId: event.id })
-        .andWhere('registration.status = :status', { status: 'PAID' })
+        .andWhere('registration.status IN (:...statuses)', { statuses: ['PAID', 'FREE'] })
         .select('SUM(registration.number_of_places)', 'total')
         .getRawOne();
       
       const currentBookedPlaces = Number(totalBookedPlaces.total) || 0;
       const requestedPlaces = Number(createEventRegistrationDto.number_of_places);
+      
       if (currentBookedPlaces + requestedPlaces > event.capacity) {
         throw new HttpException(
           `Only ${event.capacity - currentBookedPlaces} places remaining`,
           HttpStatus.BAD_REQUEST
         );
       }
+  
       if (existingRegistration) {
         existingRegistration.number_of_places += requestedPlaces;
-        existingRegistration.amount += event.price * requestedPlaces;
+        existingRegistration.amount = event.price * existingRegistration.number_of_places;
+        // For free events, mark as FREE
+        if (event.price === 0) {
+          existingRegistration.status = 'FREE';
+        }
         
         await this.eventRegistrationRepository.save(existingRegistration);
         
@@ -59,26 +65,46 @@ export class EventRegistrationsService {
           total_places: existingRegistration.number_of_places
         };
       }
-    const registration = await this.createRegistration(createEventRegistrationDto,user);
-    
-    try {
+  
+      const registration = await this.createRegistration(createEventRegistrationDto, user);
+      if (event.price === 0) {
+        registration.status = 'FREE';
+      }
       
-      await this.eventRegistrationRepository.save(registration);
-
-      return {
-        registration_id: registration.id,
-        status: registration.status
-      };
-    } catch (error) {
-      await this.eventRegistrationRepository.remove(registration);
-      throw new HttpException(
-        'Failed to create registration',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      );
+      try {
+        await this.eventRegistrationRepository.save(registration);
+  
+        return {
+          registration_id: registration.id,
+          status: registration.status
+        };
+      } catch (error) {
+        await this.eventRegistrationRepository.remove(registration);
+        throw new HttpException(
+          'Failed to create registration',
+          HttpStatus.INTERNAL_SERVER_ERROR
+        );
+      }
     }
-  }
-
-
+  
+    async findAvailablePlaces(eventId: number): Promise<number> {
+      const event = await this.eventRepository.findOne({ where: { id: eventId } });
+      
+      if (!event) {
+        throw new HttpException('Event not found', HttpStatus.NOT_FOUND);
+      }
+    
+      const totalBookedPlaces = await this.eventRegistrationRepository
+        .createQueryBuilder('registration')
+        .where('registration.event_id = :eventId', { eventId })
+        .andWhere('registration.status IN (:...statuses)', { statuses: ['PAID', 'FREE'] })
+        .select('SUM(registration.number_of_places)', 'total')
+        .getRawOne();
+      
+      const currentBookedPlaces = totalBookedPlaces.total || 0;
+      return event.capacity - currentBookedPlaces;
+    }
+  
 
   private async createRegistration(dto: CreateEventRegistrationDto , user) {
     const event = await this.eventRepository.findOne({
@@ -128,22 +154,6 @@ export class EventRegistrationsService {
       relations: ['user']
     });
   }
-  async findAvailablePlaces(eventId: number): Promise<number> {
-    const event = await this.eventRepository.findOne({ where: { id: eventId } });
-    
-    if (!event) {
-      throw new HttpException('Event not found', HttpStatus.NOT_FOUND);
-    }
   
-    const totalBookedPlaces = await this.eventRegistrationRepository
-      .createQueryBuilder('registration')
-      .where('registration.event_id = :eventId', { eventId })
-      .andWhere('registration.status = :status', { status: 'PAID' })
-      .select('SUM(registration.number_of_places)', 'total')
-      .getRawOne();
-    
-    const currentBookedPlaces = totalBookedPlaces.total || 0;
-    return event.capacity - currentBookedPlaces;
-  }
 
 }
