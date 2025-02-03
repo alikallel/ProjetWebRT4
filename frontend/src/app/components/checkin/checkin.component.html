@@ -1,27 +1,51 @@
-<div *ngIf="error" class="error-state">
-  Failed to load users. Please try again later.
-</div>
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Photo</th>
+        <th>Username</th>
+        <th>Status</th>
+        <th>Registration Date</th>
+        <th>Number of Places</th>
+        <th>Check-in</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Error state row -->
+      <tr *ngIf="error">
+        <td colspan="5" class="text-danger">
+          Failed to load users. Please try again later.
+        </td>
+      </tr>
 
-<div class="user-list">
-  <div *ngIf="users.length === 0">
-    There are no registered users till now.
-  </div>
+      <!-- No users row -->
+      <tr *ngIf="!error && users.length === 0">
+        <td colspan="5">
+          There are no registered users till now.
+        </td>
+      </tr>
 
-  <div *ngFor="let user of users" 
-       class="user-card" 
-       [ngClass]="{
-         'checked-in': user.checkedIn,
-         'not-checked-in': !user.checkedIn
-       }">
-    <!--<img [src]="user.photo" alt="{{user.username}}'s photo" class="user-photo"> --> <!-- Uncomment if user photo exists -->
-    <div class="user-details">
-      <h3>{{ user.username }}</h3>
-      <p>Status: {{ user.status }}</p>
-      <p>Registration Date: {{ user.registrationDate | date:'shortDate' }}</p> <!-- Use Angular Date Pipe -->
-    </div>
-    <label>
-      Check-in:
-      <input type="checkbox" [(ngModel)]="user.checkedIn" (change)="toggleCheckIn(user)">
-    </label>
-  </div>
+      <tr *ngFor="let user of users" 
+          [ngClass]="{
+            'checked-in': user.checkedIn,
+            'not-checked-in': !user.checkedIn
+          }">
+        <td>
+          <img [src]="user.userPhoto" 
+               alt="{{ user.username }}'s photo" 
+               class="user-photo" 
+               style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+        </td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.status }}</td>
+        <td>{{ user.registrationDate | date:'shortDate' }}</td>
+        <td>{{ user.numPlaces }}</td>
+        <td>
+          <input type="checkbox" 
+                 [(ngModel)]="user.checkedIn" 
+                 (change)="toggleCheckIn(user)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
