@@ -16,10 +16,13 @@ import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
 import { HomeComponent } from './components/home/home.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
+import { LoginGuard } from './guards/login.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
-  { path: 'events/page/:page', component: EventListComponent },
+  { path: 'events/page/:page', component: EventListComponent, canActivate: [LoginGuard] },
   { path: 'add-event', component: EventFormComponent },
   { path: 'event-details/:id', component: EventDetailComponent },
   // { path: 'auth', component: AuthComponent },
@@ -30,10 +33,11 @@ const routes: Routes = [
   { path: 'charts/:id', component: ChartsComponent},
   { path: 'registration-details/:id', component: RegistrationDetailsComponent },
   { path: 'user-history', component: UserHistoryComponent },
-  {path: 'my-event', component: MyEventComponent},
+  {path: 'my-event', component: MyEventComponent, canActivate: [LoginGuard, RoleGuard]},
   //{ path: '**', redirectTo: '/events/page/1' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
   //{ path: '**', redirectTo: 'login' },
   { path: '', component : HomeComponent}
 
