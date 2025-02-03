@@ -1,10 +1,10 @@
-<!-- register.component.html -->
+
+<app-auth-layout>
 <app-form-container
   title="Register"
   submitText="Create Account"
   (formSubmit)="onSubmit()"
 >
-  <!-- Username -->
   <app-input
     label="Username"
     type="text"
@@ -13,7 +13,6 @@
     [errorMessage]="registerForm.controls.username.errors | validationMessage"
   ></app-input>
 
-  <!-- Email -->
   <app-input
     label="Email"
     type="email"
@@ -22,7 +21,6 @@
     [errorMessage]="registerForm.controls.email.errors | validationMessage"
   ></app-input>
 
-  <!-- Password -->
   <app-input
     label="Password"
     type="password"
@@ -31,7 +29,6 @@
     [errorMessage]="registerForm.controls.password.errors | validationMessage"
   ></app-input>
 
-    <!-- Role Select -->
     <app-select
     label="Role"
     [options]="roles"
@@ -40,7 +37,6 @@
     [errorMessage]="registerForm.controls.role.errors | validationMessage"
   ></app-select>
 
-  <!-- Gender Select -->
   <app-select
     label="Gender"
     [options]="genders"
@@ -60,3 +56,5 @@
     <p>Already have an account? <a routerLink="/login">Login</a></p>
   </div>
 </app-form-container>
+</app-auth-layout>
+

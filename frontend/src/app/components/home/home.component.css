@@ -7,6 +7,18 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  body {
+    position: relative;
+    background-image: linear-gradient(to right, rgba(255,255,255,0) 0 100%), url('/assets/HadathRect.png') ;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -moz-box-shadow: inset 0px 0px 47px 3px  #1976d2;
+-webkit-box-shadow: inset 0px 0px 47px 3px  #1976d2;
+box-shadow: inset 0px 0px 277px 3px  #1976d2;
+    min-height: 100vh; /* ensures the body takes up full viewport height */
+  }
+  
   h1,
   h2,
   h3,
@@ -33,16 +45,33 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 90px;
     display: flex;
     align-items: center;
     background-color: #1976d2;
     color: white;
     font-weight: 600;
+    clip-path: 0 0, 100% 0, 100% 100%, 50% 100%, 90% 100% ,0 100%;
+  }
+
+  .toolbar a {
+    color: white;
+    margin: 0 10px;
+  }
+  .toolbar a:hover {
+    color: #125699;
+    margin: 0 10px;
+  }
+
+  .logo-image {
+    background-color: white;
+    float: right;
   }
 
   .toolbar img {
     margin: 0 16px;
+    float: right;
+    border-radius: 50%;
   }
 
   .toolbar #twitter-logo {
@@ -131,6 +160,7 @@
   .card.highlight-card {
     background-color: #1976d2;
     color: white;
+    opacity: 0.7;
     font-weight: 600;
     border: none;
     width: auto;

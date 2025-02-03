@@ -62,6 +62,18 @@
         formControlName="capacity"
         [errorMessage]="getCapacityErrorMessage()"
       ></app-input>
+      <!-- Add a file input field for image upload -->
+      <div class="form-group">
+        <label for="image">Event Image (Optional)</label>
+        <input
+          type="file"
+          id="image"
+          class="form-control"
+          (change)="onFileChange($event)"
+          accept="image/*"
+        />
+        <small class="form-text text-muted">Upload an image for your event (optional).</small>
+      </div>
     </app-form-container>
   </div>
 

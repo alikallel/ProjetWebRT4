@@ -31,4 +31,8 @@ export class Event {
   
   @OneToMany(() => EventRegistration, registration => registration.event)
   registrations: EventRegistration[];
+  
+  @Column({ nullable: true, type: 'varchar', length: 255 })
+  image?: string;
+  
 }

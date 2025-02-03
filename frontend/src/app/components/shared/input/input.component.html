@@ -9,7 +9,7 @@
       (blur)="onTouched()"
       class="form-control"
     >
-    <div *ngIf="errorMessage" class="error-message">
+    <div *ngIf="touched && errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
 </div>

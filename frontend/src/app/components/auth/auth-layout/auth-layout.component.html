@@ -1,0 +1,27 @@
+<div class="auth-container">
+    <div class="image-section" [style.backgroundImage]="'url(' + currentImage + ')'">
+      <div class="overlay"></div>
+      <div class="content-wrapper">
+        <div class="home-link">
+            <a [routerLink]="['/']" class="icon-circle">
+              <i class="fas fa-home"></i>
+            </a>
+          </div>
+        <div class="main-title">
+          <h1>Event</h1>
+          <p class="tagline">Where Memories Begin</p>
+        </div>
+        <div class="bottom-text">
+          <p>Create, Connect, and Celebrate Together</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+        <div class="form-wrapper">
+            <div class="form-container"> 
+      <ng-content></ng-content>
+      </div>
+      </div>
+    </div>
+  </div>
+  

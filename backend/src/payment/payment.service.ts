@@ -100,10 +100,6 @@ export class PaymentService {
         throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
       }
 
-    const registration = payment.registration;
-    registration.payment_id = paymentId;
-    await this.eventRegistrationRepository.save(registration);
-
       return await this.processPaymentVerification(payment, verificationResult);
     } catch (error) {
       throw new HttpException(
@@ -128,15 +124,11 @@ export class PaymentService {
   }
 
   private async processPaymentVerification(payment: Payment, verificationResult: any) {
-    console.log("this is ", verificationResult);
-    console.log("this is ", payment);
     if (verificationResult.result.status === 'SUCCESS') {
-      console.log("this is ", payment);
       payment.status = 'COMPLETED';
       payment.payer_name = verificationResult.result.details.name;
       payment.payer_email = verificationResult.result.details.email;
       payment.payer_phone = verificationResult.result.details.phone_number;
-      console.log("this is ", payment);
       await this.paymentRepository.save(payment);
 
       const registration = payment.registration;

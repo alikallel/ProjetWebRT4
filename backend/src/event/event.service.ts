@@ -1,10 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
 import { CreateEventDto } from './dto/add-event.dto';
 import { UserService } from '../user/user.service';  
 import { User } from 'src/auth/user.entity';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -23,18 +24,25 @@ export class EventService {
       },
     });  }
 
-    async createEvent(createEventDto: CreateEventDto, user: User): Promise<Event> {
+    async createEvent(createEventDto: CreateEventDto, user: User, file?: Express.Multer.File): Promise<Event> {
       if (!user) {
         throw new UnauthorizedException('User not authenticated');
       }
-    
+  
+      const imagePath = file ? file.path : null;  
       const event = this.eventRepository.create({
         ...createEventDto,
-        organizer: user, 
+        image: imagePath, 
+        organizer: user,
       });
-    
-      return this.eventRepository.save(event);
-    }
+  
+      try {
+        return await this.eventRepository.save(event);
+      } catch (error) {
+        console.error('Error saving event:', error);
+        throw new InternalServerErrorException('Failed to save event');
+      }
+          }
     
   async getEventById(id: number): Promise<Event> {
     const event = await this.eventRepository.findOneBy({ id });
@@ -51,11 +59,12 @@ export class EventService {
     });
   
     if (events.length === 0) {
-      throw new Error(`No events found for organizer with ID ${organizerId}`);
+      throw new NotFoundException(`No events found for organizer with ID ${organizerId}`);
     }
   
     return events;
   }
+  
   async validateEventOwnership(eventId: number, user: User) {
     const event = await this.getEventById(eventId);
 
@@ -64,5 +73,30 @@ export class EventService {
     }
     
     return event;
+  }
+  async updateEvent(id: number, updateEventDto: UpdateEventDto, user: User): Promise<Event> {
+    const event = await this.eventRepository.findOne({
+      where: { id },
+      relations: ['organizer'], 
+    });
+
+    if (!event) {
+      throw new NotFoundException(`Event with ID ${id} not found`);
+    }
+
+    if (event.organizer.id !== user.id) {  
+      throw new UnauthorizedException('You can only update your own events');
+    }
+
+    Object.assign(event, updateEventDto);
+    return this.eventRepository.save(event);
+  }
+  async updateEventImage(id: number, imagePath: string, user: User): Promise<Event> {
+    const event = await this.validateEventOwnership(id, user);
+    
+    // Update the image path
+    event.image = imagePath;
+    
+    return this.eventRepository.save(event);
   }
 }

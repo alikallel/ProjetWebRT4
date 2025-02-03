@@ -1,4 +1,12 @@
 <div class="card shadow-sm">
+  <!-- Image container with corrected src path -->
+  <div class="card-image-container">
+    <img 
+      [src]="event.image | defaultImage" 
+      [alt]="event.title"
+      class="card-img-top"
+    >
+  </div>
   <div class="card-body">
     <h5 class="card-title">{{ event.title }}</h5>
     <div class="card-text">
@@ -16,8 +24,8 @@
       </div>
     </div>
     <p></p>
-    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md custom-button" [routerLink]="['/event-details', event.id]">View Details</button>    <p></p>
-    <!-- Disable button if capacity is 0 -->
+    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md custom-button" [routerLink]="['/event-details', event.id]">View Details</button>
+    <p></p>
     <button 
       class="btn btn-primary" 
       (click)="onRegisterClick()" 

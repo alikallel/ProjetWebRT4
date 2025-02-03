@@ -11,7 +11,6 @@ import { EventComponent } from './components/event/event.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
@@ -25,12 +24,19 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { PopularEventsComponent } from './components/popular-events/popular-events.component';
 import { FormContainerComponent } from './components/shared/form-container/form-container.component';
 import { InputComponent } from './components/shared/input/input.component';
 import { ValidationMessagePipe } from './components/shared/validation-message.pipe';
 import { SelectComponent } from './components/shared/select/select.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
+import { SliderComponent } from './components/slider/slider.component';
+//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { DefaultImagePipe } from './pipes/default-image.pipe';
 
 
 @NgModule({
@@ -57,6 +63,11 @@ import { SelectComponent } from './components/shared/select/select.component';
     UserHistoryComponent,
     LoginComponent,
     RegisterComponent,
+    MyEventComponent,
+    SliderComponent,
+    AuthLayoutComponent,
+    AboutUsComponent,
+    DefaultImagePipe
   ],
   imports: [
     BrowserModule,
@@ -67,7 +78,8 @@ import { SelectComponent } from './components/shared/select/select.component';
     ReactiveFormsModule,
     NgChartsModule,
     QRCodeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]

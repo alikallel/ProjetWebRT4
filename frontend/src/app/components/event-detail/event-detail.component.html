@@ -1,55 +1,129 @@
-<div class="event-detail-container p-5" *ngIf="eventData">
-  <!-- Header Section -->
-  <div class="header flex justify-between items-center mb-6">
-    <h2 class="event-title text-4xl font-bold">{{ eventData.title }}</h2>
-    <button class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/events">
-      Back to Events
-    </button>
-  </div>
-
-  <!-- Event Information -->
-  <div class="event-info grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded-xl shadow-md">
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Description</h2>
-      <p>{{ eventData.description }}</p>
-    </div>
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Date</h2>
-      <p>{{ eventData.date | date: 'fullDate' }}</p>
-    </div>
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Location</h2>
-      <p>{{ eventData.location }}</p>
-    </div>
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Price</h2>
-      <p>{{ eventData.price }}DT</p>
-    </div>
-    <div class="event-section">
-      <h2 class="text-xl font-semibold">Capacity</h2>
-      <p>{{ eventData.capacity }} attendees</p>
-    </div>
-  </div>
-
-  <!-- Organizer Events Section -->
-  <div class="mt-8">
-    <h3 class="event-title text-4xl font-bold">Other Events by {{ eventData?.organizer.username }}</h3>
-    <p></p>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let event of organizerEvents" class="bg-white p-4 shadow-lg rounded-xl border border-gray-200 hover:shadow-xl transform hover:scale-105 transition duration-300">
-        <h4 class="text-xl font-bold text-gray-800 mb-2">{{ event.title }}</h4>
-        <p class="text-sm text-gray-500">{{ event.date | date }}</p>
-        <div class="mt-4">
-          <a 
-  class="text-blue-600 hover:underline font-medium cursor-pointer"
-  [routerLink]="['/event-details', event.id]" 
-  routerLinkActive="active" >
-  View Details
-</a>
-       </div>
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="event-banner position-relative">
+        <img [src]="eventData.image | defaultImage" 
+             alt="{{ eventData.title }}" 
+             class="img-fluid w-100 banner-image">
+        
+        <!-- Image upload button -->
+        <button *ngIf="isEventMaster()" 
+                class="btn btn-primary rounded-circle position-absolute upload-btn"
+                (click)="triggerFileInput()"
+                title="Upload new image">
+          <fa-icon [icon]="faUpload"></fa-icon>
+        </button>
+        
+        <!-- Hidden file input -->
+        <input type="file"
+               id="imageUpload"
+               (change)="onFileSelected($event)"
+               accept="image/*"
+               class="d-none">
       </div>
     </div>
   </div>
   
-  
-  
+  <div class="row">
+    <div class="col-md-8">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="event-title mb-0">{{ eventData.title }}</h1>
+        <div class="action-buttons">
+          <button *ngIf="isEventMaster()" 
+                  class="btn btn-outline-primary me-2" 
+                  (click)="toggleEditMode()">
+            <fa-icon [icon]="faEdit"></fa-icon> Edit Event
+          </button>
+          <button class="btn btn-outline-secondary" 
+                  routerLink="/events">
+            Back to Events
+          </button>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Description</h5>
+          <p *ngIf="!editMode" class="card-text">{{ eventData.description }}</p>
+          <textarea *ngIf="editMode" 
+                   [(ngModel)]="eventData.description" 
+                   class="form-control"
+                   rows="4">
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Event Details -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Event Details</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Date:</strong>
+                {{ eventData.date | date: 'fullDate' }}</p>
+              <p><strong>Location:</strong>
+                {{ eventData.location }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Price:</strong>
+                {{ eventData.price }}DT</p>
+              <p>
+                <strong>Capacity:</strong>
+                <span *ngIf="!editMode">{{ eventData.capacity }} attendees</span>
+                <input *ngIf="editMode" 
+                       type="number" 
+                       class="form-control"
+                       [(ngModel)]="availablePlaces" 
+                       (change)="onCapacityChange($event)">
+              </p>
+              <p><strong>Available Places:</strong>
+                {{ availablePlaces !== undefined ? (availablePlaces > 0 ? availablePlaces + ' places' : 'Fully Booked') : 'Loading...' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="editMode" class="mt-3">
+        <button class="btn btn-primary me-2" (click)="updateEvent()">Save Changes</button>
+        <button class="btn btn-secondary" (click)="toggleEditMode()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card sticky-top" style="top: 20px">
+        <div class="card-body">
+          <h5 class="card-title">Event Registration</h5>
+          <p class="card-text">
+            <strong>Available Places:</strong>
+            {{ availablePlaces !== undefined ? (availablePlaces > 0 ? availablePlaces + ' places' : 'Fully Booked') : 'Loading...' }}
+          </p>
+          <p class="card-text">
+            <strong>Price:</strong>
+            {{ eventData.price }}DT
+          </p>
+          <button class="btn btn-primary w-100" 
+                  [disabled]="availablePlaces === 0"
+                  data-bs-toggle="modal" 
+                  data-bs-target="#registerModal">
+            Register Now
+          </button>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Other Events by {{ eventData?.organizer.username }}</h5>
+          <div class="list-group list-group-flush">
+            <a *ngFor="let event of organizerEvents" 
+               [routerLink]="['/event-details', event.id]" 
+               class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ event.title }}</h6>
+                <small>{{ event.date | date }}</small>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
