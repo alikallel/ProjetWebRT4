@@ -37,6 +37,9 @@ import { SliderComponent } from './components/slider/slider.component';
 import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { DefaultImagePipe } from './pipes/default-image.pipe';
+import { LoginGuard } from './guards/login.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { RoleGuard } from './guards/role.guard';
 
 
 @NgModule({
@@ -67,7 +70,8 @@ import { DefaultImagePipe } from './pipes/default-image.pipe';
     SliderComponent,
     AuthLayoutComponent,
     AboutUsComponent,
-    DefaultImagePipe
+    DefaultImagePipe,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,7 @@ import { DefaultImagePipe } from './pipes/default-image.pipe';
     MatSnackBarModule,
     
   ],
-  providers: [LoginInterceptorProvider],
+  providers: [LoginInterceptorProvider,LoginGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
