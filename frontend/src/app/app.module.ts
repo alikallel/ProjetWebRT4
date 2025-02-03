@@ -22,7 +22,7 @@ import { RegistrationDetailsComponent } from './components/registration-details/
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
@@ -37,6 +37,9 @@ import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.c
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { DefaultImagePipe } from './pipes/default-image.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginGuard } from './guards/login.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { RoleGuard } from './guards/role.guard';
 
 
 @NgModule({
@@ -67,7 +70,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SliderComponent,
     AuthLayoutComponent,
     AboutUsComponent,
-    DefaultImagePipe
+    DefaultImagePipe,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule,
     
   ],
-  providers: [LoginInterceptorProvider],
+  providers: [LoginInterceptorProvider,LoginGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
