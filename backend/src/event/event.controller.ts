@@ -48,10 +48,6 @@ export class EventController {
       throw new UnauthorizedException('Only event masters can create events');
     }
   
-    if (user.role !== UserRole.EVENTMASTER) {
-      throw new UnauthorizedException('Only event masters can create events');
-    }
-  
     return this.eventService.createEvent(createEventDto, user, file);
   }
   

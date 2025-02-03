@@ -1,9 +1,8 @@
 export interface User {
-  id: number;
-  email: string;
-  role: string;
-  username: string;
-  photo?: string; 
-  gender: 'male' | 'female'; 
-  birthdate: Date; 
-}
+    id: number;
+    email: string;
+    role: string;
+    username: string;
+    photo?: string; 
+    password : string;
+  }
