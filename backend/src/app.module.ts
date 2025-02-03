@@ -20,7 +20,7 @@ dotenv.config()
       port: 3306,
       username:'root',
       password: '',
-      database: 'event_app',
+      database: 'framework',
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
