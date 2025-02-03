@@ -11,6 +11,8 @@ export class ChartsComponent {
 
   eventId: number | null = null;
   isDataLoaded = [false,false,false]; 
+  error = false;
+  
 
   registeredVsAttendedData = [
     {
@@ -57,6 +59,7 @@ export class ChartsComponent {
               this.isDataLoaded[0] = true;
             },
             error: (err) => {
+              this.error = true;
               console.error('Error fetching users:', err);
             }
           });
@@ -69,6 +72,7 @@ export class ChartsComponent {
               this.cdr.detectChanges();
             },
             error: (err) => {
+              this.error = true;
               console.error('Error fetching Gender Data:', err);
             }
           });
@@ -81,6 +85,7 @@ export class ChartsComponent {
               this.isDataLoaded[2] = true;
             },
             error: (err) => {
+              this.error = true;
               console.error('Error fetching Age Data:', err);
             }
           });
