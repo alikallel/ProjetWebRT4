@@ -33,7 +33,7 @@ import { ValidationMessagePipe } from './components/shared/validation-message.pi
 import { SelectComponent } from './components/shared/select/select.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+//import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { DefaultImagePipe } from './pipes/default-image.pipe';
@@ -79,7 +79,7 @@ import { DefaultImagePipe } from './pipes/default-image.pipe';
     NgChartsModule,
     QRCodeModule,
     MatSnackBarModule,
-    FontAwesomeModule ,
+    
   ],
   providers: [LoginInterceptorProvider],
   bootstrap: [AppComponent]
