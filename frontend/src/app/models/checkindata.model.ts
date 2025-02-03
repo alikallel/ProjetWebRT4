@@ -10,6 +10,7 @@ export interface CheckInData {
   username: string;      
   status: Status; 
   userPhoto: string;
+  numPlaces: number;
   registrationDate: Date;
   checkedIn: boolean;
 
