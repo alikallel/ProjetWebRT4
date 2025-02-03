@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ChartsComponent {
 
   eventId: number | null = null;
-  isDataLoaded = false; 
+  isDataLoaded = [false,false,false]; 
 
   registeredVsAttendedData = [
     {
@@ -54,6 +54,7 @@ export class ChartsComponent {
           .subscribe({
             next: (data) => {
               this.registeredVsAttendedData[0].data = [data.Reg, data.Att];
+              this.isDataLoaded[0] = true;
             },
             error: (err) => {
               console.error('Error fetching users:', err);
@@ -63,10 +64,8 @@ export class ChartsComponent {
           this.http.get<{ male: number, female: number }>(`http://localhost:3000/chartsdata/genders/${Id}`)
           .subscribe({
             next: (data) => {
-              console.log(data);
               this.gendersData[0].data = [data.male, data.female];
-              this.isDataLoaded = true;
-              console.log("hllo",this.gendersData);
+              this.isDataLoaded[1] = true;
               this.cdr.detectChanges();
             },
             error: (err) => {
@@ -79,6 +78,7 @@ export class ChartsComponent {
             next: (data) => {
               this.ageLabels = Object.keys(data);
               this.ageData[0].data = Object.values(data);
+              this.isDataLoaded[2] = true;
             },
             error: (err) => {
               console.error('Error fetching Age Data:', err);
