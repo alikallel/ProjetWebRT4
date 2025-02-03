@@ -1,0 +1,39 @@
+.form-group {
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 2px solid #96EFFF;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: #5FBDFF;
+    box-shadow: 0 0 0 4px rgba(95, 189, 255, 0.5);
+    background: white;
+  }
+  
+  .error-message {
+    color: #ff4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ff4444;
+    display: inline-block;
+  }

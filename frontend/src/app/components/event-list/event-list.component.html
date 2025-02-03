@@ -11,7 +11,7 @@
         (ngModelChange)="filterEvents()"
         style="width: 300px; margin-right: 10px;" />
       
-      <button class="btn btn-danger" routerLink="/add-event">Add New Event</button>
+      <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md" routerLink="/my-event">My Event</button>
     </div>
   </div>
 
@@ -26,6 +26,7 @@
       <app-event [event]="event" (register)="openRegisterModal($event)"></app-event>
     </div>
   </div>
+  
   <!-- Ticket Modal -->
 <!-- Ticket Modal -->
 <div
@@ -61,6 +62,15 @@
             <i class="fas fa-money-bill-wave"></i>
             <strong>Price:</strong> {{ selectedEvent?.price }} TND
           </p>
+          <p>
+            <i class="fas fa-chair"> </i>
+            <strong>Available Places:</strong> 
+            {{ availablePlacesMap[selectedEvent?.id] !== undefined 
+               ? (availablePlacesMap[selectedEvent?.id] > 0 
+                  ? availablePlacesMap[selectedEvent?.id] + ' places' 
+                  : 'Fully Booked') 
+               : 'Loading...' }}
+          </p>
         </div>
 
         <!-- Gestion de la quantité -->
@@ -95,12 +105,20 @@
         >
           Fermer
         </button>
-        <button
+          <button
           type="button"
-          class="btn btn-danger"
+          [class]="selectedEvent?.price === 0 ? 'btn btn-success' : 'btn btn-danger'"
           (click)="makePayment()"
         >
-          <i class="fas fa-credit-card"></i> Payer
+          <ng-container *ngIf="selectedEvent?.price !== 0">
+            <img 
+              src="https://developersdev.flouci.com/static/flouci_icon.png" 
+              [style.height.px]="20"
+              [style.marginRight.px]="5"
+              alt="Flouci"
+            >
+          </ng-container>
+          {{ selectedEvent?.price === 0 ? 'Register' : 'Pay' }}
         </button>
       </div>
     </div>

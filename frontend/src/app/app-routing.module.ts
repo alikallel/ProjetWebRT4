@@ -14,6 +14,8 @@ import { RegistrationDetailsComponent } from './components/registration-details/
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
+import { HomeComponent } from './components/home/home.component';
+import { MyEventComponent } from './components/my-event/my-event.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -24,14 +26,16 @@ const routes: Routes = [
   {path: 'profile', component:ProfileComponent},
   { path: 'payment/success', component: PaymentSuccessComponent },
   { path: 'payment/fail', component: PaymentFailComponent },
-  { path: 'CheckList/:id', component: CheckIn },
-  { path: 'Charts/:id', component: ChartsComponent},
+  { path: 'checklist/:id', component: CheckIn },
+  { path: 'charts/:id', component: ChartsComponent},
   { path: 'registration-details/:id', component: RegistrationDetailsComponent },
   { path: 'user-history', component: UserHistoryComponent },
+  {path: 'my-event', component: MyEventComponent},
   //{ path: '**', redirectTo: '/events/page/1' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   //{ path: '**', redirectTo: 'login' },
+  { path: '', component : HomeComponent}
 
 
 ];

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable } from 'rxjs';
 import { Event } from '../models/event.model';
 
 @Injectable({
@@ -12,13 +12,49 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.apiUrl);
+    return this.http.get<Event[]>(this.apiUrl, this.getAuthHeaders());
   }
 
-  addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.apiUrl, event);
+  addEvent(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData, this.getAuthHeaders());
   }
+  
+
   getEventById(id: string): Observable<Event> {
-    return this.http.get<Event>(`${this.apiUrl}/${id}`);
+    return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders()).pipe(
+      catchError(error => {
+        console.error('Error fetching event:', error);
+        throw error;
+      })
+    );
   }
+
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token'); 
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+  }
+
+  getEventsByOrganizerId(organizerId: number): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.apiUrl}/organizer/${organizerId}`, this.getAuthHeaders());
+  }
+
+  getMyEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.apiUrl}/myevents`, this.getAuthHeaders());
+  }
+
+  patchEvent(id: string, payload: Partial<Event>): Observable<Event> {
+    return this.http.patch<Event>(`${this.apiUrl}/${id}`, payload, this.getAuthHeaders());
+  }
+  updateEventImage(id: string, formData: FormData): Observable<Event> {
+    return this.http.patch<Event>(
+      `${this.apiUrl}/${id}/image`,
+      formData,
+      this.getAuthHeaders()
+    );
+  }
+  
 }

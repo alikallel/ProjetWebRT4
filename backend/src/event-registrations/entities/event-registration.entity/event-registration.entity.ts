@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, OneToMany } from 'typeorm';
 import { User } from '../../../auth/user.entity';
 import { Event } from '../../../event/entities/event.entity';
+import { Payment } from 'src/payment/entities/payment.entity/payment.entity';
 
 @Entity('event_registrations')
 export class EventRegistration {
@@ -23,7 +24,7 @@ export class EventRegistration {
 
   @Column({
     type: 'enum',
-    enum: ['PENDING', 'PAID', 'CANCELLED', 'REFUNDED'],
+    enum: ['PENDING', 'PAID', 'CANCELLED', 'FREE'],
     default: 'PENDING'
   })
   status: string;
@@ -37,10 +38,10 @@ export class EventRegistration {
   @Column({ default: 1 })
   number_of_places: number;
 
-  @Column({ nullable: true })
-  payment_id: string;
- 
   @Column({ type: 'boolean', default: false }) 
   checkedIn: boolean;
+  
+  @OneToMany(() => Payment, payment => payment.registration)
+  payments: Payment[];
 
 }

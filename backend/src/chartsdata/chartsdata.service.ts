@@ -50,36 +50,35 @@ export class ChartsdataService {
     };
   }
 
-  // Function 3: Returns age percentages (young vs adult vs aged)
   async getAge(eventId: number) {
-    const youngCount = await this.eventRegistrationRepository
-        .createQueryBuilder('registration')
-        .leftJoinAndSelect('registration.user', 'user')
-        .where('registration.event_id = :eventId', { eventId })
-        .andWhere('user.age < :youngAge', { youngAge: 18 })
-        .getCount();
+    const ageRanges = [
+        { min: 0, max: 18, label: '0-18' },
+        { min: 19, max: 35, label: '19-35' },
+        { min: 36, max: 55, label: '36-55' },
+        { min: 56, max: 999, label: '56+' },
+    ];
 
-    const adultCount = await this.eventRegistrationRepository
-        .createQueryBuilder('registration')
-        .leftJoinAndSelect('registration.user', 'user')
-        .where('registration.event_id = :eventId', { eventId })
-        .andWhere('user.age >= :adultMinAge AND user.age <= :adultMaxAge', {
-          adultMinAge: 18,
-          adultMaxAge: 65,
-        })
-        .getCount();
+    const ageCountPromises = ageRanges.map(async (range) => {
+        const count = await this.eventRegistrationRepository
+            .createQueryBuilder('registration')
+            .leftJoinAndSelect('registration.user', 'user')
+            .where('registration.event_id = :eventId', { eventId })
+            // Calculate age using birthdate and current date
+            .andWhere('TIMESTAMPDIFF(YEAR, user.birthdate, CURDATE()) BETWEEN :minAge AND :maxAge', {
+                minAge: range.min,
+                maxAge: range.max,
+            })
+            .getCount();
 
-    const agedCount = await this.eventRegistrationRepository
-        .createQueryBuilder('registration')
-        .leftJoinAndSelect('registration.user', 'user')
-        .where('registration.event_id = :eventId', { eventId })
-        .andWhere('user.age > :agedAge', { agedAge: 65 })
-        .getCount();
+        return { [range.label]: count };
+    });
 
-    return{
-        young: youngCount ,
-        adult: adultCount,
-        aged: agedCount ,
-      };
-  }
+    const results = await Promise.all(ageCountPromises);
+
+    const ageCount = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+    return ageCount;
+}
+
+
 }

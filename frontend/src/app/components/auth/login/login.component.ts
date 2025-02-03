@@ -1,7 +1,10 @@
+// login.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder } from '@angular/forms';
+import { ValidationService } from '../../shared/validation.service';
 
 @Component({
   selector: 'app-login',
@@ -9,15 +12,36 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['../auth.styles.css'],
 })
 export class LoginComponent {
-  email = '';
-  password = '';
+  loginForm = this.fb.group({
+    email: ['', [
+      ValidationService.required('Email is required'),
+      ValidationService.email('Invalid email format')
+    ]],
+    password: ['', [
+      ValidationService.required('Password is required'),
+      ValidationService.minLength(6, 'Password must be at least 6 characters')
+    ]]
+  });
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
-  login() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: () => this.router.navigate(['/events']),
-      error: () => this.snackBar.open('Login failed. Please check your credentials.', 'Close', { duration: 3000 }),
-    });
+  onSubmit() {
+    console.log('Form submission triggered');
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email!, password!).subscribe({
+        next: () => this.router.navigate(['/']),
+        error: () => this.snackBar.open(
+          'Login failed. Please check your credentials.', 
+          'Close', 
+          { duration: 3000 }
+        ),
+      });
+    }
   }
 }

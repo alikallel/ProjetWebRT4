@@ -24,30 +24,36 @@ export class AuthService {
     }
   }
 
-  async register(registerDto : RegisterDto) {
-    const { email, username, password, role } = registerDto;
-
+  async register(registerDto: RegisterDto) {
+    const { email, username, password, role, gender, birthdate } = registerDto;
+  
+    // Check if email already exists
     const existingUser = await this.userRepository.findOne({ where: { email } });
     if (existingUser) {
       throw new UnauthorizedException('Email already registered');
     }
-
+  
     const existingUsername = await this.userRepository.findOne({ where: { username } });
     if (existingUsername) {
       throw new UnauthorizedException('Username already exists');
     }
-
+  
     const hashedPassword = await bcrypt.hash(password, 10);
+  
     const newUser = this.userRepository.create({
       email,
       username,
       role: role as UserRole,
       password: hashedPassword,
+      gender,
+      birthdate, 
     });
+  
     await this.userRepository.save(newUser);
-
+  
     return { message: 'User registered successfully' };
   }
+  
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
@@ -68,6 +74,7 @@ export class AuthService {
     return {
       message: 'Login successful',
       accessToken,
+      role: user.role,
     };
   }
 
