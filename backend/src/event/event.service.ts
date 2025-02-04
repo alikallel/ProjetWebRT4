@@ -58,10 +58,6 @@ export class EventService {
       relations: ['organizer'],
     });
   
-    if (events.length === 0) {
-      throw new NotFoundException(`No events found for organizer with ID ${organizerId}`);
-    }
-  
     return events;
   }
   

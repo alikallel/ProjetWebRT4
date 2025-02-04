@@ -6,7 +6,6 @@
              alt="{{ eventData.title }}" 
              class="img-fluid w-100 banner-image">
         
-        <!-- Image upload button -->
         <button *ngIf="isOrganizer && isEventMaster()" class="btn btn-primary rounded-circle position-absolute upload-btn"
 
                 (click)="triggerFileInput()"
@@ -14,7 +13,6 @@
           <fa-icon [icon]="faUpload"></fa-icon>
         </button>
         
-        <!-- Hidden file input -->
         <input type="file"
                id="imageUpload"
                (change)="onFileSelected($event)"
@@ -53,7 +51,6 @@
         </div>
       </div>
 
-      <!-- Event Details -->
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Event Details</h5>
@@ -68,8 +65,8 @@
               <p><strong>Price:</strong>
                 {{ eventData.price }}DT</p>
               <p>
-                <strong>Capacity:</strong>
-                <span *ngIf="!editMode">{{ eventData.capacity }} attendees</span>
+                <strong>Capacity: </strong>
+                <span *ngIf="!editMode">{{ eventData.capacity }} places</span>
                 <input *ngIf="editMode" 
                        type="number" 
                        class="form-control"
@@ -102,8 +99,7 @@
           </p>
           <button class="btn btn-primary w-100" 
                   [disabled]="availablePlaces === 0"
-                  data-bs-toggle="modal" 
-                  data-bs-target="#registerModal">
+                  (click)="openRegisterModal(eventData)">
             Register Now
           </button>
         </div>
@@ -127,3 +123,4 @@
     </div>
   </div>
 </div>
+<app-event-registration-modal></app-event-registration-modal>
