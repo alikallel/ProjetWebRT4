@@ -14,10 +14,12 @@ export class PopularEventsService {
   private apiUrl = 'http://localhost:3000/events';
   
     private http = inject(HttpClient);
+    private popularThreadhold = 100;
   
     getPopularEvents(): Observable<Event[]> {
       return this.http
       .get<{data :Event[]}>(this.apiUrl)
       .pipe(map(response => response.data));
     }
+    
 }

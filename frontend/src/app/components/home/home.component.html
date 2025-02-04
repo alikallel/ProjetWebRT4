@@ -6,13 +6,12 @@
       src="assets/hadath.png"
       class="logo-image"
     />
-
-
+<span>Welcome</span>
   <div class="spacer"></div>
   <a aria-label="sign in" target="_blank" rel="noopener" [routerLink]="['login']" title="login">
     Login
   </a>
-  <a aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['register']" title="register">
+  <a aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['rgister']" title="register">
     Register
      </a>
    
@@ -23,7 +22,7 @@
 <!-- Highlight Card -->
 <div class="card highlight-card card-small">
 
-  <span>{{ title }} app is running!</span>
+ <app-about-us></app-about-us>
  
    </div>
 
@@ -32,7 +31,6 @@
 <p>Here are some links to help you get started:</p>
 
 <app-popular-events></app-popular-events>
-
 
 </div>
 
