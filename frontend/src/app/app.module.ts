@@ -11,7 +11,6 @@ import { EventComponent } from './components/event/event.component';
 import { EventDetailComponent } from './components/event-detail/event-detail.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ProfileComponent } from './components/profile/profile.component';
 import { PaymentSuccessComponent } from './components/payment/payment-success/payment-success.component';
 import { PaymentFailComponent } from './components/payment/payment-fail/payment-fail.component';
 import { EventTicketComponent } from './components/payment/event-ticket/event-ticket.component';
@@ -23,8 +22,9 @@ import { RegistrationDetailsComponent } from './components/registration-details/
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { LoginInterceptorProvider } from './interceptors/login.interceptor';
+import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { PopularEventsComponent } from './components/popular-events/popular-events.component';
 import { FormContainerComponent } from './components/shared/form-container/form-container.component';
@@ -33,9 +33,13 @@ import { ValidationMessagePipe } from './components/shared/validation-message.pi
 import { SelectComponent } from './components/shared/select/select.component';
 import { MyEventComponent } from './components/my-event/my-event.component';
 import { SliderComponent } from './components/slider/slider.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthLayoutComponent } from './components/auth/auth-layout/auth-layout.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { DefaultImagePipe } from './pipes/default-image.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginGuard } from './guards/login.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { RoleGuard } from './guards/role.guard';
 
 
 @NgModule({
@@ -65,7 +69,9 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     MyEventComponent,
     SliderComponent,
     AuthLayoutComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    DefaultImagePipe,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -77,9 +83,9 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     NgChartsModule,
     QRCodeModule,
     MatSnackBarModule,
-    FontAwesomeModule ,
+    FontAwesomeModule,
   ],
-  providers: [LoginInterceptorProvider],
+  providers: [LoginInterceptorProvider,LoginGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

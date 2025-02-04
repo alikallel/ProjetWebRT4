@@ -11,5 +11,7 @@ export class UserDataDto {
   
     registrationDate: Date;
 
+    numPlaces: number;
+
     checkedIn : boolean;
   }

@@ -10,8 +10,8 @@ export class AuthLayoutComponent implements OnInit {
     '/assets/slider1.jpg',
     '/assets/slider2.jpg',
     '/assets/slider3.jpg',
-    '/assets/auth/image4.jpg',
-    '/assets/auth/image5.jpg'
+    '/assets/slider4.jpg',
+    '/assets/bolice.jpg'
   ];
 
   currentImage: string = '';

@@ -8,12 +8,15 @@
     />
 <span>Welcome</span>
   <div class="spacer"></div>
-  <a aria-label="sign in" target="_blank" rel="noopener" [routerLink]="['login']" title="login">
+  <a *ngIf="!isAuthenticated()" aria-label="sign in" target="_blank" rel="noopener" [routerLink]="['login']" title="login">
     Login
   </a>
-  <a aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['rgister']" title="register">
+  <a *ngIf="!isAuthenticated()" aria-label="sign up" target="_blank" rel="noopener" [routerLink]="['register']" title="register">
     Register
      </a>
+     <a *ngIf="isAuthenticated()" (click)="logout()" aria-label="log out" title="logout">
+      Logout
+    </a>
    
   </div>
  <body>

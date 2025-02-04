@@ -51,13 +51,29 @@ export class AuthService {
   }
 
   private apiUrl2 = 'http://localhost:3000/user';
-  getUser(id: number): Observable<User> {
+  /*getUser(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl2}/${id}`).pipe(catchError(this.handleError));
   }
 
   updateUser(id: number, userData: Partial<User>): Observable<User> {
     return this.http.put<User>(`${this.apiUrl2}/${id}`, userData).pipe(catchError(this.handleError));
-  }
+  }*/
+    getUser(): Observable<User> {
+      return this.http
+        .get<User>(this.apiUrl, { headers: this.getAuthHeaders() })
+        .pipe(catchError(this.handleError));
+    }
+    updateUser(userData: Partial<User>): Observable<User> {
+      return this.http
+        .put<User>(this.apiUrl, userData, { headers: this.getAuthHeaders() })
+        .pipe(catchError(this.handleError));
+    }
+    private getAuthHeaders(): HttpHeaders {
+      const token = localStorage.getItem('token');
+      return new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+    }
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem(this.tokenKey);

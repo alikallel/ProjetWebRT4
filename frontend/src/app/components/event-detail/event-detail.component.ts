@@ -4,7 +4,7 @@ import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/registration-details.service';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,faUpload  } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -24,6 +24,9 @@ export class EventDetailComponent implements OnInit {
   originalEventData: any = null;
   registeredAttendees: number = 0;
   private originalAvailablePlaces?: number;
+  faUpload = faUpload;
+  selectedFile: File | null = null;
+  isOrganizer: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +45,44 @@ export class EventDetailComponent implements OnInit {
       }
     });
   }
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files[0]) {
+      this.selectedFile = event.target.files[0];
+      this.uploadImage();
+    }
+  }
+  uploadImage(): void {
+    if (!this.selectedFile) return;
+
+    const formData = new FormData();
+    formData.append('image', this.selectedFile);
+
+    this.eventService.updateEventImage(this.eventId, formData).subscribe({
+      next: (updatedEvent) => {
+        this.eventData = updatedEvent;
+        this.selectedFile = null;
+        alert('Image updated successfully!');
+      },
+      error: (error) => {
+        console.error('Error uploading image:', error);
+        alert('Failed to upload image. Please try again.');
+      }
+    });
+  }
+
+  triggerFileInput(): void {
+    document.getElementById('imageUpload')?.click();
+  }
+  onCapacityChange(event: any): void {
+    const newAvailablePlaces = parseInt(event.target.value);
+    if (newAvailablePlaces < 0) {
+      alert('Available places cannot be negative');
+      this.availablePlaces = this.originalAvailablePlaces;
+      return;
+    }
+    this.availablePlaces = newAvailablePlaces;
+  }
+
   toggleEditMode(): void {
     if (this.editMode) {
       // Revert changes if canceling edit
@@ -65,7 +106,16 @@ export class EventDetailComponent implements OnInit {
       (data) => {
         this.eventData = data;
         if (this.eventData?.organizer?.id) {
-          this.loadOrganizerEvents(this.eventData.organizer.id);
+          this.authService.getCurrentUser().subscribe(
+            (currentUser) => {
+              this.isOrganizer = currentUser.id === this.eventData.organizer.id;
+              this.loadOrganizerEvents(this.eventData.organizer.id);
+            },
+            (error) => {
+              console.error('Error fetching current user:', error);
+              this.errorMessage = 'Error fetching current user. Please try again later.';
+            }
+          );
         }
         this.loading = false;
       },
@@ -133,4 +183,5 @@ export class EventDetailComponent implements OnInit {
       }
     });
   }
+  
 }

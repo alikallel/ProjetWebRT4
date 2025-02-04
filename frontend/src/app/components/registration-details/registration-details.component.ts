@@ -11,11 +11,6 @@ interface Event {
   date?: string;
 }
 
-interface Booking {
-  user: { email: string };
-  number_of_places: number;
-  status: string;
-}
 
 @Component({
   selector: 'app-registration-details',
@@ -24,7 +19,6 @@ interface Booking {
 })
 export class RegistrationDetailsComponent implements OnInit {
   event: Event | null = null;
-  bookings: Booking[] = [];
   bookedPlaces = 0;
   isLoading = true;
   error: string | null = null;
@@ -66,7 +60,6 @@ export class RegistrationDetailsComponent implements OnInit {
   private fetchBookings(id: number): void {
     this.registrationService.getEventBookings(id).subscribe({
       next: (bookings) => {
-        this.bookings = bookings;
         this.bookedPlaces = bookings.reduce((total, booking) => total + booking.number_of_places, 0);
       },
       error: (err) => {
@@ -77,7 +70,7 @@ export class RegistrationDetailsComponent implements OnInit {
       }
     });
   }
-  navigateToChecklist(eventId: number): void {
-    this.router.navigate(['/checklist', eventId]);
+  navigateToCharts(eventId: number): void {
+    this.router.navigate(['/charts', eventId]);
   }
 }

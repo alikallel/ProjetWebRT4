@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ProfileComponent {
   userForm: FormGroup;
   user: User | undefined;
-  //userId = 1;
+  
 
   constructor(private fb: FormBuilder, private userService: AuthService) {
     this.userForm = this.fb.group({
@@ -24,7 +24,7 @@ export class ProfileComponent {
     });    
   }
 
- /* ngOnInit(): void {
+/* ngOnInit(): void {
     this.userService.getUser(this.userId).subscribe((user: User) => {
       this.user = user;
       this.userForm.patchValue({
@@ -36,8 +36,7 @@ export class ProfileComponent {
     });
   }*/
 
-    ngOnInit(): void {
-      // ✅ Charger l'utilisateur connecté au démarrage
+   ngOnInit(): void {
       this.userService.getCurrentUser().subscribe({
         next: (user: User) => {
           this.user = user;
@@ -56,15 +55,18 @@ export class ProfileComponent {
 
   onSubmit() {
     if (!this.user) return;
-    const updatedData = {
+    const updatedData: Partial<User> = {
       email: this.userForm.value.email,
-      password: this.userForm.value.password,
       photo: this.userForm.value.photo,
       username: this.userForm.value.username
     };
+    if (this.userForm.value.password) {
+      updatedData.password = this.userForm.value.password;
+    }
 
-    this.userService.updateUser(this.user.id, updatedData).subscribe(() => {
+    this.userService.updateUser(updatedData).subscribe(() => {
       alert('Profile updated successfully!');
-    });
+    }
+  );
   }
 }
