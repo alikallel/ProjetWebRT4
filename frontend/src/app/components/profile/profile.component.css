@@ -1,9 +1,9 @@
 :host {
-    --primary-red: #8B0000;
-    --secondary-red: #FF6B6B;
+    --primary-red: #333333;
+    --secondary-red: #007bff;
     --background-red: #FFF5F5;
     --text-color: #333333;
-    --error-red: #FF0000;
+    --error-red: #4a25ed;
     display: block;
     min-height: 100vh;
     background: linear-gradient(135deg, var(--background-red) 0%, #FFFFFF 100%);
@@ -105,9 +105,9 @@
   }
   
   .submit-btn:hover:not(:disabled) {
-    background-color: #6B0000;
+    background-color: #1e006b;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(139, 0, 0, 0.3);
+    box-shadow: 0 4px 8px rgba(3, 1, 117, 0.3);
   }
   
   .submit-btn:disabled {
