@@ -21,7 +21,7 @@
             <div class="chart" *ngIf="isDataLoaded[0]">
                 <canvas 
                     baseChart
-                    type="pie"
+                    type="bar"
                     [options]="chartOptions"
                     [labels]="registeredVsAttendedLabels"
                     [datasets]="registeredVsAttendedData"  
@@ -56,7 +56,7 @@
                     [labels]="gendersLabels"
                     [datasets]="gendersData"  
                 ></canvas>
-            <p>thanks to siwar</p>
+            <p hidden> This Works Only cz Siwar fixed it xDD</p>
             </div>
         </div>
     </div>
