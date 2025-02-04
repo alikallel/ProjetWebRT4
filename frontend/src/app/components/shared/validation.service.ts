@@ -48,6 +48,26 @@ export class ValidationService {
     };
   }
 
+  static maxAgeFromdate(minAge: number, message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      
+      const birthDate = new Date(control.value);
+      if (isNaN(birthDate.getTime())) return null; // Invalid date
+  
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+      const isBeforeBirthday = monthDiff < 0 || 
+        (monthDiff === 0 && today.getDate() < birthDate.getDate());
+  
+      const actualAge = age - (isBeforeBirthday ? 1 : 0);
+  
+      return actualAge <= minAge ? null : { minAge: message };
+    };
+  }
+
 
   static eventDateValidator(minDate: Date = new Date()): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

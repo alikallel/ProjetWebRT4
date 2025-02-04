@@ -36,7 +36,8 @@ export class RegisterComponent {
     ]],
     birthdate: ['', [
       ValidationService.required('Birthdate is required'),
-      ValidationService.minAgeFromdate(5, 'Must be at least 5 years old')
+      ValidationService.minAgeFromdate(5, 'Must be at least 5 years old'),
+      ValidationService.maxAgeFromdate(120, 'Cant put an age more than 120 !!')
     ]]
   });
 
