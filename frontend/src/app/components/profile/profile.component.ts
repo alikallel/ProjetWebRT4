@@ -15,6 +15,7 @@ export class ProfileComponent {
   user: User | undefined;
   selectedFile: File | null = null;
   previewImage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private userService: AuthService) {
     this.userForm = this.fb.group({
@@ -77,7 +78,7 @@ export class ProfileComponent {
       }
   
       this.userService.updateUser(updatedData).subscribe(() => {
-        alert('Profile updated successfully!');
+       this.showMessage('User updated successfully!');
       });
   
       if (this.selectedFile) {
@@ -85,7 +86,7 @@ export class ProfileComponent {
         formData.append('file', this.selectedFile);
         this.userService.uploadProfileImage(formData).subscribe({
           next: (response: any) => {
-            alert('Profile image updated successfully!');
+            this.showMessage('Profile image updated successfully!');
     
             // ✅ Correction : Vérifier si response contient l'utilisateur mis à jour
             if (response && response.photo) {
@@ -97,6 +98,13 @@ export class ProfileComponent {
             console.error('Image upload failed', err);
           }
         });
+        
       }
+    }
+    showMessage(message: string) {
+      this.successMessage = message;
+      setTimeout(() => {
+        this.successMessage = null; // ❌ Masquer après 3 secondes
+      }, 3000);
     }
 }
