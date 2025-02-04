@@ -26,6 +26,7 @@ export class EventDetailComponent implements OnInit {
   private originalAvailablePlaces?: number;
   faUpload = faUpload;
   selectedFile: File | null = null;
+  isOrganizer: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -105,7 +106,16 @@ export class EventDetailComponent implements OnInit {
       (data) => {
         this.eventData = data;
         if (this.eventData?.organizer?.id) {
-          this.loadOrganizerEvents(this.eventData.organizer.id);
+          this.authService.getCurrentUser().subscribe(
+            (currentUser) => {
+              this.isOrganizer = currentUser.id === this.eventData.organizer.id;
+              this.loadOrganizerEvents(this.eventData.organizer.id);
+            },
+            (error) => {
+              console.error('Error fetching current user:', error);
+              this.errorMessage = 'Error fetching current user. Please try again later.';
+            }
+          );
         }
         this.loading = false;
       },

@@ -7,8 +7,8 @@
              class="img-fluid w-100 banner-image">
         
         <!-- Image upload button -->
-        <button *ngIf="isEventMaster()" 
-                class="btn btn-primary rounded-circle position-absolute upload-btn"
+        <button *ngIf="isOrganizer && isEventMaster()" class="btn btn-primary rounded-circle position-absolute upload-btn"
+
                 (click)="triggerFileInput()"
                 title="Upload new image">
           <fa-icon [icon]="faUpload"></fa-icon>
@@ -29,7 +29,7 @@
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="event-title mb-0">{{ eventData.title }}</h1>
         <div class="action-buttons">
-          <button *ngIf="isEventMaster()" 
+          <button *ngIf="isEventMaster() && isOrganizer" 
                   class="btn btn-outline-primary me-2" 
                   (click)="toggleEditMode()">
             <fa-icon [icon]="faEdit"></fa-icon> Edit Event
