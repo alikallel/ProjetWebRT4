@@ -41,6 +41,7 @@ import { LoginGuard } from './guards/login.guard';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { RoleGuard } from './guards/role.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     AboutUsComponent,
     DefaultImagePipe,
     UnauthorizedComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
