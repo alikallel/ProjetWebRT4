@@ -1,15 +1,19 @@
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+
 export class InitiatePaymentDto {
-    registration_id: number;
-    amount: number;
-  }
-  
-  export class PaymentVerificationDto {
-    payment_id: string;
-  }
-  
-  export class PaymentResponseDto {
-    registration_id: number;
-    payment_link: string;
-    payment_id: string;
-    status: string;
-  }
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  registration_id: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  amount: number;
+}
+
+export class PaymentVerificationDto {
+  @IsNotEmpty()
+  @IsString()
+  payment_id: string;
+}

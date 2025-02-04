@@ -10,5 +10,6 @@ export interface Event {
     organizer: User;
     price : number;  
     capacity : number; 
+    image?: string;
   }
   

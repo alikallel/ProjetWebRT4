@@ -21,17 +21,18 @@ export class CheckinService {
                 'user.photo as userPhoto',
                 'registration.status',
                 'registration.registration_date',
+                'registration.number_of_places',
                 'registration.checkedIn',
             ])
             .where('registration.event_id = :eventId', { eventId })
             .getRawMany();
-
     
         return registrations.map((registration) => ({
             reg_id: registration.registration_id,
-            username: registration.username,
+            username: registration.user_username,
             userPhoto: registration.userPhoto,
             status: registration.registration_status,
+            numPlaces: registration.registration_number_of_places,
             registrationDate: registration.registration_registration_date,
             checkedIn: registration.registration_checkedIn,
         }));

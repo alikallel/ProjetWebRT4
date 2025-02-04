@@ -14,6 +14,7 @@ export class EventFormComponent {
   eventForm: FormGroup;
   alertMessage: string | null = null;
   minDate: string = new Date().toISOString().split('T')[0]; 
+  selectedFile: File | null = null; // To store the selected file
 
   constructor(
     private fb: FormBuilder,
@@ -87,8 +88,14 @@ export class EventFormComponent {
     }
     return '';
   }
+  // Handle file selection
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
 
-  onSubmit() {
+  /*onSubmit() {
     if (this.eventForm.valid) {
       const eventData = { ...this.eventForm.value,
         price: parseFloat(this.eventForm.value.price), 
@@ -109,5 +116,37 @@ export class EventFormComponent {
       console.log('Form is invalid');
       this.snackBar.open('Form is invalid.', 'Close', { duration: 3000 });
     }
-  }
+  }*/
+    onSubmit() {
+      if (this.eventForm.valid) {
+        const formData = new FormData();
+        formData.append('title', this.eventForm.get('title')?.value);
+        formData.append('date', this.eventForm.get('date')?.value);
+        formData.append('location', this.eventForm.get('location')?.value);
+        formData.append('description', this.eventForm.get('description')?.value);
+        formData.append('price', this.eventForm.get('price')?.value);
+        formData.append('capacity', this.eventForm.get('capacity')?.value);
+    
+        // If a file is selected, append it to the FormData
+        if (this.selectedFile) {
+          formData.append('image', this.selectedFile, this.selectedFile.name);
+        }
+        console.log('Form data:', formData);
+        this.eventService.addEvent(formData).subscribe(
+          (response) => {
+            console.log('Event added successfully:', response);
+            this.snackBar.open('Event added successfully.', 'Close', { duration: 3000 });
+            this.eventForm.reset();
+          },
+          (error) => {
+            console.error('Error adding event:', error);
+            this.snackBar.open('Error adding event.', 'Close', { duration: 3000 });
+          }
+        );
+      } else {
+        console.log('Form is invalid');
+        this.snackBar.open('Form is invalid.', 'Close', { duration: 3000 });
+      }
+    }
+    
 }

@@ -1,4 +1,12 @@
 <div class="card shadow-sm">
+  <!-- Image container with corrected src path -->
+  <div class="card-image-container">
+    <img 
+      [src]="event.image | defaultImage" 
+      [alt]="event.title"
+      class="card-img-top"
+    >
+  </div>
   <div class="card-body">
     <h5 class="card-title">{{ event.title }}</h5>
     <div class="card-text">

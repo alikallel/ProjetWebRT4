@@ -18,9 +18,9 @@ dotenv.config()
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: process.env.DB_USERNAME,
-      password: process.env.PASSWORD,
-      database: process.env.DB_NAME,
+      username:'root',
+      password: '',
+      database: 'framework',
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

@@ -15,9 +15,10 @@ export class EventService {
     return this.http.get<Event[]>(this.apiUrl, this.getAuthHeaders());
   }
 
-  addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.apiUrl, event, this.getAuthHeaders());
+  addEvent(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData, this.getAuthHeaders());
   }
+  
 
   getEventById(id: string): Observable<Event> {
     return this.http.get<Event>(`${this.apiUrl}/${id}`, this.getAuthHeaders()).pipe(
@@ -48,6 +49,12 @@ export class EventService {
   patchEvent(id: string, payload: Partial<Event>): Observable<Event> {
     return this.http.patch<Event>(`${this.apiUrl}/${id}`, payload, this.getAuthHeaders());
   }
-  
+  updateEventImage(id: string, formData: FormData): Observable<Event> {
+    return this.http.patch<Event>(
+      `${this.apiUrl}/${id}/image`,
+      formData,
+      this.getAuthHeaders()
+    );
+  }
   
 }
