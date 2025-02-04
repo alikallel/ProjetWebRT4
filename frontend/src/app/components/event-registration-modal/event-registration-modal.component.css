@@ -1,0 +1,82 @@
+.modal-header .modal-title {
+    font-family: 'Arial', sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+  
+  
+  
+  .modal-body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+  }
+  
+  .ticket-details p {
+    margin-bottom: 1.2rem;
+    padding: 0.8rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .ticket-details i {
+    margin-right: 10px;
+    color: #3498db;
+    width: 20px;
+  }
+  
+  .ticket-quantity {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    justify-content: center;
+  }
+  
+  .ticket-quantity button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #3498db;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  
+  .ticket-quantity button:hover {
+    background: #2980b9;
+  }
+  
+  .ticket-quantity span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 1rem;
+    min-width: 30px;
+    text-align: center;
+  }
+  
+  .ticket-total {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-top: 1.5rem;
+  }
+  
+  .ticket-total p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+  }
+  
+  
+  .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  

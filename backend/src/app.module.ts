@@ -18,8 +18,13 @@ dotenv.config()
       type: 'mysql',
       host: 'localhost',
       port: 3306,
+<<<<<<< HEAD
       username: process.env.DB_USERNAME,
       password: process.env.PASSWORD,
+=======
+      username:process.env.DB_USERNAME,
+      password: '',
+>>>>>>> la
       database: process.env.DB_NAME,
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],

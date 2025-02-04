@@ -42,6 +42,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { RoleGuard } from './guards/role.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { EventRegistrationModalComponent } from './components/event-registration-modal/event-registration-modal.component';
 
 
 @NgModule({
@@ -75,7 +76,9 @@ import { FooterComponent } from './components/footer/footer.component';
     DefaultImagePipe,
     UnauthorizedComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    EventRegistrationModalComponent
+
   ],
   imports: [
     BrowserModule,
