@@ -40,6 +40,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginGuard } from './guards/login.guard';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { RoleGuard } from './guards/role.guard';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { RoleGuard } from './guards/role.guard';
     AuthLayoutComponent,
     AboutUsComponent,
     DefaultImagePipe,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

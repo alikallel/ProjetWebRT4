@@ -19,8 +19,8 @@ dotenv.config()
       host: 'localhost',
       port: 3306,
       username:'root',
-      password: '',
-      database: 'framework',
+      password: 'root123',
+      database: 'eventplanner',
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
