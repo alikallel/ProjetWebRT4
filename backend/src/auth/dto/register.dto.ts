@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength, IsEnum, IsDateString, MaxLength, IsNotEmpty, MinDate, MaxDate } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsEnum, IsDateString, MaxLength, IsNotEmpty, MinDate, MaxDate, IsDate } from 'class-validator';
 import { UserRole, Gender } from 'src/auth/user.entity';
 import { Transform } from 'class-transformer';
 
@@ -25,7 +25,7 @@ export class RegisterDto {
   @IsNotEmpty({ message: 'Gender is required.' })
   gender: Gender;
 
-  @IsDateString({}, { message: 'Invalid birthdate format.' })
+  @IsDate({ message: 'Invalid date format.' })
   @IsNotEmpty({ message: 'Birthdate is required.' })
   @Transform(({ value }) => new Date(value)) // Ensure value is converted to Date
   @MinDate(new Date(new Date().setFullYear(new Date().getFullYear() - 120)), { message: 'You must be younger than 120 years old.' })
