@@ -1,9 +1,13 @@
+<div *ngIf="successMessage" class="success-message">
+  {{ successMessage }}
+</div>
 
 <div class="profile-container">
   <div class="profile-card">
     <div class="profile-header">
       <div class="profile-image-container">
-        <img [src]="user?.photo" alt="Profile Picture" class="profile-image">
+        <img [src]="user?.photo ? 'http://localhost:3000' + user?.photo : 'assets/default.avif'" 
+        alt="Profile Picture" class="profile-image">
       </div>
       <h2>Profile Information</h2>
     </div>
@@ -14,21 +18,30 @@
       </div>
       <div class="form-group">
         <label for="username">User Name</label>
-        <input type="text" id="username" formControlName="username" >
+        <input type="text" id="username" formControlName="username">
+        <small class="error" *ngIf="userForm.controls['username'].invalid && userForm.controls['username'].touched">
+          Le nom d'utilisateur doit contenir au moins 3 caractères.
+        </small>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" >
+        <input type="email" id="email" formControlName="email">
+        <small class="error" *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
+          Email invalide
+        </small>
       </div>
       <div class="form-group">
         <label for="password">New Password</label>
-        <input type="password" id="password" formControlName="password" >
+        <input type="password" id="password" formControlName="password">
+        <small class="error" *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched">
+          Le mot de passe doit contenir entre 6 et 20 caractères.
+        </small>
       </div>
       <div class="form-group">
-        <label for="photo">Profile Picture (URL)</label>
-        <textarea id="photo" formControlName="photo" rows="4"></textarea>
+        <label for="photo">Profile Picture</label>
+        <input type="file" id="photo" (change)="onFileSelected($event)">
       </div>
-      <button type="submit" [disabled]="userForm.invalid" class="submit-btn">
+      <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
         Update Profile
       </button>
     </form>

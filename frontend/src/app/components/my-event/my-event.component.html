@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="card bg-primary text-white">
+      <div class="card bg-primary text-white" (click)="openGetPaidModal()" style="cursor: pointer;">
         <div class="card-body">
           <h6 class="card-subtitle mb-2">Get paid</h6>
           <h3 class="card-title mb-0">Click to Learn More</h3>
@@ -61,6 +61,13 @@
   <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="filteredEvents.length">
     <div class="col" *ngFor="let event of filteredEvents">
       <div class="card h-100 shadow-sm">
+        <div class="card-image-container">
+          <img 
+            [src]="event.image | defaultImage"
+            [alt]="event.title"
+            class="card-img-top object-fit-cover"
+          >
+        </div>
         <div class="card-body">
           <h3 class="card-title h5">{{ event.title }}</h3>
           <p class="card-text"><strong>Date:</strong> {{ event.date | date }}</p>
@@ -80,5 +87,41 @@
 
   <div *ngIf="!isLoading && filteredEvents.length === 0" class="text-center py-5">
     <p class="h5 text-muted">No events found.</p>
+  </div>
+</div>
+<div class="modal fade" id="getPaidModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Get Paid for Your Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>To process your payment, please follow these steps:</p>
+        <ol>
+          <li>Ensure your event has been completed</li>
+          <li>Prepare the following documents:
+            <ul>
+              <li>Identity proof (Passport or National ID)</li>
+              <li>Bank account details (RIB/IBAN)</li>
+            </ul>
+          </li>
+          <li>Send an email to: <strong>"payments&#64;exmple.com"</strong></li>
+        </ol>
+        <p>Email should include:</p>
+        <ul>
+          <li>Event name</li>
+          <li>Event date</li>
+          <li>Scanned identity document</li>
+          <li>Bank account information</li>
+        </ul>
+        <div class="alert alert-info">
+          Note: Payments are processed within 8 business days after verification.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

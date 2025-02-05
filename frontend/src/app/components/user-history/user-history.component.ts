@@ -8,9 +8,11 @@ import { PaymentService, UserPayment } from 'src/app/services/payment.service';
 })
 export class UserHistoryComponent implements OnInit {
   payments: UserPayment[] = [];
+  filteredPayments: UserPayment[] = [];
   isLoading = true;
   error: string | null = null;
-
+  searchTerm = '';
+  
   constructor(private paymentService: PaymentService) {}
 
   ngOnInit(): void {
@@ -21,6 +23,7 @@ export class UserHistoryComponent implements OnInit {
     this.paymentService.getUserPayments().subscribe({
       next: (payments) => {
         this.payments = payments;
+        this.filteredPayments = payments;
         this.isLoading = false;
       },
       error: (err) => {
@@ -31,13 +34,32 @@ export class UserHistoryComponent implements OnInit {
     });
   }
 
-  getStatusClass(status: string): string {
-    switch(status) {
-      case 'COMPLETED': return 'badge bg-success';
-      case 'PENDING': return 'badge bg-warning';
-      case 'FAILED': return 'badge bg-danger';
-      default: return 'badge bg-secondary';
+  filterPayments(): void {
+    const searchText = this.searchTerm.toLowerCase().trim();
+    if (!searchText) {
+      this.filteredPayments = this.payments;
+    } else {
+      this.filteredPayments = this.payments.filter(payment => 
+        payment.registration.event.title.toLowerCase().includes(searchText)
+      );
     }
   }
-  
+
+  getStatusClass(status: string): string {
+    switch(status.toUpperCase()) {
+      case 'COMPLETED': return 'badge rounded-pill bg-success';
+      case 'PENDING': return 'badge rounded-pill bg-warning text-dark';
+      case 'FAILED': return 'badge rounded-pill bg-danger';
+      default: return 'badge rounded-pill bg-secondary';
+    }
+  }
+
+  getStatusIcon(status: string): string {
+    switch(status.toUpperCase()) {
+      case 'COMPLETED': return 'bi bi-check-circle-fill';
+      case 'PENDING': return 'bi bi-clock-fill';
+      case 'FAILED': return 'bi bi-x-circle-fill';
+      default: return 'bi bi-question-circle-fill';
+    }
+  }
 }

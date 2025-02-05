@@ -1,0 +1,83 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <div *ngIf="isLoading" class="text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Verifying payment...</p>
+            </div>
+  
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+  
+            <div *ngIf="!isLoading && !error && paymentVerified" class="text-center">
+              <div class="mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+              </div>
+              <h2 class="card-title mb-4">Payment Successful!</h2>
+              
+              <div class="payment-details">
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Payment Status:</div>
+                  <div class="col-md-6 text-start">{{ paymentDetails?.payment_status }}</div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Payer Name:</div>
+                  <div class="col-md-6 text-start">{{ paymentDetails?.payer_details?.name }}</div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Email:</div>
+                  <div class="col-md-6 text-start">{{ paymentDetails?.payer_details?.email }}</div>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Phone:</div>
+                  <div class="col-md-6 text-start">{{ paymentDetails?.payer_details?.phone }}</div>
+                </div>
+              </div>
+  
+              <div *ngIf="sponsorshipDetails" class="mt-4 pt-4 border-top">
+                <h3 class="mb-3">Sponsorship Details</h3>
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Amount:</div>
+                  <div class="col-md-6 text-start">${{ sponsorshipDetails.amount }}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Status:</div>
+                  <div class="col-md-6 text-start">{{ sponsorshipDetails.status }}</div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6 text-end fw-bold">Created Date:</div>
+                  <div class="col-md-6 text-start">{{ sponsorshipDetails.created_at | date }}</div>
+                </div>
+              </div>
+  
+              <div class="mt-4">
+                <button class="btn btn-primary" (click)="goToHome()">
+                  Return to Home
+                </button>
+              </div>
+            </div>
+  
+            <div *ngIf="!isLoading && !error && !paymentVerified" class="text-center">
+              <div class="mb-4">
+                <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
+              </div>
+              <h2 class="card-title mb-4">Payment Failed</h2>
+              <p>We couldn't verify your payment. Please try again or contact support.</p>
+              <button class="btn btn-primary" (click)="goToHome()">
+                Return to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

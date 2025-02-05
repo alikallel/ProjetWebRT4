@@ -4,8 +4,10 @@ import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/registration-details.service';
-import { faEdit,faUpload  } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUpload, faStar } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { EventSponsorshipService } from '../../services/event-sponsorship.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -21,12 +23,16 @@ export class EventDetailComponent implements OnInit {
   availablePlaces?: number;
   editMode: boolean = false;
   faEdit = faEdit;
+  faStar = faStar;
   originalEventData: any = null;
   registeredAttendees: number = 0;
   private originalAvailablePlaces?: number;
   faUpload = faUpload;
   selectedFile: File | null = null;
   isOrganizer: boolean = false;
+  sponsorshipDetails: any = null;
+  showSponsorshipModal: boolean = false;
+  isEventMasterUser: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +40,8 @@ export class EventDetailComponent implements OnInit {
     private router: Router,
     private regestrationService: RegistrationService,
     private authService: AuthService,
+    private modalService: ModalService,
+    private sponsorshipService: EventSponsorshipService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +50,57 @@ export class EventDetailComponent implements OnInit {
       if (this.eventId) {
         this.loadEventData(this.eventId);
         this.loadAvailablePlaces(this.eventId);
+        this.loadSponsorshipDetails();
+        this.checkUserRole();
+      }
+    });
+  }
+
+  private checkUserRole(): void {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.isEventMasterUser = user.role === 'EVENTMASTER';
+    });
+  }
+
+  private loadSponsorshipDetails(): void {
+    this.sponsorshipService.findByEvent(Number(this.eventId)).subscribe({
+      next: (details) => {
+        this.sponsorshipDetails = details;
+      },
+      error: (error) => {
+        console.error('Error loading sponsorship details:', error);
+      }
+    });
+  }
+
+  openSponsorshipModal(): void {
+    this.showSponsorshipModal = true;
+  }
+
+  closeSponsorshipModal(): void {
+    this.showSponsorshipModal = false;
+  }
+
+  initiateSponsorship(): void {
+    if (!this.isEventMaster()) {
+      alert('Only Event Masters can sponsor events');
+      return;
+    }
+
+    const sponsorshipDto = {
+      event_id: Number(this.eventId)
+    };
+
+    this.sponsorshipService.create(sponsorshipDto).subscribe({
+      next: (response) => {
+        window.location.href = response.payment_details.payment_link;
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          alert('This event is already sponsored');
+        } else {
+          alert('Failed to initiate sponsorship. Please try again.');
+        }
       }
     });
   }
@@ -85,11 +144,9 @@ export class EventDetailComponent implements OnInit {
 
   toggleEditMode(): void {
     if (this.editMode) {
-      // Revert changes if canceling edit
       this.eventData = { ...this.originalEventData };
       this.availablePlaces = this.originalAvailablePlaces;
     } else {
-      // Save the original values for restoration later
       this.originalEventData = { ...this.eventData };
       this.originalAvailablePlaces = this.availablePlaces;
     }
@@ -120,7 +177,7 @@ export class EventDetailComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        this.errorMessage = 'Error fetching event details. Please try again later.';
+        this.errorMessage = `Error fetching event details. Please try again later. ${error}`;
         this.loading = false;
       }
     );
@@ -128,26 +185,21 @@ export class EventDetailComponent implements OnInit {
   updateEvent(): void {
       console.log('registeredAttendees (static):', this.registeredAttendees);
       const payload: Partial<Event> = {};
-      // Check for changes in the event description
       if (this.eventData.description !== this.originalEventData.description) {
         payload.description = this.eventData.description;
       }
-      // Ensure available places is non-negative
       if (this.availablePlaces === undefined || this.availablePlaces < 0) {
         alert('Available places must be a non-negative number.');
         return;
       }
-      // Calculate the new capacity by adding registered attendees and available places
       const newCapacity = this.registeredAttendees + this.availablePlaces!;
       console.log('newCapacity:', newCapacity);
-      // Ensure the new capacity is greater than or equal to registered attendees
       if (newCapacity >= this.registeredAttendees) {
         payload.capacity = newCapacity;
       } else {
         alert('New capacity must be greater than or equal to the number of registered attendees.');
         return;
       }
-      // Proceed to update the event via the backend
       this.eventService.patchEvent(this.eventId, payload).subscribe(
         (updatedEvent) => {
           this.eventData = { ...this.eventData, ...updatedEvent };
@@ -168,7 +220,7 @@ export class EventDetailComponent implements OnInit {
         this.organizerEvents = data;
       },
       (error) => {
-        this.errorMessage = 'Error fetching organizer events. Please try again later.';
+        this.errorMessage = `Error fetching organizer events. Please try again later. ${error}`;
       }
     );
   }
@@ -183,5 +235,9 @@ export class EventDetailComponent implements OnInit {
       }
     });
   }
+  openRegisterModal(event: any) {
+    this.modalService.openModal(event);
+  }
+
   
 }
