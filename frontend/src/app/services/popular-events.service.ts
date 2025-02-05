@@ -15,9 +15,7 @@ export class PopularEventsService {
     private http = inject(HttpClient);
   
     getPopularEvents(): Observable<Event[]> {
-      return this.http
-      .get<{data :Event[]}>(this.apiUrl)
-      .pipe(map(response => response.data));
+      return this.http.get<Event[]>(this.apiUrl); 
     }
     
 }
