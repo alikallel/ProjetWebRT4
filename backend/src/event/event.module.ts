@@ -4,7 +4,6 @@ import { EventService } from './event.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Event } from './entities/event.entity';
 import { UserModule } from 'src/user/user.module';  
-
 @Module({
   imports: [TypeOrmModule.forFeature([Event]),
   UserModule ],
