@@ -1,3 +1,4 @@
+// event-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { EventService } from 'src/app/services/event.service';
@@ -18,9 +19,15 @@ export class EventListComponent implements OnInit {
   searchTerm: string = '';
   availablePlacesMap: { [eventId: number]: number } = {};
 
+  dateFilter: string = '';
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
+
   currentPage: number = 1;
   eventsPerPage: number = 9;
   totalPages: number = 1;
+  showAdvancedFilters: boolean = false;
+
 
   constructor(
     private eventService: EventService,
@@ -46,14 +53,14 @@ export class EventListComponent implements OnInit {
     this.eventService.getEvents().subscribe({
       next: (data: Event[]) => {
         this.events = data;
-        this.filteredEvents = data;
-        this.totalPages = Math.ceil(this.events.length / this.eventsPerPage);
+        this.applyFilters();
+        this.totalPages = Math.ceil(this.filteredEvents.length / this.eventsPerPage);
 
         if (page < 1 || page > this.totalPages) {
           this.router.navigate(['/events/page', 1]);
         } else {
           this.currentPage = page;
-          this.applyFilterAndPaginate();
+          this.paginate();
           this.fetchAvailablePlaces();
         }
       },
@@ -80,26 +87,51 @@ export class EventListComponent implements OnInit {
     this.modalService.openModal(event);
   }
 
+  applyFilters(): void {
+    this.filteredEvents = this.events.filter((event) => {
+      const matchesSearch = !this.searchTerm || 
+        event.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        event.location.toLowerCase().includes(this.searchTerm.toLowerCase());
 
-  filterEvents(): void {
-    const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-    this.filteredEvents = this.events.filter((event) =>
-      event.title.toLowerCase().includes(lowerCaseSearchTerm) ||
-      event.location.toLowerCase().includes(lowerCaseSearchTerm)
-    );
-  
+      const matchesDate = !this.dateFilter || 
+        new Date(event.date).toISOString().split('T')[0] === this.dateFilter;
+
+      const matchesPrice = (!this.minPrice || event.price >= this.minPrice) &&
+        (!this.maxPrice || event.price <= this.maxPrice);
+
+      return matchesSearch && matchesDate && matchesPrice;
+    });
+
     this.currentPage = 1;
-    this.applyFilterAndPaginate();
+    this.totalPages = Math.ceil(this.filteredEvents.length / this.eventsPerPage);
+    this.paginate();
   }
 
-  applyFilterAndPaginate(): void {
-    this.totalPages = Math.ceil(this.filteredEvents.length / this.eventsPerPage);
-  
-    if (this.currentPage > this.totalPages) {
-      this.currentPage = 1;
-    }
-  
-    this.paginate();
+  clearFilters(): void {
+    this.searchTerm = '';
+    this.dateFilter = '';
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.applyFilters();
+  }
+  get hasActiveFilters(): boolean {
+    return !!(
+      this.searchTerm ||
+      this.dateFilter ||
+      this.minPrice ||
+      this.maxPrice
+    );
+  }
+  get hasAdvancedFiltersActive(): boolean {
+    return !!(
+      this.dateFilter ||
+      this.minPrice ||
+      this.maxPrice
+    );
+  }
+
+  toggleAdvancedFilters(): void {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
   }
 
   paginate(): void {
@@ -118,6 +150,7 @@ export class EventListComponent implements OnInit {
   isEventMaster(): boolean {
     return this.authService.getUserRole() === 'EventMaster';
   }
+
   onRegistrationComplete(): void {
     this.fetchAvailablePlaces();
   }
