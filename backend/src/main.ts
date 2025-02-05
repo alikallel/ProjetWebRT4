@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as express from 'express';
 import {ValidationPipe} from "@nestjs/common";
 import helmet from 'helmet';
+import { RemovePasswordInterceptor } from './exclude-password.interceptor';
 
 
 
@@ -14,6 +15,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
+    app.useGlobalInterceptors(new RemovePasswordInterceptor());
 
   /*app.useGlobalPipes(new ValidationPipe({
     transform: true,

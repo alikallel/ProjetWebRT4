@@ -25,7 +25,10 @@ export class RegisterDto {
   @IsNotEmpty({ message: 'Gender is required.' })
   gender: Gender;
 
-  @IsDate({ message: 'Invalid birthdate format.' })
+
+
+  @IsDate({ message: 'Invalid date format.' })
+
   @IsNotEmpty({ message: 'Birthdate is required.' })
   @Transform(({ value }) => new Date(value)) // Ensure value is converted to Date
   @MinDate(new Date(new Date().setFullYear(new Date().getFullYear() - 120)), { message: 'You must be younger than 120 years old.' })

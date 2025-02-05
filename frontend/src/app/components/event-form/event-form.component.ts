@@ -136,7 +136,7 @@ export class EventFormComponent {
           (response) => {
             console.log('Event added successfully:', response);
             this.snackBar.open('Event added successfully.', 'Close', { duration: 3000 });
-            this.eventForm.reset();
+            this.router.navigate(['/events']);
           },
           (error) => {
             console.error('Error adding event:', error);
