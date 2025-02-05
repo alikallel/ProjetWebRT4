@@ -8,7 +8,7 @@ import { SponsorshipPaymentService } from 'src/sponsorship-payment/sponsorship-p
 
 @Injectable()
 export class EventSponsorshipService {
-  private readonly SPONSORSHIP_AMOUNT = 10000;
+  private readonly SPONSORSHIP_AMOUNT = 100000;
 
   constructor(
     @InjectRepository(EventSponsorship)

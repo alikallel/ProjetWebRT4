@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SponsorshipPaymentsService, PaymentVerificationResponse, SponsorshipDetails } from '../../services/sponsorship-payments.service';
 import { finalize } from 'rxjs/operators';
+import {faStar } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-sponsorship-payments',
@@ -14,6 +16,8 @@ export class SponsorshipPaymentsComponent implements OnInit {
   error: string | null = null;
   paymentDetails: PaymentVerificationResponse | null = null;
   sponsorshipDetails: SponsorshipDetails | null = null;
+  faStar = faStar;
+
 
   constructor(
     private route: ActivatedRoute,
