@@ -1,151 +1,100 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between align-items-center">
-    <h1>EventPlanner</h1>
-
-    <div class="d-flex align-items-center">
+    <h1>Events</h1>
+    
+    <div class="d-flex align-items-center gap-2">
+      <button 
+        class="btn btn-link p-0 px-2"
+        (click)="toggleAdvancedFilters()"
+        [title]="showAdvancedFilters ? 'Hide filters' : 'Show more filters'"
+      >
+        <i class="bi" [class.bi-plus-circle]="!showAdvancedFilters" [class.bi-dash-circle]="showAdvancedFilters"></i>
+      </button>
+      
       <input
         type="text"
         class="form-control"
-        placeholder="Search events by title or location"
+        placeholder="Search events..."
         [(ngModel)]="searchTerm"
-        (ngModelChange)="filterEvents()"
-        style="width: 300px; margin-right: 10px;" />
+        (ngModelChange)="applyFilters()"
+        style="width: 200px;"
+      />
       
-      <button *ngIf="isEventMaster()" class="btn btn-outline-primary px-4 py-2 rounded shadow-md custom-button" routerLink="/my-event">My Event</button>
+      
+
+      <ng-container *ngIf="showAdvancedFilters">
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="dateFilter"
+          (ngModelChange)="applyFilters()"
+          style="width: 130px;"
+        />
+        
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Min "
+          [(ngModel)]="minPrice"
+          (ngModelChange)="applyFilters()"
+          style="width: 80px;"
+        />
+        
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Max "
+          [(ngModel)]="maxPrice"
+          (ngModelChange)="applyFilters()"
+          style="width: 80px;"
+        />
+      </ng-container>
+      
+    <!-- <button 
+        *ngIf="hasActiveFilters"
+        class="btn btn-link p-0 px-2"
+        (click)="clearFilters()"
+        title="Clear filters"
+      >
+          <i class="bi bi-x-circle"></i>
+      </button>--> 
+      
+      <button 
+        *ngIf="isEventMaster()" 
+        class="btn btn-outline-primary px-4 py-2 rounded shadow-md custom-button" 
+        routerLink="/my-event"
+      >
+        My Event
+      </button>
     </div>
   </div>
 
-  <!-- No Events Found Message -->
   <div *ngIf="!paginatedEvents.length" class="text-center font-weight-bold mt-4">
     No events found.
   </div>
 
-  <!-- Event List -->
   <div *ngIf="paginatedEvents.length > 0" class="row mt-4">
     <div class="col-md-4 mb-4" *ngFor="let event of paginatedEvents">
       <app-event [event]="event" (register)="openRegisterModal($event)"></app-event>
     </div>
   </div>
-  
 
-<!-- Ticket Modal -->
-<div
-  class="modal fade"
-  id="ticketModal"
-  tabindex="-1"
-  aria-labelledby="ticketModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ticketModalLabel">- BILLETS -</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <!-- Détails avec icônes -->
-        <div class="ticket-details">
-          <p>
-            <i class="fas fa-calendar-day"></i>
-            <strong>Date:</strong> {{ selectedEvent?.date }}
-          </p>
-          <p>
-            <i class="fas fa-map-marker-alt"></i>
-            <strong>Location:</strong> {{ selectedEvent?.location }}
-          </p>
-          <p>
-            <i class="fas fa-money-bill-wave"></i>
-            <strong>Price:</strong> {{ selectedEvent?.price }} TND
-          </p>
-          <p>
-            <i class="fas fa-chair"> </i>
-            <strong>Available Places:</strong> 
-            {{ availablePlacesMap[selectedEvent?.id] !== undefined 
-               ? (availablePlacesMap[selectedEvent?.id] > 0 
-                  ? availablePlacesMap[selectedEvent?.id] + ' places' 
-                  : 'Fully Booked') 
-               : 'Loading...' }}
-          </p>
-        </div>
-
-        <!-- Gestion de la quantité -->
-        <div class="ticket-quantity d-flex align-items-center my-3">
-          <button
-            (click)="decrementQuantity()"
-            class="btn btn-secondary btn-sm me-2"
-          >
-            <i class="fas fa-minus"></i>
-          </button>
-          <span>{{ quantity }}</span>
-          <button
-            (click)="incrementQuantity()"
-            class="btn btn-secondary btn-sm ms-2"
-          >
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-
-        <!-- Montant total -->
-        <div class="ticket-total mt-3">
-          <p>
-            <strong>Total Amount:</strong> {{ amount }} TND
-          </p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-        >
-          Fermer
-        </button>
-          <button
-          type="button"
-          [class]="selectedEvent?.price === 0 ? 'btn btn-success' : 'btn btn-danger'"
-          (click)="makePayment()"
-        >
-          <ng-container *ngIf="selectedEvent?.price !== 0">
-            <img 
-              src="https://developersdev.flouci.com/static/flouci_icon.png" 
-              [style.height.px]="20"
-              [style.marginRight.px]="5"
-              alt="Flouci"
-            >
-          </ng-container>
-          {{ selectedEvent?.price === 0 ? 'Register' : 'Pay' }}
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  <!-- Pagination -->
   <nav *ngIf="totalPages > 1" aria-label="Pagination" class="mt-4">
     <ul class="pagination justify-content-center">
-      <!-- Previous Button -->
       <li class="page-item" [class.disabled]="currentPage === 1">
         <button class="page-link" (click)="changePage(currentPage - 1)">
           <i class="bi bi-chevron-left"></i> Previous
         </button>
       </li>
-
-      <!-- Page Numbers -->
-      <li 
-        class="page-item" 
-        *ngFor="let page of [].constructor(totalPages); let i = index" 
+      
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
         [class.active]="currentPage === i + 1"
       >
         <button class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</button>
       </li>
-
-      <!-- Next Button -->
+      
       <li class="page-item" [class.disabled]="currentPage === totalPages">
         <button class="page-link" (click)="changePage(currentPage + 1)">
           Next <i class="bi bi-chevron-right"></i>
@@ -153,4 +102,6 @@
       </li>
     </ul>
   </nav>
+
+  <app-event-registration-modal></app-event-registration-modal>
 </div>

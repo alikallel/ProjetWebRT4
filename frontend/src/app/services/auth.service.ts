@@ -60,12 +60,12 @@ export class AuthService {
   }*/
     getUser(): Observable<User> {
       return this.http
-        .get<User>(this.apiUrl, { headers: this.getAuthHeaders() })
+        .get<User>(this.apiUrl2, { headers: this.getAuthHeaders() })
         .pipe(catchError(this.handleError));
     }
     updateUser(userData: Partial<User>): Observable<User> {
       return this.http
-        .put<User>(this.apiUrl, userData, { headers: this.getAuthHeaders() })
+        .put<User>(this.apiUrl2, userData, { headers: this.getAuthHeaders() })
         .pipe(catchError(this.handleError));
     }
     private getAuthHeaders(): HttpHeaders {
@@ -74,6 +74,10 @@ export class AuthService {
         Authorization: `Bearer ${token}`,
       });
     }
+    uploadProfileImage(imageData: FormData) {
+      return this.http.put<User>('http://localhost:3000/user/upload-profile-image', imageData);
+    }
+    
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem(this.tokenKey);

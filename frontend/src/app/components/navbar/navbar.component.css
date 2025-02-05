@@ -1,0 +1,74 @@
+/* Navbar General */
+.navbar {
+    padding: 0.8rem 1rem;
+    min-height: 70px;
+    background-color: #1976d2 !important;
+    box-shadow: none;
+  }
+  
+  /* Logo Styling */
+  .logo-img {
+    height: 50px;
+    width: auto;
+    max-height: 100%;
+    display: block;
+  }
+  
+  /* Centrer le logo et les liens */
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-nav {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Styling des liens */
+  .nav-link {
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover,
+  .nav-link:focus {
+    color: #ff9800 !important;
+    background-color: transparent !important;
+    outline: none !important;
+  }
+  
+  /* Dropdown Styling */
+  .dropdown-item {
+    font-size: 1rem;
+    color: #212529;
+    background-color: transparent !important;
+  }
+  
+  .dropdown-item:hover {
+    background-color: rgba(25, 118, 210, 0.1) !important;
+    color: #1976d2 !important;
+  }
+  
+  .dropdown-menu {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  /* Suppression de tout effet noir ou ombre */
+  .navbar-toggler {
+    border: none;
+    background-color: transparent !important;
+  }
+  
+  .text-danger:hover {
+    background-color: rgba(255, 0, 0, 0.1) !important;
+  }
+  
+  .nav-item {
+    margin: 0 1.5rem;
+  }
+  

@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+/* Main content will take up all available space */
+.main-content {
+    flex: 1;
+}

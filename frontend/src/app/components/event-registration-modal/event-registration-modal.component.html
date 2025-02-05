@@ -1,0 +1,71 @@
+<div class="modal fade" id="eventRegistrationModal" tabindex="-1" aria-labelledby="eventRegistrationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventRegistrationModalLabel">- BILLETS -</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="ticket-details">
+          <p>
+            <i class="fas fa-calendar-day"></i>
+            <strong>Date:</strong> {{ selectedEvent?.date | date }}
+          </p>
+          <p>
+            <i class="fas fa-map-marker-alt"></i>
+            <strong>Location:</strong> {{ selectedEvent?.location }}
+          </p>
+          <p>
+            <i class="fas fa-money-bill-wave"></i>
+            <strong>Price:</strong> {{ selectedEvent?.price }} TND
+          </p>
+          <p>
+            <i class="fas fa-chair"></i>
+            <strong>Available Places:</strong> 
+            {{ getAvailablePlacesDisplay() }}
+          </p>
+        </div>
+        
+        <div class="ticket-quantity d-flex align-items-center my-3">
+          <button (click)="decrementQuantity()" 
+                  class="btn btn-secondary btn-sm me-2"
+                  [disabled]="quantity <= 1">
+            <i class="fas fa-minus"></i>
+          </button>
+          <span>{{ quantity }}</span>
+          <button (click)="incrementQuantity()" 
+                  class="btn btn-secondary btn-sm ms-2"
+                  [disabled]="!canIncrementQuantity()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        
+        <div class="ticket-total mt-3">
+          <p>
+            <strong>Total Amount:</strong> {{ amount }} TND
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          [class]="selectedEvent?.price === 0 ? 'btn btn-success' : 'btn btn-danger'"
+          (click)="makePayment()"
+          [disabled]="!isValidPurchase()">
+          <ng-container *ngIf="selectedEvent?.price !== 0">
+            <img 
+              src="https://developersdev.flouci.com/static/flouci_icon.png" 
+              [style.height.px]="20"
+              [style.marginRight.px]="5"
+              alt="Flouci"
+            >
+          </ng-container>
+          {{ selectedEvent?.price === 0 ? 'Register' : 'Pay' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

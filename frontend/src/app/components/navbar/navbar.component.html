@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-primary shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" [routerLink]="['/']">
+        <img src="/assets/HadathRect-removebg-preview.png" alt="Hadath Logo" class="logo-img" />
+      </a>
+  
+      <!-- Mobile Menu Toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Centered Navbar Content -->
+      <div *ngIf="isAuthenticated()" class="collapse navbar-collapse justify-content-center" id="navbarContent">
+        <ul class="navbar-nav">
+          <li class="nav-item mx-3">
+            <a class="nav-link" [routerLink]="['/']">Home</a>
+          </li>
+          <li class="nav-item dropdown mx-3">
+            <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Events
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/events']">All Events</a></li>
+              <li *ngIf="getUserRole() === 'EventMaster'" ><a class="dropdown-item" [routerLink]="['/my-event']">My Events</a></li>
+            </ul>
+          </li>
+          <li *ngIf="getUserRole() === 'User'" class="nav-item mx-3">
+            <a class="nav-link" [routerLink]="['/user-history']">History</a>
+          </li>
+          <li *ngIf="getUserRole() === 'EventMaster'" class="nav-item mx-3">
+            <a class="nav-link" [routerLink]="['/charts', userId]">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Right-Aligned User Dropdown -->
+      <div class="user-menu">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fas fa-user-circle me-1"></i> User
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a *ngIf="isAuthenticated()" class="dropdown-item" [routerLink]="['/profile']">Profile</a></li>
+              <li><a *ngIf="!isAuthenticated()" class="dropdown-item" [routerLink]="['/login']">Login</a></li>
+              <li><a *ngIf="!isAuthenticated()" class="dropdown-item" [routerLink]="['/register']">Register</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a *ngIf="isAuthenticated()" (click)="logout()" class="dropdown-item text-danger" href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
