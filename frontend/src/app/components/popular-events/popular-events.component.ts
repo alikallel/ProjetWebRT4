@@ -10,9 +10,6 @@ export class PopularEventsComponent {
   
   popEventsService = inject(PopularEventsService);
 //popEvents = [ 'ev1 ', 'ev2'];
-  popEvents = this.popEventsService.getPopularEvents().subscribe(events => {
-    // events is the array of Event objects
-    console.log(events);
-  });
+  popEvents = this.popEventsService.getPopularEvents();
 
 }

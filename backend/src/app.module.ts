@@ -9,6 +9,7 @@ import { EventRegistrationsController } from './event-registrations/event-regist
 import { EventRegistrationsModule } from './event-registrations/event-registrations.module';
 import { CheckinModule } from './checkin/checkin.module';
 import { ChartsdataModule } from './chartsdata/chartsdata.module';
+import { PopularEventsService } from './popular-events/popular-events.service';
 import * as dotenv from 'dotenv';
 
 dotenv.config()
@@ -33,6 +34,6 @@ dotenv.config()
     ChartsdataModule,
   ],
   controllers: [AppController, EventRegistrationsController],
-  providers: [AppService],
+  providers: [AppService, PopularEventsService],
 })
 export class AppModule {}
