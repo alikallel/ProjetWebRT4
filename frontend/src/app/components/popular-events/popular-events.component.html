@@ -1,13 +1,27 @@
-<!-- <ul *ngFor="let popularEvent of popEvents">
-    <li >
-      <div class="card-container">
-        <a class="card" target="_blank" rel="noopener"  > 
-          <h1>{{popularEvent}}</h1>
-          <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-          <span>{{popularEvent}} description</span>
-          <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>    </a>
-    
+<ul>
+  <li *ngFor="let popularEvent of popEvents" class="mb-4">
+    <div class="card-container card-body">
+      <h5 class="card-title">{{ popularEvent.title }}</h5>
+      <div class="card-text">
+        <div>
+          <strong>Date:</strong> {{ popularEvent.date }}
+        </div>
+        <div>
+          <strong>Location:</strong> {{ popularEvent.location }}
+        </div>
+        <div>
+          <strong>Description:</strong> {{ popularEvent.description }}
+        </div>
+        <div>
+          <strong>Price:</strong> {{ popularEvent.price === 0 ? 'Free' : popularEvent.price + ' TND' }}
+        </div>
+        <div>
+          <strong>Capacity:</strong> {{ popularEvent.capacity }}
+        </div>
+        <div>
+          <strong>Organizer:</strong> {{ popularEvent.organizer.username }}
+        </div>
+      </div>
     </div>
-    </li>
-</ul> -->
- <div> {{popEvents | async}}</div> 
+  </li>
+</ul>

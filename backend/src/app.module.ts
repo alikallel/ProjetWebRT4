@@ -12,6 +12,7 @@ import { ChartsdataModule } from './chartsdata/chartsdata.module';
 import { PopularEventsService } from './popular-events/popular-events.service';
 import { EventSponsorshipModule } from './event-sponsorship/event-sponsorship.module';
 import { SponsorshipPaymentModule } from './sponsorship-payment/sponsorship-payment.module';
+import { PopularEventsModule } from './popular-events/popular-events.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config()
@@ -37,9 +38,10 @@ dotenv.config()
     ChartsdataModule,
     EventSponsorshipModule,
     SponsorshipPaymentModule,
+    PopularEventsModule,
  
   ],
   controllers: [AppController, EventRegistrationsController],
-  providers: [AppService, PopularEventsService],
+  providers: [AppService],
 })
 export class AppModule {}
