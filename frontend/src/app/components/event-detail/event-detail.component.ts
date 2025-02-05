@@ -4,9 +4,10 @@ import { EventService } from '../../services/event.service';
 import { Event } from '../../models/event.model';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/registration-details.service';
-import { faEdit,faUpload  } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faUpload, faStar } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { ModalService } from 'src/app/services/modal.service';
+import { EventSponsorshipService } from '../../services/event-sponsorship.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -22,12 +23,16 @@ export class EventDetailComponent implements OnInit {
   availablePlaces?: number;
   editMode: boolean = false;
   faEdit = faEdit;
+  faStar = faStar;
   originalEventData: any = null;
   registeredAttendees: number = 0;
   private originalAvailablePlaces?: number;
   faUpload = faUpload;
   selectedFile: File | null = null;
   isOrganizer: boolean = false;
+  sponsorshipDetails: any = null;
+  showSponsorshipModal: boolean = false;
+  isEventMasterUser: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +40,8 @@ export class EventDetailComponent implements OnInit {
     private router: Router,
     private regestrationService: RegistrationService,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private sponsorshipService: EventSponsorshipService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +50,57 @@ export class EventDetailComponent implements OnInit {
       if (this.eventId) {
         this.loadEventData(this.eventId);
         this.loadAvailablePlaces(this.eventId);
+        this.loadSponsorshipDetails();
+        this.checkUserRole();
+      }
+    });
+  }
+
+  private checkUserRole(): void {
+    this.authService.getCurrentUser().subscribe(user => {
+      this.isEventMasterUser = user.role === 'EVENTMASTER';
+    });
+  }
+
+  private loadSponsorshipDetails(): void {
+    this.sponsorshipService.findByEvent(Number(this.eventId)).subscribe({
+      next: (details) => {
+        this.sponsorshipDetails = details;
+      },
+      error: (error) => {
+        console.error('Error loading sponsorship details:', error);
+      }
+    });
+  }
+
+  openSponsorshipModal(): void {
+    this.showSponsorshipModal = true;
+  }
+
+  closeSponsorshipModal(): void {
+    this.showSponsorshipModal = false;
+  }
+
+  initiateSponsorship(): void {
+    if (!this.isEventMaster()) {
+      alert('Only Event Masters can sponsor events');
+      return;
+    }
+
+    const sponsorshipDto = {
+      event_id: Number(this.eventId)
+    };
+
+    this.sponsorshipService.create(sponsorshipDto).subscribe({
+      next: (response) => {
+        window.location.href = response.payment_details.payment_link;
+      },
+      error: (error) => {
+        if (error.status === 400) {
+          alert('This event is already sponsored');
+        } else {
+          alert('Failed to initiate sponsorship. Please try again.');
+        }
       }
     });
   }

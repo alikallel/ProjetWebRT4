@@ -23,7 +23,6 @@ export class EventRegistrationsService {
         throw new HttpException('Event not found', HttpStatus.NOT_FOUND);
       }
     
-      // Check existing registration for the user
       const existingRegistration = await this.eventRegistrationRepository.findOne({
         where: { 
           event_id: event.id, 
@@ -31,7 +30,6 @@ export class EventRegistrationsService {
         }
       });
     
-      // Calculate total booked places - include both PAID and FREE statuses
       const totalBookedPlaces = await this.eventRegistrationRepository
         .createQueryBuilder('registration')
         .where('registration.event_id = :eventId', { eventId: event.id })
@@ -52,7 +50,6 @@ export class EventRegistrationsService {
       if (existingRegistration) {
         existingRegistration.number_of_places += requestedPlaces;
         existingRegistration.amount = event.price * existingRegistration.number_of_places;
-        // For free events, mark as FREE
         if (event.price === 0) {
           existingRegistration.status = 'FREE';
         }

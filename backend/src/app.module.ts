@@ -9,6 +9,8 @@ import { EventRegistrationsController } from './event-registrations/event-regist
 import { EventRegistrationsModule } from './event-registrations/event-registrations.module';
 import { CheckinModule } from './checkin/checkin.module';
 import { ChartsdataModule } from './chartsdata/chartsdata.module';
+import { EventSponsorshipModule } from './event-sponsorship/event-sponsorship.module';
+import { SponsorshipPaymentModule } from './sponsorship-payment/sponsorship-payment.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config()
@@ -18,13 +20,9 @@ dotenv.config()
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-<<<<<<< HEAD
       username: process.env.DB_USERNAME,
       password: process.env.PASSWORD,
-=======
-      username:process.env.DB_USERNAME,
-      password: '',
->>>>>>> la
+
       database: process.env.DB_NAME,
 
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
@@ -36,6 +34,9 @@ dotenv.config()
     EventRegistrationsModule,
     CheckinModule,
     ChartsdataModule,
+    EventSponsorshipModule,
+    SponsorshipPaymentModule,
+ 
   ],
   controllers: [AppController, EventRegistrationsController],
   providers: [AppService],

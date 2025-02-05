@@ -5,7 +5,15 @@
         <img [src]="eventData.image | defaultImage" 
              alt="{{ eventData.title }}" 
              class="img-fluid w-100 banner-image">
-        
+           
+             <div *ngIf="sponsorshipDetails" 
+             class="sponsored-badge position-absolute">
+          <div class="badge-content">
+            <fa-icon [icon]="faStar" class="star-icon"></fa-icon>
+            <span>SPONSORED EVENT</span>
+          </div>
+        </div>
+
         <button *ngIf="isOrganizer && isEventMaster()" class="btn btn-primary rounded-circle position-absolute upload-btn"
 
                 (click)="triggerFileInput()"
@@ -26,7 +34,17 @@
     <div class="col-md-8">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="event-title mb-0">{{ eventData.title }}</h1>
+      
+      
         <div class="action-buttons">
+          <div *ngIf="sponsorshipDetails" class="sponsored-status ">
+            <fa-icon [icon]="faStar" [styles]="{'color': '#FFD700'}"></fa-icon>
+        </div>
+          <button *ngIf="isEventMaster() && isOrganizer && !sponsorshipDetails" 
+          class="btn btn-warning me-2" 
+          (click)="openSponsorshipModal()">
+        <fa-icon [icon]="faStar"></fa-icon> Sponsor Event
+      </button>
           <button *ngIf="isEventMaster() && isOrganizer" 
                   class="btn btn-outline-primary me-2" 
                   (click)="toggleEditMode()">
@@ -119,6 +137,36 @@
             </a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" [class.show]="showSponsorshipModal" [style.display]="showSponsorshipModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sponsor this Event</h5>
+        <button type="button" class="btn-close" (click)="closeSponsorshipModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="sponsor-info">
+          <h6>Benefits of Sponsoring:</h6>
+          <ul>
+            <li>Featured placement on the home page</li>
+            <li>Special "Sponsored" badge on event listing</li>
+            <li>Increased visibility to potential attendees</li>
+            <li>Priority in search results</li>
+          </ul>
+          <div class="sponsor-price mt-3">
+            <p><strong>Sponsorship Fee:</strong> 100 TND</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeSponsorshipModal()">Close</button>
+        <button type="button" class="btn btn-warning" (click)="initiateSponsorship()">
+          <fa-icon [icon]="faStar"></fa-icon> Sponsor Now
+        </button>
       </div>
     </div>
   </div>

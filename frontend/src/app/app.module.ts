@@ -43,6 +43,7 @@ import { RoleGuard } from './guards/role.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventRegistrationModalComponent } from './components/event-registration-modal/event-registration-modal.component';
+import { SponsorshipPaymentsComponent } from './components/sponsorship-payments/sponsorship-payments.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { EventRegistrationModalComponent } from './components/event-registration
     UnauthorizedComponent,
     NavbarComponent,
     FooterComponent,
-    EventRegistrationModalComponent
+    EventRegistrationModalComponent,
+    SponsorshipPaymentsComponent
 
   ],
   imports: [
