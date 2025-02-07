@@ -11,7 +11,7 @@
       </button>
   
       <!-- Centered Navbar Content -->
-      <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+      <div *ngIf="isAuthenticated()" class="collapse navbar-collapse justify-content-center" id="navbarContent">
         <ul class="navbar-nav">
           <li class="nav-item mx-3">
             <a class="nav-link" [routerLink]="['/']">Home</a>
@@ -23,7 +23,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" [routerLink]="['/events']">All Events</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/my-event']">My Events</a></li>
+              <li *ngIf="getUserRole() === 'EventMaster'" ><a class="dropdown-item" [routerLink]="['/my-event']">My Events</a></li>
             </ul>
           </li>
           <li class="nav-item mx-3">

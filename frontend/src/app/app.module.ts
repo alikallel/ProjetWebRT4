@@ -44,6 +44,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
+import { EventRegistrationModalComponent } from './components/event-registration-modal/event-registration-modal.component';
+import { SponsorshipPaymentsComponent } from './components/sponsorship-payments/sponsorship-payments.component';
 
 
 @NgModule({
@@ -78,7 +80,9 @@ import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component
     UnauthorizedComponent,
     NavbarComponent,
     FooterComponent,
-    QrScannerComponent
+    QrScannerComponent,
+    EventRegistrationModalComponent,
+    SponsorshipPaymentsComponent,
   ],
   imports: [
     BrowserModule,

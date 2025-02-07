@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DefaultImagePipe implements PipeTransform {
   private readonly backendUrl = 'http://localhost:3000'; 
 
-  transform(imagePath: string | null): string {
+  transform(imagePath: string | null  | undefined): string {
     const defaultImage = 'assets/defaultevent.jpg';
 
     

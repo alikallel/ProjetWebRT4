@@ -1,13 +1,81 @@
- <ul *ngFor="let popularEvent of popEvents">
-    <li >
-      <div class="card-container">
-        <a class="card" target="_blank" rel="noopener"  > 
-          <h1>{{popularEvent}}</h1>
-          <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="100" height="50" viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
-          <span>{{popularEvent}} description</span>
-          <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>    </a>
-    
+<div class="container mt-4">
+  <!-- Sponsored Events -->
+  <div class="sponsored-section position-relative">
+    <h4 class="mb-3">Sponsored Events</h4>
+    <div class="event-slider">
+      <button class="nav-arrow left" *ngIf="currentIndex > 0" (click)="previous()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="nav-arrow right" *ngIf="currentIndex + itemsToShow < sponsoredEvents.length" (click)="next()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+        <div class="col" *ngFor="let sponsoredEvent of visibleSponsoredEvents">
+          <div class="card h-100 shadow-sm sponsored-card">
+            <div class="sponsored-badge">
+              <i class="bi bi-star-fill me-1"></i>Sponsored
+            </div>
+            <img [src]="sponsoredEvent.event.image | defaultImage" class="card-img-top" alt="Event image">
+            <div class="card-body">
+              <h5 class="card-title text-truncate">{{ sponsoredEvent.event.title }}</h5>
+              <p class="card-text text-muted small mb-2">
+                <i class="bi bi-geo-alt me-1"></i>{{ sponsoredEvent.event.location }}
+              </p>
+              <p class="card-text text-muted small mb-2">
+                <i class="bi bi-calendar me-1"></i>{{ sponsoredEvent.event.date | date }}
+              </p>
+              <p class="card-text description-text">{{ sponsoredEvent.event.description }}</p>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="badge" [ngClass]="sponsoredEvent.event.price === 0 ? 'bg-success' : 'bg-primary'">
+                  {{ sponsoredEvent.event.price === 0 ? 'Free' : sponsoredEvent.event.price + ' TND' }}
+                </span>
+                <small class="text-muted">
+                  <i class="bi bi-people me-1"></i>{{ sponsoredEvent.event.capacity }} spots
+                </small>
+              </div>
+            </div>
+            <div class="card-footer bg-transparent">
+              <small class="text-muted">
+                <i class="bi bi-person-circle me-1"></i>{{ sponsoredEvent.event.organizer.username }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    </li>
-</ul> 
-<!-- <div> {{popEvents}}</div> -->
+  </div>
+ 
+  <!-- Popular Events -->
+  <h4 class="mb-3">Popular Events</h4>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let popularEvent of popEvents">
+      <div class="card h-100 shadow-sm">
+        <img [src]="popularEvent.image | defaultImage" class="card-img-top" alt="Event image" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{ popularEvent.title }}</h5>
+          <p class="card-text text-muted small mb-2">
+            <i class="bi bi-geo-alt me-1"></i>{{ popularEvent.location }}
+          </p>
+          <p class="card-text text-muted small mb-2">
+            <i class="bi bi-calendar me-1"></i>{{ popularEvent.date | date }}
+          </p>
+          <p class="card-text description-text">{{ popularEvent.description }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="badge" [ngClass]="popularEvent.price === 0 ? 'bg-success' : 'bg-primary'">
+              {{ popularEvent.price === 0 ? 'Free' : popularEvent.price + ' TND' }}
+            </span>
+            <small class="text-muted">
+              <i class="bi bi-people me-1"></i>{{ popularEvent.capacity }} spots
+            </small>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent">
+          <small class="text-muted">
+            <i class="bi bi-person-circle me-1"></i>{{ popularEvent.organizer.username }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>

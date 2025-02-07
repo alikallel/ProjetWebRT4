@@ -10,14 +10,12 @@ export class PopularEventsService {
 
   constructor() { }
 
-  //private eventService = inject(EventService);
-  private apiUrl = 'http://localhost:3000/events';
+  private apiUrl = 'http://localhost:3000/popular-events';
   
     private http = inject(HttpClient);
   
     getPopularEvents(): Observable<Event[]> {
-      return this.http
-      .get<{data :Event[]}>(this.apiUrl)
-      .pipe(map(response => response.data));
+      return this.http.get<Event[]>(this.apiUrl); 
     }
+    
 }

@@ -16,6 +16,7 @@ import { MyEventComponent } from './components/my-event/my-event.component';
 import { LoginGuard } from './guards/login.guard';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { RoleGuard } from './guards/role.guard';
+import { SponsorshipPaymentsComponent } from './components/sponsorship-payments/sponsorship-payments.component';
 
 const routes: Routes = [
   { path: 'events', redirectTo: '/events/page/1', pathMatch: 'full' },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '', component : HomeComponent},
+  { path: 'sponsorship/success', component: SponsorshipPaymentsComponent},
   { path: '**', component: HomeComponent }
 
 
