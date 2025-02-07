@@ -32,7 +32,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: '', component : HomeComponent}
+  { path: '', component : HomeComponent},
+  { path: '**', component: HomeComponent }
 
 
 ];

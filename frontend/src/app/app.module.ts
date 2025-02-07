@@ -42,6 +42,8 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { RoleGuard } from './guards/role.guard';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
 
 
 @NgModule({
@@ -75,7 +77,8 @@ import { FooterComponent } from './components/footer/footer.component';
     DefaultImagePipe,
     UnauthorizedComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    QrScannerComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +91,7 @@ import { FooterComponent } from './components/footer/footer.component';
     QRCodeModule,
     MatSnackBarModule,
     FontAwesomeModule,
+    ZXingScannerModule,
   ],
   providers: [LoginInterceptorProvider,LoginGuard, RoleGuard],
   bootstrap: [AppComponent]

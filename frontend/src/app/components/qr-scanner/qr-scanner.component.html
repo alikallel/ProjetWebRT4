@@ -1,0 +1,40 @@
+<div class="scanner-container">
+    <!-- Start Scanner Button -->
+    <div *ngIf="!showScanner" class="start-button-container">
+      <button (click)="startScanner()">Start QR Scanner</button>
+    </div>
+  
+    <!-- Scanner Section -->
+    <div *ngIf="showScanner">
+      <zxing-scanner 
+        *ngIf="scannerEnabled"
+        [enable]="scannerEnabled"
+        (scanSuccess)="handleScanSuccess($event)"
+        (camerasFound)="handleCamerasFound($event)"
+        (scanError)="handleScanError($event)"
+        (scanComplete)="handleScanComplete()"
+        (permissionResponse)="handlePermissionResponse($event)">
+      </zxing-scanner>
+  
+      <div *ngIf="!hasCameras && hasPermission" class="error-message">
+        No cameras found on this device.
+      </div>
+  
+      <div *ngIf="!hasPermission" class="error-message">
+        Camera permission is required to scan QR codes.
+      </div>
+  
+      <div *ngIf="userName && userName !== 'Erooor187'" class="result-container success">
+        <h3>Scanned Successfully</h3>
+        <p>The status of {{ userName }} was updated Successfully</p>
+        <button (click)="startNewScan()">Scan Again</button>
+      </div>
+      
+      <div *ngIf="userName === 'Erooor187'" class="result-container error">
+        <h3>Error In Scan</h3>
+        <p>User not found in this event! Please try again</p>
+        <button (click)="startNewScan()">Scan Again</button>
+      </div>
+             
+    </div>
+  </div>

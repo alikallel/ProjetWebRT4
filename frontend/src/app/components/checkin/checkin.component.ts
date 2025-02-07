@@ -12,6 +12,7 @@ export class CheckIn implements OnInit {
 
   error = false;
   users: CheckInData[] = [];
+  public username: string ="";
 
   constructor(private http: HttpClient) {}
 
@@ -37,6 +38,18 @@ export class CheckIn implements OnInit {
       });
   }
 
+  handleQrCheckIn(regId: number) {
+    const user = this.users.find(u => u.reg_id === regId);
+    if (user) {
+      user.checkedIn=!user.checkedIn
+      this.toggleCheckIn(user);
+      this.username = user.username;
+    } else {
+      this.username = "Erooor187";
+      console.error('User not found with reg_id:', regId);
+    }
+  }
+
   toggleCheckIn(user: CheckInData) {
     const newCheckedInStatus = user.checkedIn;
   
@@ -47,6 +60,7 @@ export class CheckIn implements OnInit {
       .subscribe({
         next: () => {
           console.log('Check-in status updated successfully.');
+          user.checkedIn = newCheckedInStatus;
         },
         error: (err) => {
           console.error('Error updating check-in status:', err);
