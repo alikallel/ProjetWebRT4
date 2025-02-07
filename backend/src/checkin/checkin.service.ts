@@ -38,6 +38,46 @@ export class CheckinService {
         }));
     }
 
+    async getUser(regId: number): Promise<UserDataDto> {
+      const registration = await this.eventRegistrationRepository
+          .createQueryBuilder('registration')
+          .leftJoinAndSelect('registration.user', 'user')
+          .select([
+              'registration.id',
+              'user.username',
+              'user.photo AS userPhoto',
+              'registration.status',
+              'registration.registration_date',
+              'registration.number_of_places',
+              'registration.checkedIn',
+          ])
+          .where('registration.id = :regId', { regId })
+          .getRawOne();
+      if (!registration) {
+          throw new Error(`Registration with ID ${regId} not found`);
+      }
+  
+      const { 
+          registration_id: reg_id, 
+          user_username: username, 
+          userPhoto, 
+          registration_status: status, 
+          registration_number_of_places: numPlaces, 
+          registration_registration_date: registrationDate, 
+          registration_checkedIn: checkedIn 
+      } = registration;
+  
+      return {
+          reg_id,
+          username,
+          userPhoto,
+          status,
+          numPlaces,
+          registrationDate,
+          checkedIn,
+      };
+  }  
+
     async updateCheckInStatus(
         id: number,
         checkedIn: boolean,

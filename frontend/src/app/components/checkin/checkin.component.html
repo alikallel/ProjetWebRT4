@@ -48,4 +48,10 @@
       </tr>
     </tbody>
   </table>
+  <app-qr-scanner
+  [userName]="username"
+  (toggleQRCheckIn)="handleQrCheckIn($event)">
+</app-qr-scanner>
+
+
 </div>

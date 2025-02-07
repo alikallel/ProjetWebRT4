@@ -10,6 +10,14 @@ import { User } from 'src/decorators/user.decorator';
 export class CheckinController {
     constructor(private readonly checkinService: CheckinService) {}
 
+    @Get('/user/:regid')
+    async getUser(
+        @Param('regid') id: number,
+        @User() user): Promise<UserDataDto> {
+        validateUserRole(user,"EVENTMASTER");
+        return this.checkinService.getUser(id);
+    }
+
     @Get(':eventId')  
     async getEventRegistrations(
         @Param('eventId') eventId: number, @User() user): Promise<UserDataDto[]> {
